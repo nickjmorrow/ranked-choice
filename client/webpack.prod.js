@@ -26,7 +26,7 @@ module.exports = {
         },
     },
     output: {
-        path: `${__dirname}/public`,
+        path: `${__dirname}/prod`,
         publicPath: '/',
         filename: 'app.min.js',
     },

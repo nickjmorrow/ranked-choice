@@ -9,7 +9,6 @@ jobs:
       - checkout
       - node/install-packages:
           cache-path: client/node_modules
-          override-ci-command: npm install
           app-dir: client
       - run:
           command: npm run format
