@@ -14,7 +14,7 @@ jobs:
                 working_directory: client
                 name: Install Node Modules
             - run:
-                command: npm format
+                command: npm run format
                 working_directory: client
                 name: Check for Formatting Errors
             - run:
