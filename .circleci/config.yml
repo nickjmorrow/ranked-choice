@@ -5,15 +5,15 @@ jobs:
   build-and-test:
     executor:
       name: node/default
-    working_directory: client
+    working_directory: ~/client
     steps:
       - checkout
       - run:
-          command: ls client
+          command: pwd && ls client
       - node/install-packages:
           cache-path: ~/client/node_modules
           override-ci-command: npm install
-          app-dir: client
+          app-dir: ~/client
       - run:
           command: npm run format
           name: Check for Formatting Errors
