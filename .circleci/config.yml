@@ -26,8 +26,15 @@ jobs:
           command: npm run build
           name: Build JavaScript
           working_directory: client
+  deploy:
+    executor: node-executor
+    steps:
+      - run:
+          name: Netlify Deploy
+          command: netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --prod --dir prod
 
 workflows:
-  build-and-test:
+  build-test-deploy:
     jobs:
       - build-and-test
+      - deploy
