@@ -7,10 +7,8 @@ jobs:
       name: node/default
     steps:
       - checkout
-      - run:
-          command: pwd && ls client
       - node/install-packages:
-          cache-path: ~/client/node_modules
+          cache-path: client/node_modules
           override-ci-command: npm install
           app-dir: client
       - run:
