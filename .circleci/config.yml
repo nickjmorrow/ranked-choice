@@ -35,8 +35,3 @@ workflows:
             - run:
                 name: Netlify Deploy
                 command: netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --prod --dir prod
-
-workflows:
-  build-test-deploy:
-    jobs:
-      - build-and-test
