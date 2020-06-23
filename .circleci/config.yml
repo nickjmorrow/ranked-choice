@@ -16,15 +16,19 @@ jobs:
       - run:
           command: npm run format
           name: Check for Formatting Errors
+          working_directory: client
       - run:
           command: npm run lint
           name: Check for Linting Errors
+          working_directory: client
       - run:
           command: npm test
           name: Run JavaScript Tests
+          working_directory: client
       - run:
           command: npm run build
           name: Build JavaScript
+          working_directory: client
 
 workflows:
   build-and-test:
