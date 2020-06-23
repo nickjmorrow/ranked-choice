@@ -5,9 +5,9 @@ workflows:
   build-test-deploy:
     jobs:
       - build-and-test
-      - deploy
-        # requires:
-        #   - build-and-test
+      - deploy:
+        requires:
+          - build-and-test
 jobs:
   build-and-test:
     executor:
@@ -33,10 +33,17 @@ jobs:
           command: npm run build
           name: Build JavaScript
           working_directory: client
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - public
   deploy:
     executor:
       name: node/default
     steps:
+      - checkout
+      - attach_workspace:
+          at: ./
       - run: pwd && ls
       - run:
           name: Netlify Deploy
