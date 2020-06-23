@@ -41,11 +41,10 @@ jobs:
     executor:
       name: node/default
     steps:
-      - checkout
       - attach_workspace:
           at: ./
-      - run: pwd && ls
+      - run: pwd && ls && ls client
       - run:
           name: Netlify Deploy
           working_directory: client
-          command: ./node_modules/.bin/netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --prod --dir prod
+          command: ./client/node_modules/.bin/netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --prod --dir client/prod
