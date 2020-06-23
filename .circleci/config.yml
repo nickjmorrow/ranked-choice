@@ -1,0 +1,34 @@
+version: 2.1
+orbs:
+  node: circleci/node@3.0.0
+jobs:
+  build-and-test:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          cache-path: client/node_modules
+          override-ci-command: npm install
+          app-dir: client
+      - run:
+          command: npm run format
+          name: Check for Formatting Errors
+          working_directory: client
+      - run:
+          command: npm run lint
+          name: Check for Linting Errors
+          working_directory: client
+      - run:
+          command: npm test
+          name: Run JavaScript Tests
+          working_directory: client
+      - run:
+          command: npm run build
+          name: Build JavaScript
+          working_directory: client
+
+workflows:
+  build-and-test:
+    jobs:
+      - build-and-test
