@@ -8,7 +8,7 @@ jobs:
     steps:
       - checkout
       - node/with-cache:
-          key: v1-myapp-cache
+          app-dir: client
           steps:
             - run:
                 command: npm install
