@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - stable
+cache:
+  directories:
+    - node_modules
+script:
+  - npm run --prefix client build
+  - npm run --prefix client lint
+  - npm run --prefix client test
+on:
+  branch: master
