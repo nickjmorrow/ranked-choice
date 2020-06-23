@@ -36,7 +36,7 @@ jobs:
       - persist_to_workspace:
           root: ./
           paths:
-            - public
+            - client/prod
   deploy:
     executor:
       name: node/default
