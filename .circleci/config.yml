@@ -5,9 +5,9 @@ workflows:
   build-test-deploy:
     jobs:
       - build-and-test
-      - deploy:
-          requires:
-            - build-and-test
+      - deploy
+        # requires:
+        #   - build-and-test
 jobs:
   build-and-test:
     executor:
@@ -37,6 +37,7 @@ jobs:
     executor:
       name: node/default
     steps:
+      - run: pwd && ls
       - run:
           name: Netlify Deploy
           working_directory: client
