@@ -9,7 +9,7 @@ jobs:
       - checkout
       - node/with-cache:
           steps:
-            - node/install-packages
+            - node/install-packages:
                 cache-path: ~/client/node_modules
                 override-ci-command: npm install
             - run:
