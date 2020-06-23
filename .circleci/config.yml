@@ -7,9 +7,11 @@ jobs:
       name: node/default
     steps:
       - checkout
-      - node/with-cache:
+      - save_cache:
+          key: v1-myapp-cache
           paths:
             - ~/client
+      - node/with-cache:
           steps:
             - run: |
                 cd client
