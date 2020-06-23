@@ -7,21 +7,28 @@ jobs:
       name: node/default
     steps:
       - checkout
-      - save_cache:
-          key: v1-myapp-cache
-          paths:
-            - ~/client
       - node/with-cache:
           steps:
             - run:
                 command: npm install
                 working_directory: client
-                # cd client
-                # npm install
-                # npm run format
-                # npm run lint
-                # npm test
-                # npm run build
+                name: Install Node Modules
+            - run:
+                command: npm format
+                working_directory: client
+                name: Check for Formatting Errors
+            - run:
+                command: npm run lint
+                working_directory: client
+                name: Check for Linting Errors
+            - run:
+                command: npm test
+                working_directory: client
+                name: Run JavaScript Tests
+            - run:
+                command: npm run build
+                working_directory: client
+                name: Build JavaScript
 
 workflows:
   build-and-test:
