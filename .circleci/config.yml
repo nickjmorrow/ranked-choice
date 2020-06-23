@@ -13,13 +13,15 @@ jobs:
             - ~/client
       - node/with-cache:
           steps:
-            - run: |
-                cd client
-                npm install
-                npm run format
-                npm run lint
-                npm test
-                npm run build
+            - run:
+                command: npm install
+                working_directory: client
+                # cd client
+                # npm install
+                # npm run format
+                # npm run lint
+                # npm test
+                # npm run build
 
 workflows:
   build-and-test:
