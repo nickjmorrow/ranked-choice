@@ -9,12 +9,13 @@ jobs:
       - checkout
       - node/with-cache:
           steps:
-            - run: cd client
-            - run: npm install
-            - run: npm run format
-            - run: npm run lint
-            - run: npm test
-            - run: npm run build
+            - run: |
+                cd client
+                npm install
+                npm run format
+                npm run lint
+                npm test
+                npm run build
 
 workflows:
   build-and-test:
