@@ -3,6 +3,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpack = require('webpack');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: ['./src/index.tsx'],
@@ -34,12 +35,15 @@ module.exports = {
         minimizer: [new TerserPlugin()],
     },
     plugins: [
-        new CleanWebpackPlugin(),
+        new CleanWebpackPlugin({}),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'public', 'index.html'),
         }),
         new webpack.DefinePlugin({
             __DEV__: true,
+        }),
+        new CopyPlugin({
+            patterns: [{ from: 'public/_redirects', to: '' }],
         }),
     ],
 };
