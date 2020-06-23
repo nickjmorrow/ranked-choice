@@ -45,7 +45,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ./
-      - run: pwd && ls && ls client && ls client/prod && ls client/node_modules/.bin
+      - run: pwd && ls client/node_modules/.bin
       - run:
           name: Netlify Deploy
           working_directory: client
