@@ -45,8 +45,8 @@ jobs:
     steps:
       - attach_workspace:
           at: ./
-      - run: pwd && ls client/node_modules/.bin
+      - run: pwd && ls client/node_modules/.bin/netlify
       - run:
           name: Netlify Deploy
           working_directory: client
-          command: ./client/node_modules/.bin/netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --prod --dir client/prod
+          command: client/node_modules/.bin/netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --prod --dir client/prod
