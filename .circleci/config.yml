@@ -27,7 +27,8 @@ jobs:
           name: Build JavaScript
           working_directory: client
   deploy:
-    executor: node-executor
+    executor:
+      name: node/default
     steps:
       - run:
           name: Netlify Deploy
