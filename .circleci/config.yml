@@ -32,9 +32,12 @@ jobs:
           name: Build JavaScript
           working_directory: client
   deploy:
+    requires:
+      - build
     executor:
       name: node/default
     steps:
       - run:
           name: Netlify Deploy
+          working_directory: client
           command: netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --prod --dir prod
