@@ -37,13 +37,15 @@ jobs:
           root: ./
           paths:
             - client/prod
+            - client/node_modules
+
   deploy:
     executor:
       name: node/default
     steps:
       - attach_workspace:
           at: ./
-      - run: pwd && ls && ls client
+      - run: pwd && ls && ls client && ls client/prod
       - run:
           name: Netlify Deploy
           working_directory: client
