@@ -4,7 +4,7 @@ orbs:
 workflows:
   build-test-deploy:
     jobs:
-        build-and-test:
+      - build-and-test:
           executor:
             name: node/default
           steps:
@@ -28,7 +28,7 @@ workflows:
                 command: npm run build
                 name: Build JavaScript
                 working_directory: client
-      deploy:
+      - deploy:
           executor:
             name: node/default
           steps:
