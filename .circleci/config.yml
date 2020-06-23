@@ -8,12 +8,9 @@ jobs:
     steps:
       - checkout
       - node/with-cache:
-          app-dir: client
           steps:
-            - run:
-                command: npm install
-                working_directory: client
-                name: Install Node Modules
+            - node/install-pages
+                cache-path: ~/client/node_modules
             - run:
                 command: npm run format
                 working_directory: client
