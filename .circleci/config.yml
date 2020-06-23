@@ -5,27 +5,23 @@ jobs:
   build-and-test:
     executor:
       name: node/default
+    working_directory: ~/client
     steps:
       - checkout
       - node/install-packages:
           cache-path: ~/client/node_modules
           override-ci-command: npm install
-          working_directory: client
       - run:
           command: npm run format
-          working_directory: client
           name: Check for Formatting Errors
       - run:
           command: npm run lint
-          working_directory: client
           name: Check for Linting Errors
       - run:
           command: npm test
-          working_directory: client
           name: Run JavaScript Tests
       - run:
           command: npm run build
-          working_directory: client
           name: Build JavaScript
 
 workflows:
