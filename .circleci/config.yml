@@ -8,6 +8,8 @@ jobs:
     working_directory: ~/client
     steps:
       - checkout
+      - run:
+          command: ls
       - node/install-packages:
           cache-path: ~/client/node_modules
           override-ci-command: npm install
