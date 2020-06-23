@@ -10,7 +10,7 @@ jobs:
       - node/with-cache:
           steps:
             - node/install-pages
-                cache-path: ~/client/node_modules
+                override-ci-command: npm install
             - run:
                 command: npm run format
                 working_directory: client
