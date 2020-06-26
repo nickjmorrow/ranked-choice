@@ -29,7 +29,7 @@ export const App: React.SFC = () => {
                             <Main>
                                 <Switch>
                                     {componentRouteMappings.map(crm => (
-                                        <Route key={crm.route} path={crm.route} component={crm.component} />
+                                        <Route exact key={crm.route} path={crm.route} component={crm.component} />
                                     ))}
                                     <Route component={NotFound} />
                                 </Switch>
