@@ -8,8 +8,6 @@ export const Header: React.FC = () => {
         <StyledHeader>
             <AppName variant={'h1'}>Competency</AppName>
             <RightAligned>
-                <HeaderLink route={'/login'}>Hello, Jane Smith (Instructor)</HeaderLink>
-                <HeaderLink route={'/about'}>Support</HeaderLink>
                 <HeaderLink route={'/about'}>About</HeaderLink>
             </RightAligned>
         </StyledHeader>

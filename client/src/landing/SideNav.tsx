@@ -21,6 +21,7 @@ const StyledNav = styled.nav`
     display: flex;
     flex-direction: column;
     width: 240px;
+    padding-top: ${p => p.theme.spacing.ss12};
 `;
 
 const NavLink = styled.div``;

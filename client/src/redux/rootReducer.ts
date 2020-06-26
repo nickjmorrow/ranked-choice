@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import { todosReducer } from '~/todos/state/todosReducer';
+import { simulationApi } from '~/simulation';
 
 export const rootReducer = combineReducers({
-    todosState: todosReducer,
+    simulationState: simulationApi.reducer,
 });
