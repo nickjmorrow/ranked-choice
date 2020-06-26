@@ -26,7 +26,7 @@ export const Results: React.FC = () => {
                                 {activeRound.roundId === r.roundId && (
                                     <OptionListContainer>
                                         {options.map(o => (
-                                            <OptionContainer>
+                                            <OptionContainer key={o.optionId}>
                                                 <Typography>
                                                     {o.label}:{' '}
                                                     {

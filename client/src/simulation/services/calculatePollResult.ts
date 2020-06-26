@@ -9,6 +9,26 @@ export interface CalculatePollResultRequest {
     votes: Vote[];
 }
 
+const isMajorityOfRemainingVotesReached = (round: Round): boolean => {
+    const { optionVoteResults } = round;
+    const totalVotes = optionVoteResults.reduce((agg, cur) => agg + cur.voteCount, 0);
+    return optionVoteResults.some(r => r.voteCount / totalVotes > 0.5);
+};
+
+const hasTied = (round: Round): boolean => {
+    const { optionVoteResults } = round;
+    const max = optionVoteResults.reduce((agg, cur) => Math.max(agg, cur.voteCount), -Infinity);
+    const result = !optionVoteResults.filter(r => r.voteCount !== 0).some(r => r.voteCount !== max);
+
+    return result;
+};
+
+const removeFewestVotedCandidates = (round: Round, validCandidates: Map<number, boolean>) => {
+    const { optionVoteResults } = round;
+    const fewestVotes = optionVoteResults.reduce((agg, cur) => Math.min(agg, cur.voteCount), Infinity);
+    round.optionVoteResults.filter(r => r.voteCount === fewestVotes).forEach(r => validCandidates.delete(r.optionId));
+};
+
 const validateCalculatePollResultRequest = (calculatePollResultRequest: CalculatePollResultRequest) => {
     const { options, votes } = calculatePollResultRequest;
 
@@ -75,11 +95,11 @@ export const calculatePollResult = (argument: CalculatePollResultRequest): PollR
     const { options, votes } = argument;
 
     let roundId = 1;
-    let pollResult: PollResult = {
+    const pollResult: PollResult = {
         rounds: [],
     };
 
-    let validCandidates = new Map<number, boolean>();
+    const validCandidates = new Map<number, boolean>();
     options.forEach(o => validCandidates.set(o.optionId, true));
 
     const byOrderId = (a: Choice, b: Choice) => (a.orderId < b.orderId ? -1 : 1);
@@ -92,7 +112,7 @@ export const calculatePollResult = (argument: CalculatePollResultRequest): PollR
         const roundResults = getInitialRoundResults();
 
         votes.forEach(vote => {
-            let orderedChoices = vote.choices.sort(byOrderId).filter(toValidCandidates);
+            const orderedChoices = vote.choices.sort(byOrderId).filter(toValidCandidates);
             if (orderedChoices.length === 0) {
                 return;
             }
@@ -117,24 +137,4 @@ export const calculatePollResult = (argument: CalculatePollResultRequest): PollR
     }
 
     return pollResult;
-};
-
-const isMajorityOfRemainingVotesReached = (round: Round): boolean => {
-    const { optionVoteResults } = round;
-    const totalVotes = optionVoteResults.reduce((agg, cur) => agg + cur.voteCount, 0);
-    return optionVoteResults.some(r => r.voteCount / totalVotes > 0.5);
-};
-
-const hasTied = (round: Round): boolean => {
-    const { optionVoteResults } = round;
-    const max = optionVoteResults.reduce((agg, cur) => Math.max(agg, cur.voteCount), -Infinity);
-    const result = !optionVoteResults.filter(r => r.voteCount !== 0).some(r => r.voteCount !== max);
-
-    return result;
-};
-
-const removeFewestVotedCandidates = (round: Round, validCandidates: Map<number, boolean>) => {
-    const { optionVoteResults } = round;
-    const fewestVotes = optionVoteResults.reduce((agg, cur) => Math.min(agg, cur.voteCount), Infinity);
-    round.optionVoteResults.filter(r => r.voteCount === fewestVotes).forEach(r => validCandidates.delete(r.optionId));
 };

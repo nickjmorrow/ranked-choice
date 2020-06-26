@@ -16,7 +16,7 @@ export const Vote: React.FC<{ vote: VoteType }> = ({ vote }) => {
             <Collapse isOpened={isOpen}>
                 <ChoicesContainer>
                     {vote.choices.map(c => (
-                        <Choice>
+                        <Choice key={c.optionId}>
                             <Typography style={{ marginRight: '16px' }}>{c.orderId}</Typography>
                             <Typography>{options.find(o => o.optionId === c.optionId)!.label}</Typography>
                         </Choice>

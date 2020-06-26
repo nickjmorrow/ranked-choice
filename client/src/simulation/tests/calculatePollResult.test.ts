@@ -3,6 +3,25 @@ import { PollResult } from '~/simulation/types/PollResult';
 import { Round } from '~/simulation/types/Round';
 import { OptionVoteResult } from '~/simulation/types/OptionVoteResult';
 
+interface TestArgument {
+    calculatePollResultRequest: CalculatePollResultRequest;
+    expectedPollResult: PollResult;
+}
+
+const byRoundId = (a: Round, b: Round) => (a.roundId < b.roundId ? -1 : 1);
+
+const byOptionId = (a: OptionVoteResult, b: OptionVoteResult) => (a.optionId < b.optionId ? -1 : 1);
+const sortedByRoundIdOptionId = (pollResult: PollResult): PollResult => ({
+    rounds: pollResult.rounds
+        .sort(byRoundId)
+        .map(r => ({ roundId: r.roundId, optionVoteResults: r.optionVoteResults.sort(byOptionId) })),
+});
+
+const testMacro = (testArgument: TestArgument): void => {
+    const actualPollResult = calculatePollResult(testArgument.calculatePollResultRequest);
+    expect(sortedByRoundIdOptionId(actualPollResult)).toEqual(sortedByRoundIdOptionId(testArgument.expectedPollResult));
+};
+
 describe('poll results calculator', () => {
     it('single round', () => {
         const calculatePollResultRequest = {
@@ -420,23 +439,3 @@ describe('poll results calculator', () => {
         );
     });
 });
-
-interface TestArgument {
-    calculatePollResultRequest: CalculatePollResultRequest;
-    expectedPollResult: PollResult;
-}
-
-const testMacro = (testArgument: TestArgument): void => {
-    const actualPollResult = calculatePollResult(testArgument.calculatePollResultRequest);
-    expect(sortedByRoundIdOptionId(actualPollResult)).toEqual(sortedByRoundIdOptionId(testArgument.expectedPollResult));
-};
-
-const sortedByRoundIdOptionId = (pollResult: PollResult): PollResult => ({
-    rounds: pollResult.rounds
-        .sort(byRoundId)
-        .map(r => ({ roundId: r.roundId, optionVoteResults: r.optionVoteResults.sort(byOptionId) })),
-});
-
-const byRoundId = (a: Round, b: Round) => (a.roundId < b.roundId ? -1 : 1);
-
-const byOptionId = (a: OptionVoteResult, b: OptionVoteResult) => (a.optionId < b.optionId ? -1 : 1);
