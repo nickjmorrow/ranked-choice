@@ -11,16 +11,27 @@ export const VotesManager: React.FC = () => {
 
     return (
         <Container>
-            <Typography variant={'h3'}>Votes</Typography>
-            <OptionBarListContainer>
+            <Typography variant={'h2'}>Votes</Typography>
+            <VotesContainer>
                 {votes.map(v => (
-                    <Vote vote={v} key={v.voterId} />
+                    <VoteContainer key={v.voterId}>
+                        <Vote vote={v} />
+                    </VoteContainer>
                 ))}
-            </OptionBarListContainer>
+            </VotesContainer>
         </Container>
     );
 };
 
 const Container = styled.div``;
 
-const VotesContainer = styled.div``;
+const VotesContainer = styled(OptionBarListContainer)`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+`;
+
+const VoteContainer = styled.div`
+    margin-right: ${p => p.theme.spacing.ss6};
+    margin-bottom: ${p => p.theme.spacing.ss6};
+`;

@@ -112,7 +112,10 @@ export const calculatePollResult = (argument: CalculatePollResultRequest): PollR
         const roundResults = getInitialRoundResults();
 
         votes.forEach(vote => {
-            const orderedChoices = vote.choices.sort(byOrderId).filter(toValidCandidates);
+            const orderedChoices = vote.choices
+                .slice()
+                .sort(byOrderId)
+                .filter(toValidCandidates);
             if (orderedChoices.length === 0) {
                 return;
             }

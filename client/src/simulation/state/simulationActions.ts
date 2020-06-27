@@ -10,8 +10,8 @@ export enum SimulationActionTypeKeys {
     ADD_VOTE = 'ADD_VOTE',
     UPDATE_VOTE = 'UPDATE_VOTE',
     REMOVE_VOTE = 'REMOVE_VOTE',
-    REMOVE_CHOICE = 'REMOVE_CHOICE',
     ADD_CHOICE = 'ADD_CHOICE',
+    REMOVE_CHOICE = 'REMOVE_CHOICE',
 }
 
 const addOption = (label: Option['label']) => action(SimulationActionTypeKeys.ADD_OPTION, label);
@@ -25,13 +25,14 @@ const removeVote = (vote: Vote) => action(SimulationActionTypeKeys.REMOVE_VOTE, 
 const removeChoice = (payload: { vote: Vote; choice: Choice }) =>
     action(SimulationActionTypeKeys.REMOVE_CHOICE, payload);
 
-const addChoice = (payload: { vote: Vote; choice: Choice }) => action(SimulationActionTypeKeys.ADD_CHOICE, payload);
+const addChoice = (payload: { vote: Vote; optionId: Option['optionId'] }) =>
+    action(SimulationActionTypeKeys.ADD_CHOICE, payload);
 
 export const simulationActions = {
     addOption,
     removeOption,
     addVote,
-    removeVote,
-    removeChoice,
     addChoice,
+    removeChoice,
+    removeVote,
 };

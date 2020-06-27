@@ -6,40 +6,51 @@ import { OptionBar } from '~/simulation/components/OptionBar';
 import { Collapse } from 'react-collapse';
 import { useSelector, useDispatch } from 'react-redux';
 import { simulationSelectors } from '~/simulation/state/simulationSelectors';
+import Select from 'react-select';
 import { simulationActions } from '~/simulation/state/simulationActions';
-import { RemoveIconButton } from '~/core/RemoveIconButton';
+import { DangerIconButton } from '~/simulation/components/DangerIconButton';
 import { Choice } from '~/simulation/types/Choice';
+
+interface SelectOption {
+    value: number;
+    label: string;
+}
 
 export const Vote: React.FC<{ vote: VoteType }> = ({ vote }) => {
     const [isOpen, setIsOpen] = React.useState(true);
     const options = useSelector(simulationSelectors.getOptions);
+    const validOptions = options.filter(o => !vote.choices.map(c => c.optionId).includes(o.optionId));
+    const selectOptions: SelectOption[] = validOptions.map(o => ({ value: o.optionId, label: o.label }));
     const dispatch = useDispatch();
-    const handleRemove = () => {
-        dispatch(simulationActions.removeVote(vote));
+    const handleChange = (selectOption: SelectOption): void => {
+        dispatch(simulationActions.addChoice({ vote, optionId: selectOption.value }));
     };
-    const handleRemoveChoice = (choice: Choice) => {
-        dispatch(simulationActions.removeChoice({ vote, choice }));
+
+    const handleRemove = (choice: Choice): void => {
+        dispatch(simulationActions.removeChoice({ choice, vote }));
     };
     return (
-        <OptionBar onClick={() => setIsOpen(s => !s)}>
-            <InnerContainer>
-                <Typography>{vote.label ?? `VoterId ${vote.voterId}`}</Typography>
-                <RemoveIconButton onClick={handleRemove} />
-            </InnerContainer>
+        <Container>
+            <Typography onClick={() => setIsOpen(s => !s)}>{vote.label ?? `VoterId ${vote.voterId}`}</Typography>
             <Collapse isOpened={isOpen}>
                 <ChoicesContainer>
-                    {vote.choices.map(c => (
-                        <Choice key={c.optionId}>
-                            <div>
-                                <Typography style={{ marginRight: '16px' }}>{c.orderId}</Typography>
-                                <Typography>{options.find(o => o.optionId === c.optionId)!.label}</Typography>
-                            </div>
-                            <RemoveChoiceButton onClick={() => handleRemoveChoice(c)} />
-                        </Choice>
-                    ))}
+                    {vote.choices
+                        .sort((a, b) => (a.orderId < b.orderId ? -1 : 1))
+                        .map(c => (
+                            <Choice key={c.optionId}>
+                                <div>
+                                    <Typography style={{ marginRight: '16px' }}>{c.orderId}</Typography>
+                                    <Typography>{options.find(o => o.optionId === c.optionId)!.label}</Typography>
+                                </div>
+                                <DangerIconButton onClick={() => handleRemove(c)} />
+                            </Choice>
+                        ))}
+                    <Typography>
+                        <Select options={selectOptions} value={null} onChange={handleChange as any} />
+                    </Typography>
                 </ChoicesContainer>
             </Collapse>
-        </OptionBar>
+        </Container>
     );
 };
 
@@ -52,21 +63,10 @@ const ChoicesContainer = styled.div`
 
 const Choice = styled.div`
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: ${p => p.theme.spacing.ss48};
 `;
 
-const InnerContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    min-width: ${p => p.theme.spacing.ss48};
-`;
-
-const RemoveChoiceButton = styled(RemoveIconButton)`
-    height: 8px;
-    width: 8px;
+const Container = styled(OptionBar)`
+    width: ${p => p.theme.spacing.ss64};
 `;
