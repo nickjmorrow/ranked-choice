@@ -18,11 +18,17 @@ export const simulationInitialState: SimulationState = {
     votes: [
         {
             voterId: 1,
-            choices: [{ optionId: 1, orderId: 1 }],
+            choices: [
+                { optionId: 1, orderId: 1 },
+                { optionId: 2, orderId: 2 },
+            ],
         },
         {
             voterId: 2,
-            choices: [{ optionId: 1, orderId: 1 }],
+            choices: [
+                { optionId: 1, orderId: 1 },
+                { optionId: 3, orderId: 2 },
+            ],
         },
         {
             voterId: 3,
