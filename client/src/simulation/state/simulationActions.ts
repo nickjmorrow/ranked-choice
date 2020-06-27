@@ -1,7 +1,10 @@
 import { action } from 'typesafe-actions';
 import { Option } from '~/simulation/types/Option';
 import { Vote } from '~/simulation/types/Vote';
+<<<<<<< HEAD
 import { Choice } from '~/simulation/types/Choice';
+=======
+>>>>>>> master
 
 export enum SimulationActionTypeKeys {
     ADD_OPTION = 'ADD_OPTION',
@@ -10,6 +13,7 @@ export enum SimulationActionTypeKeys {
     ADD_VOTE = 'ADD_VOTE',
     UPDATE_VOTE = 'UPDATE_VOTE',
     REMOVE_VOTE = 'REMOVE_VOTE',
+<<<<<<< HEAD
     REMOVE_CHOICE = 'REMOVE_CHOICE',
     ADD_CHOICE = 'ADD_CHOICE',
 }
@@ -34,4 +38,15 @@ export const simulationActions = {
     removeVote,
     removeChoice,
     addChoice,
+=======
+}
+
+const addOption = (option: Option) => action(SimulationActionTypeKeys.ADD_OPTION, option);
+
+const addVote = (vote: Vote) => action(SimulationActionTypeKeys.ADD_VOTE, vote);
+
+export const simulationActions = {
+    addOption,
+    addVote,
+>>>>>>> master
 };

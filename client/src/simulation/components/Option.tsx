@@ -1,4 +1,5 @@
 import * as React from 'react';
+<<<<<<< HEAD
 import styled from 'styled-components';
 import { Option as OptionType } from '~/simulation/types/Option';
 import { Typography } from '~/core/Typography';
@@ -28,3 +29,16 @@ const InnerContainer = styled.div`
     justify-content: space-between;
     align-items: center;
 `;
+=======
+import { Option as OptionType } from '~/simulation/types/Option';
+import { Typography } from '~/core/Typography';
+import { OptionBar } from '~/simulation/components/OptionBar';
+
+export const Option: React.FC<{ option: OptionType }> = ({ option }) => {
+    return (
+        <OptionBar>
+            <Typography>{option.label}</Typography>
+        </OptionBar>
+    );
+};
+>>>>>>> master
