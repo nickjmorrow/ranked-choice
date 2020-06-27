@@ -15,11 +15,7 @@ export const Results: React.FC = () => {
 
     return (
         <Container>
-<<<<<<< HEAD
             <Typography variant={'h3'}>Results</Typography>
-=======
-            <Typography variant={'h2'}>Results</Typography>
->>>>>>> master
             <MainContainer>
                 <RoundsContainer>
                     {rounds
