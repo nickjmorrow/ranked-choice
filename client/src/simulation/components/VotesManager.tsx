@@ -11,7 +11,7 @@ export const VotesManager: React.FC = () => {
 
     return (
         <Container>
-            <Typography variant={'h2'}>Votes</Typography>
+            <Typography variant={'h3'}>Votes</Typography>
             <OptionBarListContainer>
                 {votes.map(v => (
                     <Vote vote={v} key={v.voterId} />

@@ -123,12 +123,12 @@ export const themeInputs = {
     typography: {
         fontSizes: defaultFontSizeInputs,
         fontWeights: defaultFontWeightInputs,
-        fontFamily: {
+        fontFamilies: {
             default: 'Roboto, sans-serif',
             title: 'Oleo Script Swash Caps, cursive',
             monospace: 'Fira Mono, monospace',
         },
-        lineHeight: {
+        lineHeights: {
             default: '24px',
         },
     },
@@ -138,12 +138,5 @@ export const themeInputs = {
     },
     icons: {
         iconSizes: defaultIconSizeInputs,
-    },
-    appSettings: {
-        githubUrl: 'https://github.com/nickjmorrow/',
-        linkedInUrl: 'https://www.linkedin.com/in/nickjmorrow/',
-        portfolioUrl: 'https://nickjmorrow.com',
-        appName: 'DEFAULT_APP_NAME',
-        appUrl: 'DEFAULT_APP_URL',
     },
 };

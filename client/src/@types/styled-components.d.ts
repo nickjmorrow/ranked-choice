@@ -5,13 +5,21 @@ type Theme = ReturnType<typeof getTheme>;
 
 declare module 'styled-components' {
     export interface DefaultTheme {
-        typography: Theme['typography'];
-        colors: Theme['colors'];
+        backgroundColor: Theme['backgroundColor'];
+        coreColor: Theme['coreColor'];
+        accentColor: Theme['accentColor'];
+        warningColor: Theme['warningColor'];
+        dangerColor: Theme['dangerColor'];
+        successColor: Theme['dangerColor'];
+        neutralColor: Theme['neutralColor'];
+        fontSizes: Theme['fontSizes'];
+        fontFamilies: Theme['fontFamilies'];
+        fontWeights: Theme['fontWeights'];
+        lineHeights: Theme['lineHeights'];
         transitions: Theme['transitions'];
         boxShadow: Theme['boxShadow'];
-        border: Theme['border'];
+        borderRadius: Theme['borderRadius'];
+        borderStyle: Theme['borderStyle'];
         spacing: Theme['spacing'];
-        icons: Theme['icons'];
-        appSettings: Theme['appSettings'];
     }
 }

@@ -22,5 +22,5 @@ const StyledLink = styled(RouterLink)`
 `;
 
 const StyledTypography = styled(Typography)`
-    color: ${p => p.theme.colors.core.cs4};
+    color: ${p => p.theme.coreColor.cs4};
 `;

@@ -50,6 +50,7 @@ const Body = styled.div`
 
 const Main = styled.main`
     flex: 1;
+    margin-top: ${p => p.theme.spacing.ss12};
 `;
 
 const Container = styled.div`
