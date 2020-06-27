@@ -13,9 +13,8 @@ const getFontSize = (variant?: Variant) => {
         case 'h6':
             return 'default';
         case 'body':
-            return '14px';
         default:
-            return 'inherit';
+            return '16px';
     }
 };
 
@@ -46,7 +45,7 @@ const getColor = (theme: Theme, colorVariant?: ColorVariant) => {
         case 'inherit':
             return 'inherit';
         default:
-            return theme.colors.core.cs9;
+            return theme.coreColor.cs9;
     }
 };
 
@@ -56,7 +55,7 @@ interface TypographyProps {
 }
 
 export const Typography = styled('span').attrs((p: TypographyProps) => ({ as: getTag(p.variant) }))<TypographyProps>`
-    font-family: ${p => p.theme.typography.fontFamily.default};
+    font-family: ${p => p.theme.fontFamilies.default};
     font-size: ${p => getFontSize(p.variant)};
     color: ${p => getColor(p.theme, p.colorVariant)};
 `;

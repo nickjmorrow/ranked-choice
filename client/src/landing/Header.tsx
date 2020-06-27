@@ -6,7 +6,7 @@ import { Link } from '~/core/Link';
 export const Header: React.FC = () => {
     return (
         <StyledHeader>
-            <AppName variant={'h1'}>Competency</AppName>
+            <AppName variant={'h1'}>Unnamed Voting Project</AppName>
             <RightAligned>
                 <HeaderLink route={'/about'}>About</HeaderLink>
             </RightAligned>
@@ -19,7 +19,7 @@ const StyledHeader = styled.header`
     align-items: center;
     padding: 32px 64px;
     justify-content: space-between;
-    background-color: ${p => p.theme.colors.neutral.cs2};
+    background-color: ${p => p.theme.neutralColor.cs2};
 `;
 
 const AppName = styled(Typography)`
@@ -32,11 +32,11 @@ const HeaderLink = styled(Link)`
     display: block;
     padding: 16px;
     margin-left: 16px;
-    border-radius: ${p => p.theme.border.borderRadius.br1};
+    border-radius: ${p => p.theme.borderRadius.br1};
     transition: all ${p => p.theme.transitions.fast};
     &: hover {
         transition: all ${p => p.theme.transitions.fast};
-        background-color: ${p => p.theme.colors.core.cs1};
+        background-color: ${p => p.theme.coreColor.cs1};
     }
 `;
 

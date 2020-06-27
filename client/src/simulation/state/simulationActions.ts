@@ -14,18 +14,25 @@ export enum SimulationActionTypeKeys {
     REMOVE_CHOICE = 'REMOVE_CHOICE',
 }
 
-const addOption = (option: Option) => action(SimulationActionTypeKeys.ADD_OPTION, option);
+const addOption = (label: Option['label']) => action(SimulationActionTypeKeys.ADD_OPTION, label);
 
-const addVote = (vote: Vote) => action(SimulationActionTypeKeys.ADD_VOTE, vote);
+const removeOption = (option: Option) => action(SimulationActionTypeKeys.REMOVE_OPTION, option);
 
-const addChoice = (payload: { optionId: number; vote: Vote }) => action(SimulationActionTypeKeys.ADD_CHOICE, payload);
+const addVote = (vote: Omit<Vote, 'voterId'>) => action(SimulationActionTypeKeys.ADD_VOTE, vote);
 
-const removeChoice = (payload: { choice: Choice; vote: Vote }) =>
+const removeVote = (vote: Vote) => action(SimulationActionTypeKeys.REMOVE_VOTE, vote);
+
+const removeChoice = (payload: { vote: Vote; choice: Choice }) =>
     action(SimulationActionTypeKeys.REMOVE_CHOICE, payload);
+
+const addChoice = (payload: { vote: Vote; optionId: Option['optionId'] }) =>
+    action(SimulationActionTypeKeys.ADD_CHOICE, payload);
 
 export const simulationActions = {
     addOption,
+    removeOption,
     addVote,
     addChoice,
     removeChoice,
+    removeVote,
 };

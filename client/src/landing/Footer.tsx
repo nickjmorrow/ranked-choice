@@ -3,11 +3,7 @@ import styled from 'styled-components';
 import { Typography } from '~/core/Typography';
 
 export const Footer: React.FC = () => {
-    return (
-        <StyledFooter>
-            <Typography>Nicholas Morrow</Typography>
-        </StyledFooter>
-    );
+    return <StyledFooter></StyledFooter>;
 };
 
 const StyledFooter = styled.footer`
@@ -15,5 +11,5 @@ const StyledFooter = styled.footer`
     padding: 0 64px;
     display: flex;
     align-items: center;
-    background-color: ${p => p.theme.colors.neutral.cs2};
+    background-color: ${p => p.theme.neutralColor.cs2};
 `;
