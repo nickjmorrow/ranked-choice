@@ -19,6 +19,29 @@ export const simulationReducer = (
                 const optionId = state.options.reduce((agg, cur) => Math.max(agg, cur.optionId), 0) + 1;
                 draftState.options.push({ optionId, label: action.payload.label });
             });
+        case SimulationActionTypeKeys.ADD_CHOICE:
+            return produce(state, draftState => {
+                const vote = draftState.votes.find(v => v.voterId === action.payload.vote.voterId)!;
+                vote.choices = [
+                    ...vote.choices
+                        .sort((a, b) => (a.orderId < b.orderId ? -1 : 1))
+                        .map((c, i) => ({ ...c, orderId: i + 1 })),
+                    { optionId: action.payload.optionId, orderId: vote.choices.length + 1 },
+                ];
+            });
+        case SimulationActionTypeKeys.REMOVE_CHOICE:
+            return produce(state, draftState => {
+                const { choices } = draftState.votes.find(v => v.voterId === action.payload.vote.voterId)!;
+                choices.splice(
+                    choices.findIndex(c => c.optionId === action.payload.choice.optionId),
+                    1,
+                );
+                choices
+                    .sort((a, b) => (a.orderId < b.orderId ? -1 : 1))
+                    .forEach((c, i) => {
+                        c.orderId = i + 1;
+                    });
+            });
         default:
             return state;
     }

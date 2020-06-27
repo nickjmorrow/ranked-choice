@@ -4,26 +4,53 @@ import { Vote as VoteType } from '~/simulation/types/Vote';
 import { Typography } from '~/core/Typography';
 import { OptionBar } from '~/simulation/components/OptionBar';
 import { Collapse } from 'react-collapse';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { simulationSelectors } from '~/simulation/state/simulationSelectors';
+import Select from 'react-select';
+import { simulationActions } from '~/simulation/state/simulationActions';
+import { DangerIconButton } from '~/simulation/components/DangerIconButton';
+import { Choice } from '~/simulation/types/Choice';
+
+interface SelectOption {
+    value: number;
+    label: string;
+}
 
 export const Vote: React.FC<{ vote: VoteType }> = ({ vote }) => {
     const [isOpen, setIsOpen] = React.useState(true);
     const options = useSelector(simulationSelectors.getOptions);
+    const validOptions = options.filter(o => !vote.choices.map(c => c.optionId).includes(o.optionId));
+    const selectOptions: SelectOption[] = validOptions.map(o => ({ value: o.optionId, label: o.label }));
+    const dispatch = useDispatch();
+    const handleChange = (selectOption: SelectOption): void => {
+        dispatch(simulationActions.addChoice({ vote, optionId: selectOption.value }));
+    };
+
+    const handleRemove = (choice: Choice): void => {
+        dispatch(simulationActions.removeChoice({ choice, vote }));
+    };
     return (
-        <OptionBar onClick={() => setIsOpen(s => !s)}>
-            <Typography>{vote.label ?? `VoterId ${vote.voterId}`}</Typography>
+        <Container>
+            <Typography onClick={() => setIsOpen(s => !s)}>{vote.label ?? `VoterId ${vote.voterId}`}</Typography>
             <Collapse isOpened={isOpen}>
                 <ChoicesContainer>
-                    {vote.choices.map(c => (
-                        <Choice key={c.optionId}>
-                            <Typography style={{ marginRight: '16px' }}>{c.orderId}</Typography>
-                            <Typography>{options.find(o => o.optionId === c.optionId)!.label}</Typography>
-                        </Choice>
-                    ))}
+                    {vote.choices
+                        .sort((a, b) => (a.orderId < b.orderId ? -1 : 1))
+                        .map(c => (
+                            <Choice key={c.optionId}>
+                                <div>
+                                    <Typography style={{ marginRight: '16px' }}>{c.orderId}</Typography>
+                                    <Typography>{options.find(o => o.optionId === c.optionId)!.label}</Typography>
+                                </div>
+                                <DangerIconButton onClick={() => handleRemove(c)} />
+                            </Choice>
+                        ))}
+                    <Typography>
+                        <Select options={selectOptions} value={null} onChange={handleChange as any} />
+                    </Typography>
                 </ChoicesContainer>
             </Collapse>
-        </OptionBar>
+        </Container>
     );
 };
 
@@ -34,4 +61,12 @@ const ChoicesContainer = styled.div`
     margin-top: ${p => p.theme.spacing.ss6};
 `;
 
-const Choice = styled.div``;
+const Choice = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+const Container = styled(OptionBar)`
+    width: ${p => p.theme.spacing.ss64};
+`;

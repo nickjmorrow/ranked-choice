@@ -11,7 +11,7 @@ export const SimulationPage: React.FC = () => {
         { component: VotesManager, label: 'Votes', stateId: 2 },
         { component: Results, label: 'Results', stateId: 3 },
     ];
-    const [currentState, setCurrentState] = React.useState(states[2]);
+    const [currentState, setCurrentState] = React.useState(states[1]);
 
     return (
         <Container>
