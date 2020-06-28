@@ -4,19 +4,17 @@ import { Option as OptionType } from '~/simulation/types/Option';
 import { Typography } from '~/core/Typography';
 import { OptionBar } from '~/simulation/components/OptionBar';
 import { RemoveIconButton } from '~/core/RemoveIconButton';
-import { useDispatch } from 'react-redux';
-import { simulationActions } from '~/simulation/state/simulationActions';
 
-export const Option: React.FC<{ option: OptionType }> = ({ option }) => {
-    const dispatch = useDispatch();
-    const handleRemove = () => {
-        dispatch(simulationActions.removeOption(option));
-    };
+export const Option: React.FC<{
+    style?: React.CSSProperties;
+    option: OptionType;
+    onRemove: (option: OptionType) => void;
+}> = ({ option, style, onRemove: handleRemove }) => {
     return (
-        <OptionBar>
+        <OptionBar style={style}>
             <InnerContainer>
                 <Typography>{option.label}</Typography>
-                <RemoveIconButton onClick={handleRemove} />
+                <RemoveIconButton onClick={() => handleRemove(option)} />
             </InnerContainer>
         </OptionBar>
     );
