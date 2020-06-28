@@ -6,12 +6,15 @@ import { calculatePollResult } from '~/simulation/services/calculatePollResult';
 import { Typography } from '~/core/Typography';
 import { ResultGraph } from '~/simulation/components/ResultGraph';
 import { OptionBar } from '~/simulation/components/OptionBar';
+import { useMedia } from 'react-media';
+import { mediaQueries } from '~/core/mediaQueries';
 
 export const Results: React.FC = () => {
     const options = useSelector(simulationSelectors.getOptions);
     const votes = useSelector(simulationSelectors.getVotes);
     const { rounds } = calculatePollResult({ options, votes });
     const [activeRound, setActiveRound] = React.useState(rounds[rounds.length - 1]);
+    const screenSize = useMedia({ queries: mediaQueries });
 
     return (
         <Container>
@@ -41,7 +44,10 @@ export const Results: React.FC = () => {
                             </RoundButtonBar>
                         ))}
                 </RoundsContainer>
-                <ResultGraph style={{ marginTop: '-64px' }} optionVoteResults={activeRound.optionVoteResults} />
+                <ResultGraph
+                    style={{ marginTop: screenSize.small ? '0' : '-64px' }}
+                    optionVoteResults={activeRound.optionVoteResults}
+                />
             </MainContainer>
         </Container>
     );
@@ -71,4 +77,5 @@ const OptionContainer = styled.div`
 const MainContainer = styled.div`
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 `;

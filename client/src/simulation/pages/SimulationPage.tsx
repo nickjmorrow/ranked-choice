@@ -11,7 +11,7 @@ export const SimulationPage: React.FC = () => {
         { component: VotesManager, label: 'Votes', stateId: 2 },
         { component: Results, label: 'Results', stateId: 3 },
     ];
-    const [currentState, setCurrentState] = React.useState(states[1]);
+    const [currentState, setCurrentState] = React.useState(states[2]);
 
     return (
         <Container>
@@ -42,10 +42,11 @@ const Container = styled.div``;
 const StateListContainer = styled.div`
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 `;
 
 const StateContainer = styled.div<{ isActive: boolean }>`
-    min-width: ${p => p.theme.spacing.ss32};
+    min-width: ${p => p.theme.spacing.ss24};
     display: flex;
     justify-content: center;
     padding: ${p => p.theme.spacing.ss4} 0;

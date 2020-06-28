@@ -35,6 +35,7 @@ export const Vote: React.FC<{ vote: VoteType }> = ({ vote }) => {
             <Collapse isOpened={isOpen}>
                 <ChoicesContainer>
                     {vote.choices
+                        .slice()
                         .sort((a, b) => (a.orderId < b.orderId ? -1 : 1))
                         .map(c => (
                             <Choice key={c.optionId}>

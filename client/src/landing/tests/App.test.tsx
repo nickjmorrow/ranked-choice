@@ -9,6 +9,14 @@ import { MemoryRouter } from 'react-router';
 import { ThemeProvider } from '~/theming/ThemeProvider';
 
 let container = (null as unknown) as HTMLDivElement;
+
+beforeAll(() => {
+    // @ts-ignore
+    window.matchMedia = () => ({
+        addListener: () => {},
+        removeListener: () => {},
+    });
+});
 beforeEach(() => {
     container = document.createElement('div');
     document.body.appendChild(container);
