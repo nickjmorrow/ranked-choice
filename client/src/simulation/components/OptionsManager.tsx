@@ -7,7 +7,7 @@ import { Typography } from '~/core/Typography';
 
 import { Option } from '~/polling/components/Option';
 import { OptionBarListContainer } from '~/simulation/components/OptionBarListContainer';
-import { CreateOption } from '~/simulation/components/CreateOption';
+import { CreateOption } from '~/polling/components/CreateOption';
 import { Option as OptionType } from '~/polling/types/Option';
 import { simulationActions } from '~/simulation/state/simulationActions';
 
@@ -17,6 +17,9 @@ export const OptionsManager: React.FC = () => {
     const handleRemove = (option: OptionType) => {
         dispatch(simulationActions.removeOption(option));
     };
+    const handleCreate = (label: string) => {
+        dispatch(simulationActions.addOption(label));
+    };
     return (
         <Container>
             <Typography variant={'h3'}>Options</Typography>
@@ -24,7 +27,7 @@ export const OptionsManager: React.FC = () => {
                 {options.map(o => (
                     <Option option={o} key={o.optionId} onRemove={handleRemove} />
                 ))}
-                <CreateOption />
+                <CreateOption onCreate={handleCreate} />
             </OptionBarListContainer>
         </Container>
     );

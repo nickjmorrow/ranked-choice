@@ -3,17 +3,14 @@ import { OptionBar } from '~/simulation/components/OptionBar';
 import { Input } from '~/core/Input';
 import styled from 'styled-components';
 import { CreateIconButton } from '~/core/CreateIconButton';
-import { useDispatch } from 'react-redux';
-import { simulationActions } from '~/simulation/state/simulationActions';
 
-export const CreateOption: React.FC = () => {
+export const CreateOption: React.FC<{ onCreate: (label: string) => void }> = ({ onCreate: handleCreate }) => {
     const [optionLabel, setOptionLabel] = React.useState('');
-    const dispatch = useDispatch();
-    const handleCreate = (): void => {
+    const handleCreateInternal = (): void => {
         if (optionLabel.length === 0) {
             return;
         }
-        dispatch(simulationActions.addOption(optionLabel));
+        handleCreate(optionLabel);
         setOptionLabel('');
     };
     return (
@@ -24,7 +21,7 @@ export const CreateOption: React.FC = () => {
                     value={optionLabel}
                     onChange={e => setOptionLabel(e.currentTarget.value)}
                 />
-                <CreateIconButton onClick={handleCreate} />
+                <CreateIconButton onClick={handleCreateInternal} />
             </InnerContainer>
         </OptionBar>
     );
