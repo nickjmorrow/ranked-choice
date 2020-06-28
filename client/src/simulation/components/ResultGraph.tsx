@@ -25,6 +25,6 @@ export const ResultGraph: React.FC<{ optionVoteResults: OptionVoteResult[]; styl
 };
 
 const Container = styled.div`
-    height: 500px;
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
 `;

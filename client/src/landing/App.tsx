@@ -2,6 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router';
+import { useMedia } from 'react-media';
 import 'normalize.css';
 
 // inter
@@ -16,8 +17,10 @@ import { Provider } from 'react-redux';
 import { store } from '~/store';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '~/theming/ThemeProvider';
+import { mediaQueries } from '~/core/mediaQueries';
 
 export const App: React.SFC = () => {
+    const screenSize = useMedia({ queries: mediaQueries });
     return (
         <Provider store={store}>
             <BrowserRouter>
@@ -25,7 +28,7 @@ export const App: React.SFC = () => {
                     <Container>
                         <Header />
                         <Body>
-                            <SideNav />
+                            {!screenSize.small && <SideNav />}
                             <Main>
                                 <Switch>
                                     {componentRouteMappings.map(crm => (
@@ -50,7 +53,7 @@ const Body = styled.div`
 
 const Main = styled.main`
     flex: 1;
-    margin-top: ${p => p.theme.spacing.ss12};
+    margin: ${p => p.theme.spacing.ss12} ${p => p.theme.spacing.ss4};
 `;
 
 const Container = styled.div`

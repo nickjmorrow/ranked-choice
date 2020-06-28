@@ -1,16 +1,38 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Typography } from '~/core/Typography';
 import { Link } from '~/core/Link';
+import { useMedia } from 'react-media';
+import { mediaQueries } from '~/core/mediaQueries';
+import { MenuIcon } from '~/core/MenuIcon';
+import { SmallScreenMenu } from '~/landing/SmallScreenMenu';
 
 export const Header: React.FC = () => {
+    const screenSize = useMedia({ queries: mediaQueries });
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     return (
-        <StyledHeader>
-            <AppName variant={'h1'}>Unnamed Voting Project</AppName>
-            <RightAligned>
-                <HeaderLink route={'/about'}>About</HeaderLink>
-            </RightAligned>
-        </StyledHeader>
+        <>
+            {screenSize.small ? (
+                <>
+                    <SmallScreenHeader>
+                        <MenuIcon
+                            style={{ position: 'absolute', left: '20px', cursor: 'pointer' }}
+                            onClick={() => setIsMenuOpen(c => !c)}
+                        />
+                        <Link route={'/'}>
+                            <SmallAppName variant={'h1'}>Unnamed Voting Project</SmallAppName>
+                        </Link>
+                    </SmallScreenHeader>
+                    {isMenuOpen && <SmallScreenMenu onRequestClose={() => setIsMenuOpen(false)} />}
+                </>
+            ) : (
+                <StyledHeader>
+                    <Link route={'/'}>
+                        <AppName variant={'h1'}>Unnamed Voting Project</AppName>
+                    </Link>
+                </StyledHeader>
+            )}
+        </>
     );
 };
 
@@ -26,21 +48,14 @@ const AppName = styled(Typography)`
     margin: 0;
 `;
 
-const HeaderLink = styled(Link)`
-    font-size: 16px;
-    width: max-content;
-    display: block;
-    padding: 16px;
-    margin-left: 16px;
-    border-radius: ${p => p.theme.borderRadius.br1};
-    transition: all ${p => p.theme.transitions.fast};
-    &: hover {
-        transition: all ${p => p.theme.transitions.fast};
-        background-color: ${p => p.theme.coreColor.cs1};
-    }
+const SmallAppName = styled(AppName)`
+    font-size: 24px;
 `;
 
-const RightAligned = styled.div`
+const SmallScreenHeader = styled.div`
     display: flex;
-    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: ${p => p.theme.neutralColor.cs2};
+    padding: 24px 12px;
 `;
