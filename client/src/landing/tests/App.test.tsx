@@ -11,10 +11,13 @@ import { ThemeProvider } from '~/theming/ThemeProvider';
 let container = (null as unknown) as HTMLDivElement;
 
 beforeAll(() => {
-    // @ts-ignore
-    window.matchMedia = () => ({
-        addListener: () => {},
-        removeListener: () => {},
+    window.matchMedia = (): any => ({
+        addListener: () => {
+            return;
+        },
+        removeListener: () => {
+            return;
+        },
     });
 });
 beforeEach(() => {
