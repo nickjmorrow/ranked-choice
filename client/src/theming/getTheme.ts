@@ -11,7 +11,7 @@ import {
 } from '~/theming/styleProviders';
 
 export const getTheme = (themeInputs: typeof themeInputsValue) => ({
-    backgroundColor: 'hsl(0, 0%, 100%)',
+    backgroundColor: 'white',
     coreColor: generateColorShades(themeInputs.colors.core),
     accentColor: generateColorShades(themeInputs.colors.accent),
     neutralColor: generateColorShades(themeInputs.colors.neutral),
