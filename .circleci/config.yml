@@ -14,9 +14,13 @@ workflows:
             branches:
               only:
                 - master
-      - heroku/deploy-via-git:
+      - deploy-backend:
           requires:
             - build-and-test-server
+          filters:
+            branches:
+              only:
+                - master
 
 jobs:
   build-and-test-frontend:
@@ -87,3 +91,10 @@ jobs:
           name: Netlify Deploy
           working_directory: client
           command: node_modules/.bin/netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --prod --dir prod
+  deploy-backend:
+    executor: heroku/default
+    steps:
+      - checkout
+      - heroku/install
+      - heroku/deploy-via-git:
+          force: true
