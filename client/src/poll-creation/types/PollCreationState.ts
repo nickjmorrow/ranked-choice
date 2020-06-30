@@ -1,3 +1,8 @@
-import { pollCreationInitialState } from '~/poll-creation/state/pollCreationInitialState';
+import { Question } from '~/polling/types/Question';
 
-export type PollCreationState = typeof pollCreationInitialState;
+export interface PollCreationState {
+    title: string;
+    description: string;
+    questions: Question[];
+    currentInteractingQuestionId: number | null;
+}

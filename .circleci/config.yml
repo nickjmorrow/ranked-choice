@@ -4,16 +4,18 @@ orbs:
 workflows:
   build-test-deploy:
     jobs:
-      - build-and-test
-      - deploy:
+      - build-and-test-frontend
+      - build-and-test-server
+      - deploy-frontend:
           requires:
-            - build-and-test
+            - build-and-test-frontend
           filters:
             branches:
               only:
                 - master
+
 jobs:
-  build-and-test:
+  build-and-test-frontend:
     executor:
       name: node/default
     steps:
@@ -42,8 +44,36 @@ jobs:
           paths:
             - client/prod
             - client/node_modules
-
-  deploy:
+  build-and-test-server:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          cache-path: server/node_modules
+          app-dir: server
+      - run:
+          command: npm run format
+          name: Check for Formatting Errors
+          working_directory: server
+      - run:
+          command: npm run lint
+          name: Check for Linting Errors
+          working_directory: server
+      - run:
+          command: npm test
+          name: Run JavaScript Tests
+          working_directory: server
+      - run:
+          command: npm run build
+          name: Build JavaScript
+          working_directory: server
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - server/dist
+            - server/node_modules
+  deploy-frontend:
     executor:
       name: node/default
     steps:
