@@ -14,7 +14,7 @@ workflows:
             branches:
               only:
                 - master
-      - heroku/deploy-via-git
+      - heroku/deploy-via-git:
           requires:
             - build-and-test-server
 
