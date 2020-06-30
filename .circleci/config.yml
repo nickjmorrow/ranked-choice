@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@3.0.0
+  heroku: circleci/heroku@0.0.10
 workflows:
   build-test-deploy:
     jobs:
@@ -13,6 +14,9 @@ workflows:
             branches:
               only:
                 - master
+      - heroku/deploy-via-git
+          requires:
+            - build-and-test-server
 
 jobs:
   build-and-test-frontend:
