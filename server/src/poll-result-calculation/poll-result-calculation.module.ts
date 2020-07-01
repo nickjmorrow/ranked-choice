@@ -3,7 +3,7 @@ import { PollResultCalculationController } from './poll-result-calculation.contr
 import { PollResultCalculationService } from './poll-result-calculation.service';
 
 @Module({
-  controllers: [PollResultCalculationController],
-  providers: [PollResultCalculationService]
+    controllers: [PollResultCalculationController],
+    providers: [PollResultCalculationService],
 })
 export class PollResultCalculationModule {}

@@ -11,7 +11,7 @@
         "format": "prettier --write '*/**/*.{ts,tsx}'",
         "cypress:open": "cypress open",
         "cypress:run": "cypress run",
-        "ci": "npm run format && npm run lint && npm run build && npm run test",
+        "ci:preflight": "npm run format && npm run lint && npm run build && npm run test",
         "depgraph": "depcruise --include-only '^src' --output-type dot src | dot -T svg > dependencygraph.svg"
     },
     "dependencies": {
