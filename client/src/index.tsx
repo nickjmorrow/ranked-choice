@@ -5,8 +5,10 @@ import { store } from './store';
 import { App } from '~/landing/App';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '~/theming/ThemeProvider';
+import axios from 'axios';
+import { getBaseUrl } from '~/core/getBaseUrl';
 
-const baseUrl = '';
+axios.defaults.baseURL = getBaseUrl();
 
 ReactDOM.render(<App />, document.querySelector('#container'));
 

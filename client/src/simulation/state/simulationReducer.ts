@@ -12,7 +12,7 @@ export const simulationReducer = (
         case SimulationActionTypeKeys.ADD_VOTE:
             return produce(state, draftState => {
                 const voterId = state.votes.reduce((agg, cur) => Math.max(agg, cur.voterId), 0) + 1;
-                draftState.votes.push({ voterId, choices: action.payload.choices });
+                draftState.votes.push({ voterId, rankedOptions: action.payload.rankedOptions });
             });
         case SimulationActionTypeKeys.REMOVE_VOTE:
             return produce(state, draftState => {
@@ -26,16 +26,18 @@ export const simulationReducer = (
         case SimulationActionTypeKeys.ADD_CHOICE:
             return produce(state, draftState => {
                 const vote = draftState.votes.find(v => v.voterId === action.payload.vote.voterId)!;
-                vote.choices = [
-                    ...vote.choices
+                vote.rankedOptions = [
+                    ...vote.rankedOptions
                         .sort((a, b) => (a.orderId < b.orderId ? -1 : 1))
                         .map((c, i) => ({ ...c, orderId: i + 1 })),
-                    { optionId: action.payload.optionId, orderId: vote.choices.length + 1 },
+                    { optionId: action.payload.optionId, orderId: vote.rankedOptions.length + 1 },
                 ];
             });
         case SimulationActionTypeKeys.REMOVE_CHOICE:
             return produce(state, draftState => {
-                const { choices } = draftState.votes.find(v => v.voterId === action.payload.vote.voterId)!;
+                const { rankedOptions: choices } = draftState.votes.find(
+                    v => v.voterId === action.payload.vote.voterId,
+                )!;
                 choices.splice(
                     choices.findIndex(c => c.optionId === action.payload.choice.optionId),
                     1,
@@ -45,6 +47,10 @@ export const simulationReducer = (
                     .forEach((c, i) => {
                         c.orderId = i + 1;
                     });
+            });
+        case SimulationActionTypeKeys.CALCULATE_POLL_RESULT_SUCCESS:
+            return produce(state, draftState => {
+                draftState.pollResult = action.payload;
             });
         default:
             return state;

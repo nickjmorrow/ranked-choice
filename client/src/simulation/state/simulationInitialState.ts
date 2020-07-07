@@ -1,6 +1,7 @@
 import { SimulationState } from '~/simulation/types/SimulationState';
 
 export const simulationInitialState: SimulationState = {
+    pollResult: null,
     options: [
         {
             optionId: 1,
@@ -18,7 +19,7 @@ export const simulationInitialState: SimulationState = {
     votes: [
         {
             voterId: 1,
-            choices: [
+            rankedOptions: [
                 { optionId: 1, orderId: 3 },
                 { optionId: 3, orderId: 2 },
                 { optionId: 2, orderId: 1 },
@@ -26,7 +27,7 @@ export const simulationInitialState: SimulationState = {
         },
         {
             voterId: 2,
-            choices: [
+            rankedOptions: [
                 { optionId: 1, orderId: 1 },
                 { optionId: 3, orderId: 2 },
                 { optionId: 2, orderId: 3 },
@@ -34,7 +35,7 @@ export const simulationInitialState: SimulationState = {
         },
         {
             voterId: 3,
-            choices: [
+            rankedOptions: [
                 { optionId: 1, orderId: 2 },
                 { optionId: 3, orderId: 1 },
                 { optionId: 2, orderId: 3 },
@@ -42,7 +43,7 @@ export const simulationInitialState: SimulationState = {
         },
         {
             voterId: 4,
-            choices: [
+            rankedOptions: [
                 { optionId: 1, orderId: 2 },
                 { optionId: 3, orderId: 3 },
                 { optionId: 2, orderId: 1 },
@@ -50,29 +51,29 @@ export const simulationInitialState: SimulationState = {
         },
         {
             voterId: 5,
-            choices: [
+            rankedOptions: [
                 { optionId: 1, orderId: 1 },
                 { optionId: 3, orderId: 2 },
             ],
         },
         {
             voterId: 6,
-            choices: [
+            rankedOptions: [
                 { optionId: 1, orderId: 1 },
                 { optionId: 3, orderId: 2 },
             ],
         },
         {
             voterId: 7,
-            choices: [{ optionId: 1, orderId: 1 }],
+            rankedOptions: [{ optionId: 1, orderId: 1 }],
         },
         {
             voterId: 8,
-            choices: [{ optionId: 3, orderId: 1 }],
+            rankedOptions: [{ optionId: 3, orderId: 1 }],
         },
         {
             voterId: 9,
-            choices: [
+            rankedOptions: [
                 { optionId: 3, orderId: 1 },
                 { optionId: 2, orderId: 2 },
             ],

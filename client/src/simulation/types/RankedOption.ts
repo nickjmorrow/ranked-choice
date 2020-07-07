@@ -1,4 +1,4 @@
-export interface Choice {
+export interface RankedOption {
     optionId: number;
     orderId: number;
 }
