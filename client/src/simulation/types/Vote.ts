@@ -1,7 +1,6 @@
-import { Choice } from '~/simulation/types/Choice';
+import { RankedOption } from '~/simulation/types/RankedOption';
 
 export interface Vote {
     voterId: number;
-    label?: string;
-    choices: Choice[];
+    rankedOptions: RankedOption[];
 }

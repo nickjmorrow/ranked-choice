@@ -1,20 +1,47 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { simulationSelectors } from '~/simulation/state/simulationSelectors';
-import { calculatePollResult } from '~/simulation/services/calculatePollResult';
 import { Typography } from '~/core/Typography';
 import { ResultGraph } from '~/simulation/components/ResultGraph';
 import { OptionBar } from '~/simulation/components/OptionBar';
 import { useMedia } from 'react-media';
 import { mediaQueries } from '~/core/mediaQueries';
+import { simulationActions } from '~/simulation/state/simulationActions';
+import { Round } from '~/polling/types/Round';
 
 export const Results: React.FC = () => {
     const options = useSelector(simulationSelectors.getOptions);
     const votes = useSelector(simulationSelectors.getVotes);
-    const { rounds } = calculatePollResult({ options, votes });
-    const [activeRound, setActiveRound] = React.useState(rounds[rounds.length - 1]);
+    const pollResult = useSelector(simulationSelectors.getPollResult);
     const screenSize = useMedia({ queries: mediaQueries });
+    const dispatch = useDispatch();
+    const [activeRound, setActiveRound] = React.useState<Round | null>(null);
+
+    React.useEffect(() => {
+        dispatch(
+            simulationActions.calculatePollResult.request({
+                poll: {
+                    questions: [
+                        {
+                            optionIds: options.map(o => o.optionId),
+                            votes,
+                        },
+                    ],
+                },
+            }),
+        );
+    }, []);
+
+    if (pollResult === null) {
+        return null;
+    }
+
+    const { questionResults } = pollResult;
+    const { rounds } = questionResults[0];
+    if (activeRound === null) {
+        setActiveRound(rounds[rounds.length - 1]);
+    }
 
     return (
         <Container>
@@ -22,20 +49,19 @@ export const Results: React.FC = () => {
             <MainContainer>
                 <RoundsContainer>
                     {rounds
+                        .slice()
                         .sort((a, b) => (a.roundId < b.roundId ? 1 : -1))
                         .map(r => (
                             <RoundButtonBar key={r.roundId} onClick={() => setActiveRound(r)}>
                                 <Typography variant={'h3'} style={{ margin: '0' }}>{`Round ${r.roundId}`}</Typography>
-                                {activeRound.roundId === r.roundId && (
+                                {activeRound?.roundId === r.roundId && (
                                     <OptionListContainer>
                                         {options.map(o => (
                                             <OptionContainer key={o.optionId}>
                                                 <Typography>
                                                     {o.label}:{' '}
-                                                    {
-                                                        r.optionVoteResults.find(ovr => ovr.optionId === o.optionId)!
-                                                            .voteCount
-                                                    }
+                                                    {r.optionResults.find(ovr => ovr.optionId === o.optionId)
+                                                        ?.voteCount ?? '0'}
                                                 </Typography>
                                             </OptionContainer>
                                         ))}
@@ -44,10 +70,12 @@ export const Results: React.FC = () => {
                             </RoundButtonBar>
                         ))}
                 </RoundsContainer>
-                <ResultGraph
-                    style={{ marginTop: screenSize.small ? '0' : '-64px' }}
-                    optionVoteResults={activeRound.optionVoteResults}
-                />
+                {activeRound && (
+                    <ResultGraph
+                        style={{ marginTop: screenSize.small ? '0' : '-64px' }}
+                        optionVoteResults={activeRound.optionResults}
+                    />
+                )}
             </MainContainer>
         </Container>
     );

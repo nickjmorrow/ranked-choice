@@ -18,6 +18,7 @@ import { store } from '~/store';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '~/theming/ThemeProvider';
 import { mediaQueries } from '~/core/mediaQueries';
+import { getBaseUrl } from '~/core/getBaseUrl';
 
 export const App: React.SFC = () => {
     const screenSize = useMedia({ queries: mediaQueries });

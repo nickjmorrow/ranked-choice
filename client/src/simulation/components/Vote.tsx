@@ -9,7 +9,7 @@ import { simulationSelectors } from '~/simulation/state/simulationSelectors';
 import Select from 'react-select';
 import { simulationActions } from '~/simulation/state/simulationActions';
 import { DangerIconButton } from '~/simulation/components/DangerIconButton';
-import { Choice } from '~/simulation/types/Choice';
+import { RankedOption } from '~/simulation/types/RankedOption';
 
 interface SelectOption {
     value: number;
@@ -19,22 +19,22 @@ interface SelectOption {
 export const Vote: React.FC<{ vote: VoteType }> = ({ vote }) => {
     const [isOpen, setIsOpen] = React.useState(true);
     const options = useSelector(simulationSelectors.getOptions);
-    const validOptions = options.filter(o => !vote.choices.map(c => c.optionId).includes(o.optionId));
+    const validOptions = options.filter(o => !vote.rankedOptions.map(c => c.optionId).includes(o.optionId));
     const selectOptions: SelectOption[] = validOptions.map(o => ({ value: o.optionId, label: o.label }));
     const dispatch = useDispatch();
     const handleChange = (selectOption: SelectOption): void => {
         dispatch(simulationActions.addChoice({ vote, optionId: selectOption.value }));
     };
 
-    const handleRemove = (choice: Choice): void => {
+    const handleRemove = (choice: RankedOption): void => {
         dispatch(simulationActions.removeChoice({ choice, vote }));
     };
     return (
         <Container>
-            <Typography onClick={() => setIsOpen(s => !s)}>{vote.label ?? `VoterId ${vote.voterId}`}</Typography>
+            <Typography onClick={() => setIsOpen(s => !s)}>{`VoterId ${vote.voterId}`}</Typography>
             <Collapse isOpened={isOpen}>
                 <ChoicesContainer>
-                    {vote.choices
+                    {vote.rankedOptions
                         .slice()
                         .sort((a, b) => (a.orderId < b.orderId ? -1 : 1))
                         .map(c => (

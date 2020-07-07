@@ -8,4 +8,6 @@ const getOptions = (state: AppState) => state.simulationState.options;
 
 const getVotes = (state: AppState) => state.simulationState.votes;
 
-export const simulationSelectors = { getOptions, getVotes };
+const getPollResult = (state: AppState) => state.simulationState.pollResult;
+
+export const simulationSelectors = { getOptions, getVotes, getPollResult };
