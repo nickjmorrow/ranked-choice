@@ -8,6 +8,7 @@ import { PollResultCalculationService } from '~/poll-result-calculation/poll-res
 @Module({
     imports: [PollResultCalculationModule],
     controllers: [AppController, PollResultCalculationController],
+    // TODO: Why do I need to include this provider here instead of just on the PRCModule?
     providers: [AppService, PollResultCalculationService],
 })
 export class AppModule {}

@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Post } from '@nestjs/common';
+import { Controller, Req, Post } from '@nestjs/common';
 import { Request } from 'express';
 import {
     PollResultCalculationService,

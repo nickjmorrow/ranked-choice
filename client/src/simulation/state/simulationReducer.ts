@@ -48,8 +48,6 @@ export const simulationReducer = (
                         c.orderId = i + 1;
                     });
             });
-        case SimulationActionTypeKeys.CALCULATE_POLL_RESULT:
-            return produce(state, draftState => {});
         case SimulationActionTypeKeys.CALCULATE_POLL_RESULT_SUCCESS:
             return produce(state, draftState => {
                 draftState.pollResult = action.payload;
