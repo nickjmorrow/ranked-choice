@@ -19,16 +19,22 @@
         "test:watch": "jest --watch",
         "test:cov": "jest --coverage",
         "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-        "test:e2e": "jest --config ./test/jest-e2e.json"
+        "test:e2e": "jest --config ./test/jest-e2e.json",
+        "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config src/config/ormconfig.ts",
+        "typeorm:migrate": "npm run typeorm migration:generate -- -n",
+        "typeorm:run": "npm run typeorm migration:run"
     },
     "dependencies": {
         "@nestjs/common": "^7.0.0",
         "@nestjs/core": "^7.0.0",
         "@nestjs/platform-express": "^7.0.0",
+        "@nestjs/typeorm": "^7.1.0",
         "module-alias": "^2.2.2",
+        "pg": "^8.2.2",
         "reflect-metadata": "^0.1.13",
         "rimraf": "^3.0.2",
-        "rxjs": "^6.5.4"
+        "rxjs": "^6.5.4",
+        "typeorm": "^0.2.25"
     },
     "devDependencies": {
         "@nestjs/cli": "^7.0.0",
@@ -65,6 +71,9 @@
             "^.+\\.(t|j)s$": "ts-jest"
         },
         "coverageDirectory": "../coverage",
-        "testEnvironment": "node"
+        "testEnvironment": "node",
+        "moduleNameMapper": {
+            "^~/(.*)$": "<rootDir>/src/$1"
+        }
     }
 }
