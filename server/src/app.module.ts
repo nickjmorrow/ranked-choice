@@ -5,10 +5,17 @@ import { PollResultCalculationController } from './poll-result-calculation/poll-
 import { PollResultCalculationModule } from './poll-result-calculation/poll-result-calculation.module';
 import { PollResultCalculationService } from '~/poll-result-calculation/poll-result-calculation.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import ormConfig from '~/config/ormconfig';
+import { PollingModule } from './polling/polling.module';
+import ormConfig from '~/ormconfig';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-    imports: [PollResultCalculationModule, TypeOrmModule.forRoot(ormConfig)],
+    imports: [
+        PollResultCalculationModule,
+        TypeOrmModule.forRoot(ormConfig),
+        PollingModule,
+        ConfigModule.forRoot({ envFilePath: ['.env.development', '.env'] }),
+    ],
     controllers: [AppController, PollResultCalculationController],
     // TODO: Why do I need to include this provider here instead of just on the PRCModule?
     providers: [AppService, PollResultCalculationService],
