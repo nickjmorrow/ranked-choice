@@ -25,7 +25,7 @@ export class createPollingTables1594335418721 implements MigrationInterface {
 			CREATE TABLE public.questions (
 				question_id INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY
 				, poll_id INT NOT NULL REFERENCES public.polls(poll_id)
-				, order_id INT NOT NULL UNIQUE
+				, order_id INT NOT NULL
 				, content VARCHAR(255) NOT NULL
 				, subheading VARCHAR(255) NULL
 				, is_required BOOLEAN NOT NULL DEFAULT TRUE

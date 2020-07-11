@@ -6,14 +6,17 @@ export const simulationInitialState: SimulationState = {
         {
             optionId: 1,
             label: 'Bloody Maroon',
+            sublabel: null,
         },
         {
             optionId: 2,
             label: 'Cerulean Blue',
+            sublabel: null,
         },
         {
             optionId: 3,
             label: 'Mysterious Purple',
+            sublabel: null,
         },
     ],
     votes: [

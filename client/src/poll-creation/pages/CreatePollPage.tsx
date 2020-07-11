@@ -7,6 +7,7 @@ import { Question } from '~/poll-creation/components/Question';
 import { TitleDescription } from '~/poll-creation/components/TitleDescription';
 import { pollCreationSelectors } from '~/poll-creation/state/pollCreationSelectors';
 import { CreateQuestionButton } from '~/poll-creation/components/CreateQuestionButton';
+import { CreatePollButton } from '~/poll-creation/components/CreatePollButton';
 
 export const CreatePollPage: React.FC = () => {
     const pollCreationState = useSelector(pollCreationSelectors.getPollCreationState);
@@ -16,9 +17,10 @@ export const CreatePollPage: React.FC = () => {
             <Typography variant={'h2'}>Create Poll</Typography>
             <TitleDescription />
             {pollCreationState.questions.map(q => (
-                <Question question={q} key={q.questionId} />
+                <Question question={q} key={q.orderId} />
             ))}
             <CreateQuestionButton />
+            <CreatePollButton />
         </Container>
     );
 };

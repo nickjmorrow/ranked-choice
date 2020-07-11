@@ -8,6 +8,10 @@ const apiRoutes = {
         route: (link: string) => `/polls/${link}`,
         method: axios.get,
     },
+    voteOnPoll: {
+        route: '/polls/vote',
+        method: axios.post,
+    },
 };
 
 function* getPollAsync(action: ReturnType<typeof pollVotingActions.getPoll.request>) {
@@ -24,4 +28,17 @@ function* watchGetPollAsync() {
     yield takeEvery(PollVotingActionTypeKeys.GET_POLL, getPollAsync);
 }
 
-export const pollVotingSagas = [watchGetPollAsync];
+function* voteOnPollAsync(action: ReturnType<typeof pollVotingActions.voteOnPoll.request>) {
+    try {
+        yield call(apiRoutes.voteOnPoll.method, apiRoutes.voteOnPoll.route, action.payload);
+    } catch (error) {
+        handleError(error);
+        yield put(pollVotingActions.voteOnPoll.failure(error));
+    }
+}
+
+function* watchVoteOnPollAsync() {
+    yield takeEvery(PollVotingActionTypeKeys.VOTE_ON_POLL, voteOnPollAsync);
+}
+
+export const pollVotingSagas = [watchGetPollAsync, watchVoteOnPollAsync];

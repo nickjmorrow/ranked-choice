@@ -1,5 +1,5 @@
 import { action } from 'typesafe-actions';
-import { Option } from '~/simulation/types/Option';
+import { Option } from '~/polling/types/Option';
 import { Vote } from '~/simulation/types/Vote';
 import { RankedOption } from '~/simulation/types/RankedOption';
 import { CalculatePollResultRequest } from '~/polling/types/CalculatePollResultRequest';

@@ -21,7 +21,7 @@ export const simulationReducer = (
         case SimulationActionTypeKeys.ADD_OPTION:
             return produce(state, draftState => {
                 const optionId = state.options.reduce((agg, cur) => Math.max(agg, cur.optionId), 0) + 1;
-                draftState.options.push({ optionId, label: action.payload });
+                draftState.options.push({ optionId, label: action.payload, sublabel: null });
             });
         case SimulationActionTypeKeys.ADD_CHOICE:
             return produce(state, draftState => {

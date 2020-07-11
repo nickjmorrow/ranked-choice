@@ -7,6 +7,7 @@ import { Typography } from '~/core/Typography';
 import { useDispatch } from 'react-redux';
 import { pollVotingActions } from '~/poll-voting/state/pollVotingActions';
 import { Question } from '~/poll-voting/components/Question';
+import { VoteOnPollButton } from '~/poll-voting/components/VoteOnPollButton';
 
 export const PollVotingPage: React.FC = () => {
     const { link } = useParams();
@@ -31,6 +32,7 @@ export const PollVotingPage: React.FC = () => {
                     <Question question={q} key={q.questionId} />
                 ))}
             </QuestionsContainer>
+            <VoteOnPollButton />
         </Container>
     );
 };
