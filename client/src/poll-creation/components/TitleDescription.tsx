@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { pollCreationSelectors } from '~/poll-creation/state/pollCreationSelectors';
-import { Card } from '~/poll-creation/components/Card';
+import { Card } from '~/core/Card';
 import { Input } from '~/core/Input';
 import { pollCreationActions } from '~/poll-creation/state/pollCreationActions';
 

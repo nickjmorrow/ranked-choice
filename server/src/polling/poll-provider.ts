@@ -10,6 +10,9 @@ export class PollProvider {
     }
 
     public getOnePoll(link: string): Promise<Poll> {
-        return this.connection.manager.findOne(Poll, undefined, { where: { link } });
+        return this.connection.manager.findOne(Poll, undefined, {
+            where: { link },
+            relations: ['questions', 'questions.options'],
+        });
     }
 }

@@ -11,7 +11,7 @@ import { Option } from '~/polling/components/Option';
 import { Option as OptionType } from '~/polling/types/Option';
 
 // intra
-import { Card } from '~/poll-creation/components/Card';
+import { Card } from '~/core/Card';
 import { pollCreationActions } from '~/poll-creation/state/pollCreationActions';
 import { Input } from '~/core/Input';
 import { pollCreationSelectors } from '~/poll-creation/state/pollCreationSelectors';

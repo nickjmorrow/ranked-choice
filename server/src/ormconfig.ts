@@ -18,20 +18,24 @@ const getOrmConfig = (): ConnectionOptions => {
             migrationsDir: 'src/migrations',
         },
     };
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.DATABASE_URL !== undefined) {
         return {
             url: process.env.DATABASE_URL,
             ...commonOptions,
         };
     }
+
+    // typeorm CLI, TODO: move to development environment variables
     return {
-        host: 'postgres',
+        ...commonOptions,
+        host: 'localhost',
         port: 5432,
         username: 'devuser',
         password: 'pass',
         database: 'postgres',
-        ...commonOptions,
     };
 };
 
-export = getOrmConfig();
+const ormConfig = getOrmConfig();
+
+export = ormConfig;

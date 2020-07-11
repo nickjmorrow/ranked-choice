@@ -47,7 +47,14 @@ export class initialSeedData1594336147602 implements MigrationInterface {
 			OVERRIDING SYSTEM VALUE
 			VALUES 
 			(1, 1, 'Strawberry Woman', 'Fruit Party')
-			, (2, 1, 'Artichoke Man', 'Vegetable Party');
+			, (2, 1, 'Artichoke Man', 'Vegetable Party')
+			, (3, 1, 'Blueberry Guardian', 'Small Party')
+			, (4, 2, 'Julius Caesar', 'Greek')
+			, (5, 2, 'Augustus Aquinus', 'Roman')
+			, (6, 2, 'Emperor Nero', NULL)
+			, (7, 2, 'Alexander the Great', 'Other')
+			, (8, 3, 'There is no difference.', NULL)
+			, (9, 3, 'All the difference in the world.', NULL);
 		`);
     }
 

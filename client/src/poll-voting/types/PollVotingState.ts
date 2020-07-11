@@ -1,5 +1,5 @@
-import { Poll } from '~/polling/types/Poll';
+import { PollWithVotes } from '~/poll-voting/types/PollWithVotes';
 
 export interface PollVotingState {
-    poll: Poll | null;
+    poll: PollWithVotes | null;
 }

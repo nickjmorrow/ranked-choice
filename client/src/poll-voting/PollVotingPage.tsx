@@ -6,6 +6,7 @@ import { useTypedSelector } from '~/redux/useTypedSelector';
 import { Typography } from '~/core/Typography';
 import { useDispatch } from 'react-redux';
 import { pollVotingActions } from '~/poll-voting/state/pollVotingActions';
+import { Question } from '~/poll-voting/components/Question';
 
 export const PollVotingPage: React.FC = () => {
     const { link } = useParams();
@@ -25,8 +26,17 @@ export const PollVotingPage: React.FC = () => {
             <Typography variant={'h2'}>Poll Voting</Typography>
             <Typography>{poll.title}</Typography>
             <Typography>{poll.description}</Typography>
+            <QuestionsContainer>
+                {poll.questions.map(q => (
+                    <Question question={q} key={q.questionId} />
+                ))}
+            </QuestionsContainer>
         </Container>
     );
 };
 
 const Container = styled.div``;
+
+const QuestionsContainer = styled.div`
+    padding: ${p => p.theme.spacing.ss16} 0;
+`;
