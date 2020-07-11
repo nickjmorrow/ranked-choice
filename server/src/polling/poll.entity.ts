@@ -10,4 +10,7 @@ export class Poll {
 
     @Column({ name: 'link' })
     public link!: string;
+
+    @Column({ name: 'description' })
+    public description!: string;
 }

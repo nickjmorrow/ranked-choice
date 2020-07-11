@@ -1,22 +1,37 @@
 import { ConnectionOptions } from 'typeorm';
 
-const ormconfig: ConnectionOptions = {
-    type: 'postgres',
-    url: process.env.DATABASE_URL,
-    migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
-    entities: [__dirname + '/**/*.entity{.ts,.js}'],
-    // We are using migrations, synchronize should be set to false.
-    synchronize: false,
-    // Run migrations automatically,
-    // you can disable this if you prefer running migration manually.
-    migrationsRun: true,
-    logging: true,
-    logger: 'file',
-    cli: {
-        // Location of migration should be inside src folder
-        // to be compiled into dist/ folder.
-        migrationsDir: 'src/migrations',
-    },
+const getOrmConfig = (): ConnectionOptions => {
+    const commonOptions = {
+        migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        // We are using migrations, synchronize should be set to false.
+        synchronize: false,
+        type: 'postgres' as const,
+        // Run migrations automatically,
+        // you can disable this if you prefer running migration manually.
+        migrationsRun: true,
+        logging: true,
+        logger: 'file' as const,
+        cli: {
+            // Location of migration should be inside src folder
+            // to be compiled into dist/ folder.
+            migrationsDir: 'src/migrations',
+        },
+    };
+    if (process.env.NODE_ENV === 'production') {
+        return {
+            url: process.env.DATABASE_URL,
+            ...commonOptions,
+        };
+    }
+    return {
+        host: 'postgres',
+        port: 5432,
+        username: 'devuser',
+        password: 'pass',
+        database: 'postgres',
+        ...commonOptions,
+    };
 };
 
-export = ormconfig;
+export = getOrmConfig();

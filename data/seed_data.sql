@@ -20,7 +20,7 @@ INSERT INTO public.polls (
 )
 OVERRIDING SYSTEM VALUE
 VALUES 
-(1, 'Lynn County General Election', '', 'https://www.google.com', 1);
+(1, 'Lynn County General Election', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'https://www.google.com', 1);
 
 INSERT INTO public.questions (
     question_id

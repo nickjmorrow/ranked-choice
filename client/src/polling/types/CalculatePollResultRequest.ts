@@ -1,5 +1,3 @@
-import { Poll } from '~/polling/types/Poll';
-
 export interface CalculatePollResultRequest {
     poll: {
         questions: {

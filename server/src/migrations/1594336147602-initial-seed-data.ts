@@ -23,7 +23,7 @@ export class initialSeedData1594336147602 implements MigrationInterface {
 			)
 			OVERRIDING SYSTEM VALUE
 			VALUES 
-			(1, 'Lynn County General Election', '', 'djklsdfh', 1);
+			(1, 'Lynn County General Election', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'morrow', 1);
 
 			INSERT INTO public.questions (
 				question_id
@@ -33,7 +33,10 @@ export class initialSeedData1594336147602 implements MigrationInterface {
 				, subheading
 			)
 			OVERRIDING SYSTEM VALUE
-			VALUES (1, 1, 1, 'Who should win the general election?', 'Select at most one.');
+			VALUES 
+				(1, 1, 1, 'Who should win the general election?', 'Select at most one.')
+				, (2, 1, 2, 'Lorem ipsum dolor sit amet?', '')
+				, (3, 1, 3, 'What is the difference between love and hate?', 'Choose wisely.');
 
 			INSERT INTO public.options (
 				option_id
