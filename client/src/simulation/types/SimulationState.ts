@@ -1,4 +1,4 @@
-import { Option } from '~/simulation/types/Option';
+import { Option } from '~/polling/types/Option';
 import { Vote } from '~/simulation/types/Vote';
 import { PollResult } from '~/polling/types/PollResult';
 

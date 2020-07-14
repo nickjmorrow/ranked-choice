@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Option as OptionType } from '~/simulation/types/Option';
+import { Option as OptionType } from '~/polling/types/Option';
 import { Typography } from '~/core/Typography';
 import { OptionBar } from '~/simulation/components/OptionBar';
 import { RemoveIconButton } from '~/core/RemoveIconButton';

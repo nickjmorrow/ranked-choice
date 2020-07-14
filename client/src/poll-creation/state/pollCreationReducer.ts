@@ -70,6 +70,14 @@ export const pollCreationReducer = (
                 option.label = updatedOption.label;
                 option.sublabel = updatedOption.sublabel;
             });
+        case PollCreationActionTypeKeys.REMOVE_QUESTION:
+            return produce(state, draftState => {
+                draftState.questions.splice(
+                    draftState.questions.findIndex(q => q.questionId === action.payload.questionId),
+                    1,
+                );
+                draftState.questions.forEach((q, i) => (q.orderId = i + 1));
+            });
         default:
             return state;
     }

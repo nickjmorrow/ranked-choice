@@ -11,18 +11,23 @@ import { Option } from '~/polling/components/Option';
 import { Option as OptionType } from '~/polling/types/Option';
 
 // intra
-import { Card } from '~/poll-creation/components/Card';
+import { Card } from '~/core/Card';
 import { pollCreationActions } from '~/poll-creation/state/pollCreationActions';
 import { Input } from '~/core/Input';
 import { pollCreationSelectors } from '~/poll-creation/state/pollCreationSelectors';
+import { RemoveIconButton } from '~/core/RemoveIconButton';
 
 export const Question: React.FC<{ question: QuestionType }> = ({ question }) => {
     const dispatch = useDispatch();
     const handleCreateOption = (question: QuestionType, label: string) => {
-        dispatch(pollCreationActions.createOption({ question, option: { label } }));
+        dispatch(pollCreationActions.createOption({ question, option: { label, sublabel: null } }));
     };
     const handleRemoveOption = (question: QuestionType, option: OptionType) => {
         dispatch(pollCreationActions.removeOption({ question, option }));
+    };
+
+    const handleRemoveQuestion = () => {
+        dispatch(pollCreationActions.removeQuestion(question));
     };
     const currentInteractiveQuestionId = useSelector(pollCreationSelectors.getPollCreationState)
         .currentInteractingQuestionId;
@@ -33,6 +38,7 @@ export const Question: React.FC<{ question: QuestionType }> = ({ question }) => 
             key={question.questionId}
             onClick={() => dispatch(pollCreationActions.setCurrentInteractiveQuestionId(question.questionId))}
         >
+            <RemoveIconButton onClick={handleRemoveQuestion} />
             {isEditable ? (
                 <>
                     <Input
