@@ -4,6 +4,7 @@ import { CreatePollRequest } from '~/polling/types/CreatePollRequest';
 import { Poll } from '~/polling/poll.entity';
 import { UniqueLinkProvider } from '~/polling/unique-link-provider';
 import { Question } from '~/polling/question.entity';
+import { Option } from '~/polling/option.entity';
 
 @Injectable()
 export class PollCreator {
@@ -33,15 +34,33 @@ export class PollCreator {
                 .execute()
         ).identifiers.map(q => q.questionId);
 
-        const insertedQuestions = questions.map((q, i) => (q.questionId = questionIds[i]));
+        const insertedQuestions = questions.map((q, i) => {
+            q.questionId = questionIds[i];
+            return q;
+        });
 
-        // const options = insertedQuestions.flatMap(q => ({ options: q.options, questionId: q.questionId}))
+        const options = insertedQuestions
+            .map(q => ({ options: q.options, questionId: q.questionId }))
+            .reduce<Option[]>((agg, cur) => {
+                agg = [
+                    ...agg,
+                    ...cur.options.map(o => ({
+                        ...o,
+                        optionId: undefined,
+                        votes: [],
+                        question: { questionId: cur.questionId },
+                    })),
+                ] as Option[];
+                return agg;
+            }, []);
 
-        // await manager
-        //     .createQueryBuilder()
-        //     .insert()
-        //     .into(Option)
-        //     .values(options)
-        //     .execute();
+        console.log(options);
+
+        await manager
+            .createQueryBuilder()
+            .insert()
+            .into(Option)
+            .values(options)
+            .execute();
     }
 }
