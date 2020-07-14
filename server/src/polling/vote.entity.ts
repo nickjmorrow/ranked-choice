@@ -1,5 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
-import { Poll } from '~/polling/poll.entity';
+import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Option } from '~/polling/option.entity';
 
 @Entity({ schema: 'public', name: 'votes' })
@@ -8,7 +7,7 @@ export class Vote {
     public voteId!: number;
 
     @ManyToOne(
-        type => Option,
+        () => Option,
         option => option.votes,
     )
     @JoinColumn({ name: 'option_id' })

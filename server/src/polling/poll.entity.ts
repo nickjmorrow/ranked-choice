@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany, JoinColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Question } from '~/polling/question.entity';
 
 @Entity({ schema: 'public', name: 'polls' })
@@ -16,7 +16,7 @@ export class Poll {
     public description!: string;
 
     @OneToMany(
-        type => Question,
+        () => Question,
         question => question.poll,
     )
     public questions!: Question[];

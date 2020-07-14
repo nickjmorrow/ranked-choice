@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Question } from '~/polling/question.entity';
 import { Vote } from '~/polling/vote.entity';
 
@@ -14,14 +14,14 @@ export class Option {
     public sublabel!: string | null;
 
     @ManyToOne(
-        type => Question,
+        () => Question,
         question => question.options,
     )
     @JoinColumn({ name: 'question_id' })
     public question!: Question;
 
     @OneToMany(
-        type => Vote,
+        () => Vote,
         vote => vote.option,
     )
     public votes!: Vote[];

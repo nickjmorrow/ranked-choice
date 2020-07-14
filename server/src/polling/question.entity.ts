@@ -1,6 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
-import { Poll } from '~/polling/poll.entity';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Option } from '~/polling/option.entity';
+import { Poll } from '~/polling/poll.entity';
 
 @Entity({ schema: 'public', name: 'questions' })
 export class Question {
@@ -20,14 +20,14 @@ export class Question {
     public isRequired!: boolean;
 
     @ManyToOne(
-        type => Poll,
+        () => Poll,
         poll => poll.questions,
     )
     @JoinColumn({ name: 'poll_id' })
     public poll!: Poll;
 
     @OneToMany(
-        type => Option,
+        () => Option,
         option => option.question,
     )
     public options!: Option[];
