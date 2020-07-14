@@ -19,6 +19,7 @@
         "test:watch": "jest --watch",
         "test:cov": "jest --coverage",
         "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+<<<<<<< HEAD
         "test:e2e": "jest --config ./test/jest-e2e.json",
         "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config src/ormconfig.ts",
         "typeorm:create": "npm run typeorm migration:create -- -n",
@@ -37,6 +38,18 @@
         "rimraf": "^3.0.2",
         "rxjs": "^6.5.4",
         "typeorm": "^0.2.25"
+=======
+        "test:e2e": "jest --config ./test/jest-e2e.json"
+    },
+    "dependencies": {
+        "@nestjs/common": "^7.0.0",
+        "@nestjs/core": "^7.0.0",
+        "@nestjs/platform-express": "^7.0.0",
+        "module-alias": "^2.2.2",
+        "reflect-metadata": "^0.1.13",
+        "rimraf": "^3.0.2",
+        "rxjs": "^6.5.4"
+>>>>>>> master
     },
     "devDependencies": {
         "@nestjs/cli": "^7.0.0",
@@ -73,9 +86,13 @@
             "^.+\\.(t|j)s$": "ts-jest"
         },
         "coverageDirectory": "../coverage",
+<<<<<<< HEAD
         "testEnvironment": "node",
         "moduleNameMapper": {
             "^~/(.*)$": "<rootDir>/src/$1"
         }
+=======
+        "testEnvironment": "node"
+>>>>>>> master
     }
 }
