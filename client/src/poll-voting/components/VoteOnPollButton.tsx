@@ -11,7 +11,6 @@ export const VoteOnPollButton: React.FC = () => {
     const optionIds = useTypedSelector(state =>
         state.pollVotingState.poll?.questions.map(q => q.selectedOptionId).filter(o => o !== null),
     ) as number[];
-    console.log(optionIds);
     const isEnabled = optionIds !== undefined && optionIds.length > 0;
 
     const handleClick = () => {

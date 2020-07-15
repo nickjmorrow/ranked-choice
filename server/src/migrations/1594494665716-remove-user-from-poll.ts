@@ -11,7 +11,7 @@ export class removeUserFromPoll1594494665716 implements MigrationInterface {
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
 			ALTER TABLE public.polls
-			ADD user_id INT NOT NULL REFERENCES public.users(user_id);
+			ADD user_id INT NULL REFERENCES public.users(user_id);
 		`);
     }
 }
