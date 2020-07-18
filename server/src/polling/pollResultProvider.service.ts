@@ -24,19 +24,12 @@ export class PollResultProvider {
             relations: ['questions', 'questions.options', 'questions.options.votes'],
         });
 
-        // const questions = poll.questions.map(q => ({
-        //     optionIds: q.options.map(o => o.optionId),
-        //     votes: q.options.flatMap(o => o.votes).map(v => ({ orderId: v.orderId, optionId: v.option.optionId })),
-        // }));
+        const questions = poll.questions.map(async q => ({
+            optionIds: q.options.map(o => o.optionId),
+            votes: await this.getVotesForQuestion(q),
+        }));
 
         const votes = await this.getVotesForQuestion(poll.questions[0]);
-
-        console.log(votes);
-        // const calculatePollResultRequest: CalculatePollResultRequest = {
-        //     poll: {
-        //         questions,
-        //     },
-        // };
 
         throw new Error();
     }
