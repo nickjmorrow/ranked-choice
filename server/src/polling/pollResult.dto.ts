@@ -1,24 +1,10 @@
-export class PollResult {
-    public questionResults: QuestionResult[];
-}
+import { Question } from '~/polling/question.entity';
+import { Poll } from '~/polling/poll.entity';
 
-class QuestionResult {
-    public rounds: Round[];
-    public options: Option[];
-}
-
-class Option {
-    public optionId: number;
-    public label: string;
-    public sublabel: string | null;
-}
-
-class Round {
-    public roundId: number;
-    public optionResults: OptionResult[];
-}
-
-class OptionResult {
-    public optionId: number;
-    public voteCount: number;
+export interface PollResult {
+    poll: Poll;
+    questionResults: {
+        question: Question;
+        rounds: { roundId: number; optionResults: { optionId: number; voteCount: number }[] }[];
+    }[];
 }

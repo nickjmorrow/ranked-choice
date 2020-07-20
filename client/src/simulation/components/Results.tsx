@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { simulationSelectors } from '~/simulation/state/simulationSelectors';
 import { Typography } from '~/core/Typography';
 import { ResultGraph } from '~/simulation/components/ResultGraph';
-import { OptionBar } from '~/simulation/components/OptionBar';
+import { OptionBar } from '~/polling/components/OptionBar';
 import { useMedia } from 'react-media';
 import { mediaQueries } from '~/core/mediaQueries';
 import { simulationActions } from '~/simulation/state/simulationActions';
@@ -74,6 +74,7 @@ export const Results: React.FC = () => {
                     <ResultGraph
                         style={{ marginTop: screenSize.small ? '0' : '-64px' }}
                         optionVoteResults={activeRound.optionResults}
+                        options={options}
                     />
                 )}
             </MainContainer>

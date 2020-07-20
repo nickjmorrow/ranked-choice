@@ -9,13 +9,13 @@ import { PollProvider } from '~/polling/pollProvider.service';
 import { Poll } from '~/polling/poll.entity';
 import { Question } from '~/polling/question.entity';
 import { Vote } from '~/polling/vote.entity';
+import { RankedQuestionVote } from '~/poll-result-calculation/types/Vote';
 
 @Injectable()
 export class PollResultProvider {
     public constructor(
         private readonly connection: Connection,
-        pollResultCalculationService: PollResultCalculationService,
-        pollProvider: PollProvider,
+        private readonly pollResultCalculationService: PollResultCalculationService,
     ) {}
 
     public async getPollResult(link: string): Promise<PollResult> {
@@ -24,14 +24,26 @@ export class PollResultProvider {
             relations: ['questions', 'questions.options', 'questions.options.votes'],
         });
 
-        const questions = poll.questions.map(async q => ({
-            optionIds: q.options.map(o => o.optionId),
-            votes: await this.getVotesForQuestion(q),
-        }));
+        const request: CalculatePollResultRequest = {
+            poll: {
+                questions: poll.questions.map(q => ({
+                    questionId: q.questionId,
+                    optionIds: q.options.map(o => o.optionId),
+                    votes: this.getRankedQuestionVotes(q.options.flatMap(o => o.votes)),
+                })),
+            },
+        };
 
-        const votes = await this.getVotesForQuestion(poll.questions[0]);
+        const response = this.pollResultCalculationService.calculatePollResult(request);
+        const questions = poll.questions;
 
-        throw new Error();
+        return {
+            poll,
+            questionResults: response.questionResults.map(qr => ({
+                question: questions.find(q => q.questionId === qr.questionId)!,
+                rounds: qr.rounds,
+            })),
+        };
     }
 
     public async getVotesForQuestion(question: Question): Promise<Vote[]> {
@@ -43,5 +55,20 @@ export class PollResultProvider {
             .getMany();
 
         return votes;
+    }
+
+    public getRankedQuestionVotes(votes: Vote[]): RankedQuestionVote[] {
+        const map = new Map<number, Vote[]>();
+        votes.forEach(v => {
+            if (!map.has(v.submissionId)) {
+                map.set(v.submissionId, []);
+            }
+            map.set(v.submissionId, [...map.get(v.submissionId), v]);
+        });
+        return Array.from(map.values()).map(v => {
+            return {
+                rankedOptions: v.map(v => ({ orderId: v.orderId, optionId: v.optionId })),
+            };
+        });
     }
 }

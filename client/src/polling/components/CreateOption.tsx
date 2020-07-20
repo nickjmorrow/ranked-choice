@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { OptionBar } from '~/simulation/components/OptionBar';
+import { OptionBar } from '~/polling/components/OptionBar';
 import { Input } from '~/core/Input';
 import styled from 'styled-components';
 import { CreateIconButton } from '~/core/CreateIconButton';

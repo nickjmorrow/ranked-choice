@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Vote as VoteType } from '~/simulation/types/Vote';
 import { Typography } from '~/core/Typography';
-import { OptionBar } from '~/simulation/components/OptionBar';
+import { OptionBar } from '~/polling/components/OptionBar';
 import { Collapse } from 'react-collapse';
 import { useSelector, useDispatch } from 'react-redux';
 import { simulationSelectors } from '~/simulation/state/simulationSelectors';

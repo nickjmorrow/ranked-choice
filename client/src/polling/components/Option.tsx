@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Option as OptionType } from '~/polling/types/Option';
 import { Typography } from '~/core/Typography';
-import { OptionBar } from '~/simulation/components/OptionBar';
+import { OptionBar } from '~/polling/components/OptionBar';
 import { RemoveIconButton } from '~/core/RemoveIconButton';
 import { useDispatch } from 'react-redux';
 import { Input } from '~/core/Input';

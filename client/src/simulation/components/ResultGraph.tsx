@@ -4,12 +4,13 @@ import { OptionVoteResult } from '~/simulation/types/OptionVoteResult';
 import { useSelector } from 'react-redux';
 import { simulationSelectors } from '~/simulation/state/simulationSelectors';
 import styled from 'styled-components';
+import { Option } from '~/polling/types/Option';
 
-export const ResultGraph: React.FC<{ optionVoteResults: OptionVoteResult[]; style?: React.CSSProperties }> = ({
-    optionVoteResults,
-    style,
-}) => {
-    const options = useSelector(simulationSelectors.getOptions);
+export const ResultGraph: React.FC<{
+    options: Option[];
+    optionVoteResults: OptionVoteResult[];
+    style?: React.CSSProperties;
+}> = ({ options, optionVoteResults, style }) => {
     return (
         <Container style={style}>
             <VictoryChart theme={VictoryTheme.material} domainPadding={30}>
