@@ -23,3 +23,5 @@ export const QuestionResult: React.FC<{ questionResult: QuestionResultType }> = 
 };
 
 const Container = styled.div``;
+
+

@@ -99,9 +99,8 @@ export class PollResultCalculationService {
         //     throw new Error('Expected vote list to contain at least one vote but it contained 0.');
         // }
 
-        const invalidVotes = votes
-            .map(v => v.rankedOptions.map(c => c.optionId))
-            .flat()
+        const invalidVotes = []
+            .concat(...votes.map(v => v.rankedOptions.map(c => c.optionId)))
             .filter(v => !optionIds.includes(v));
         if (invalidVotes.length > 0) {
             throw new Error(

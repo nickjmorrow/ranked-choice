@@ -29,7 +29,7 @@ export class PollResultProvider {
                 questions: poll.questions.map(q => ({
                     questionId: q.questionId,
                     optionIds: q.options.map(o => o.optionId),
-                    votes: this.getRankedQuestionVotes(q.options.flatMap(o => o.votes)),
+                    votes: this.getRankedQuestionVotes([].concat(...q.options.map(o => o.votes))),
                 })),
             },
         };

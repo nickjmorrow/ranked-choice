@@ -24,22 +24,19 @@ export class PollVoter {
         } else {
             maxSubmissionId = maxSubmissionVote[0].submission_id + 1;
         }
-        const votes = pollVoteRequest.questions
-            .flatMap(q => ({ options: q.options, questionId: q.questionId }))
-            .flatMap(q =>
-                q.options.map(o => ({
-                    optionId: o.optionId,
-                    orderId: o.orderId,
-                    questionId: q.questionId,
-                    submissionId: maxSubmissionId,
-                })),
-            );
+        const votes = [].concat(
+            ...pollVoteRequest.questions
+                .map(q => ({ options: q.options, questionId: q.questionId }))
+                .map(q =>
+                    q.options.map(o => ({
+                        optionId: o.optionId,
+                        orderId: o.orderId,
+                        questionId: q.questionId,
+                        submissionId: maxSubmissionId,
+                    })),
+                ),
+        );
 
-        await this.connection
-            .createQueryBuilder()
-            .insert()
-            .into(Vote)
-            .values(votes)
-            .execute();
+        await this.connection.manager.insert(Vote, votes);
     }
 }
