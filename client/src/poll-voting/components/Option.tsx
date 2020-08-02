@@ -15,14 +15,40 @@ export const Option: React.FC<{ option: OrderedOption; question: QuestionWithVot
 
     return (
         <Container onClick={handleClick} isSelected={option.orderId !== null}>
-            <Typography>{option.orderId}</Typography>
-            <Typography>{option.label}</Typography>
-            <Typography>{option.sublabel}</Typography>
+            <Order>{option.orderId}</Order>
+            <Content>
+                <Typography>{option.label}</Typography>
+                <Sublabel>{option.sublabel}</Sublabel>
+            </Content>
         </Container>
     );
 };
 
 const Container = styled.div<{ isSelected: boolean }>`
     cursor: pointer;
-    background-color: ${p => (p.isSelected ? p.theme.coreColor.cs4 : p.theme.backgroundColor)};
+    background-color: ${p => (p.isSelected ? p.theme.coreColor.cs2 : p.theme.backgroundColor)};
+    padding: ${p => p.theme.spacing.ss4};
+    box-shadow: ${p => p.theme.boxShadow.bs1};
+    border-radius: ${p => p.theme.borderRadius.br1};
+    margin: ${p => p.theme.spacing.ss4} 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    transition: background-color ${p => p.theme.transitions.slow};
+    align-items: center;
+`;
+
+const Content = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+`;
+
+const Order = styled(Typography)`
+    font-size: ${p => p.theme.fontSizes.fs4};
+`;
+
+const Sublabel = styled(Typography)`
+    font-size: ${p => p.theme.fontSizes.fs2};
+    color: ${p => p.theme.neutralColor.cs5};
 `;

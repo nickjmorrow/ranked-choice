@@ -25,7 +25,7 @@ export const PollVotingPage: React.FC = () => {
     return (
         <Container>
             <Typography variant={'h2'}>{poll.title}</Typography>
-            <Typography>{poll.description}</Typography>
+            <Description>{poll.description}</Description>
             <QuestionsContainer>
                 {poll.questions.map(q => (
                     <Question question={q} key={q.questionId} />
@@ -36,8 +36,14 @@ export const PollVotingPage: React.FC = () => {
     );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+    max-width: ${p => p.theme.spacing.ss128};
+`;
 
 const QuestionsContainer = styled.div`
-    padding: ${p => p.theme.spacing.ss16} 0;
+    padding: ${p => p.theme.spacing.ss6} 0;
+`;
+
+const Description = styled(Typography)`
+    line-height: 1.4rem;
 `;

@@ -7,7 +7,6 @@ import { pollVotingActions } from '~/poll-voting/state/pollVotingActions';
 import { Typography } from '~/core/Typography';
 import { QuestionWithVote, FilledOrderedOption } from '~/poll-voting/types/QuestionWithVote';
 import { getPollVotingRequest } from '~/poll-voting/state/pollVotingSelectors';
-import { PollVoteRequest } from '~/poll-voting/types/PollVoteRequest';
 
 export const VoteOnPollButton: React.FC = () => {
     const dispatch = useDispatch();
@@ -17,8 +16,8 @@ export const VoteOnPollButton: React.FC = () => {
         dispatch(pollVotingActions.voteOnPoll.request(request));
     };
     return (
-        <Button onClick={handleClick}>
-            <Typography>Vote</Typography>
+        <Button style={{ width: '100%' }} onClick={handleClick}>
+            Vote
         </Button>
     );
 };

@@ -29,6 +29,8 @@ export const Button = styled.button<Props>`
     border: none;
     cursor: ${p => (p.isEnabled ? 'pointer' : 'none')};
     background-color: ${p => getColor(p.theme, p, 'normal')};
+    color: ${p => p.theme.backgroundColor};
+    font-family: ${p => p.theme.fontFamilies.default};
     &: hover {
         background-color: ${p => getColor(p.theme, p, 'hover')};
     }
