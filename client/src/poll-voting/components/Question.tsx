@@ -11,9 +11,9 @@ export const Question: React.FC<{ question: QuestionWithVote }> = ({ question })
     const unorderedOptions = question.options.filter(o => o.orderId === null);
     return (
         <Container>
-            <Typography>{question.orderId}</Typography>
-            <Typography>{question.content}</Typography>
-            <Typography>{question.subheading}</Typography>
+            <Title>Question {question.orderId}</Title>
+            <Content style={{ display: 'block' }}>{question.content}</Content>
+            <Subheading style={{ display: 'block' }}>{question.subheading}</Subheading>
             <OptionsContainer>
                 {orderedOptions
                     .sort((a, b) => (a.orderId < b.orderId ? -1 : 1))
@@ -28,6 +28,26 @@ export const Question: React.FC<{ question: QuestionWithVote }> = ({ question })
     );
 };
 
-const Container = styled(Card)``;
+const Container = styled.div`
+    margin: ${p => p.theme.spacing.ss6} 0;
+`;
 
 const OptionsContainer = styled.div``;
+
+const Title = styled(Typography)`
+    display: block;
+    color: ${p => p.theme.neutralColor.cs5};
+    font-size: ${p => p.theme.fontSizes.fs1};
+    margin-bottom: ${p => p.theme.spacing.ss4};
+`;
+
+const Content = styled(Typography)`
+    margin-bottom: ${p => p.theme.spacing.ss2};
+`;
+
+const Subheading = styled(Typography)`
+    display: block;
+    color: ${p => p.theme.neutralColor.cs5};
+    font-size: ${p => p.theme.fontSizes.fs2};
+    margin-bottom: ${p => p.theme.spacing.ss4};
+`;

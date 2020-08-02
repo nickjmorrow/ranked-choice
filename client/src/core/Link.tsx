@@ -11,7 +11,7 @@ export const Link: React.FC<{
 }> = ({ route, children, className, style }) => {
     return (
         <StyledLink className={className} to={route} style={style}>
-            <StyledTypography fontSizeVariant={'inherit'} colorVariant={'inherit'}>
+            <StyledTypography sizeVariant={'inherit'} colorVariant={'inherit'}>
                 {children}
             </StyledTypography>
         </StyledLink>

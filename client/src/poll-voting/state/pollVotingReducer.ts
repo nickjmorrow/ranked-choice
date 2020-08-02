@@ -24,7 +24,8 @@ export const pollVotingReducer = (
         case PollVotingActionTypeKeys.SELECT_OPTION:
             return produce(state, draftState => {
                 const { question, option } = action.payload;
-                const currentQuestion = draftState.poll?.questions.find(q => q.questionId === question.questionId)!;
+                const currentQuestion = (draftState.poll &&
+                    draftState.poll.questions.find(q => q.questionId === question.questionId))!;
                 const currentOption = currentQuestion.options.find(o => o.optionId === option.optionId)!;
                 if (currentOption.orderId === null) {
                     const maxOrderId = Math.max(

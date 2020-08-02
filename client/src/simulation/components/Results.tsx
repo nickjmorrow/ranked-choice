@@ -48,20 +48,20 @@ export const Results: React.FC = () => {
             <Typography variant={'h3'}>Results</Typography>
             <MainContainer>
                 <RoundsContainer>
-                    {rounds
-                        .slice()
+                    {[...rounds]
                         .sort((a, b) => (a.roundId < b.roundId ? 1 : -1))
                         .map(r => (
                             <RoundButtonBar key={r.roundId} onClick={() => setActiveRound(r)}>
                                 <Typography variant={'h3'} style={{ margin: '0' }}>{`Round ${r.roundId}`}</Typography>
-                                {activeRound?.roundId === r.roundId && (
+                                {activeRound && activeRound.roundId === r.roundId && (
                                     <OptionListContainer>
                                         {options.map(o => (
                                             <OptionContainer key={o.optionId}>
                                                 <Typography>
                                                     {o.label}:{' '}
-                                                    {r.optionResults.find(ovr => ovr.optionId === o.optionId)
-                                                        ?.voteCount ?? '0'}
+                                                    {r.optionResults.some(ovr => ovr.optionId === o.optionId)
+                                                        ? r.optionResults.find(ovr => ovr.optionId === o.optionId)
+                                                        : '0'}
                                                 </Typography>
                                             </OptionContainer>
                                         ))}

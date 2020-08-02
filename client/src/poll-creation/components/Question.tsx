@@ -67,7 +67,7 @@ export const Question: React.FC<{ question: QuestionType }> = ({ question }) => 
             ) : (
                 <>
                     <Typography style={{ display: 'block', marginBottom: '4px' }}>{question.content}</Typography>
-                    <Typography style={{ display: 'block', marginBottom: '8px' }} fontSizeVariant={'fs2'}>
+                    <Typography style={{ display: 'block', marginBottom: '8px' }} sizeVariant={'fs2'}>
                         {question.subheading}
                     </Typography>
                 </>

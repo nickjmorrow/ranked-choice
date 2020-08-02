@@ -59,7 +59,7 @@ const Body = styled.div`
 
 const Main = styled.main`
     flex: 1;
-    margin: ${p => p.theme.spacing.ss12} ${p => p.theme.spacing.ss4};
+    margin: ${p => p.theme.spacing.ss6} ${p => p.theme.spacing.ss4};
 `;
 
 const Container = styled.div`

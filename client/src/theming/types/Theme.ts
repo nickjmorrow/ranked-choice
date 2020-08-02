@@ -1,3 +1,3 @@
-import { getTheme } from '~/theming/getTheme';
+import { theme } from '~/theming/theme';
 
-export type Theme = ReturnType<typeof getTheme>;
+export type Theme = typeof theme;

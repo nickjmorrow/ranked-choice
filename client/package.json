@@ -14,11 +14,13 @@
         "ci:preflight": "npm run format && npm run lint && npm run build && npm run test",
         "depgraph": "depcruise --include-only '^src' --output-type dot src | dot -T svg > dependencygraph.svg"
     },
+    "resolutions": {
+        "acorn": "npm:acorn-with-stage3"
+    },
     "dependencies": {
         "@testing-library/react": "^10.3.0",
         "@types/react": "16.9.19",
         "@types/react-dom": "16.9.5",
-        "@types/styled-components": "4.4.2",
         "@types/webpack-env": "1.15.1",
         "@typescript-eslint/eslint-plugin": "^2.19.2",
         "@typescript-eslint/parser": "^2.19.2",
@@ -44,7 +46,7 @@
         "redux-saga": "^1.1.3",
         "reflect-metadata": "^0.1.13",
         "sinon": "^9.0.2",
-        "styled-components": "5.0.0",
+        "styled-components": "^5.1.1",
         "tsyringe": "^4.1.0",
         "typesafe-actions": "^5.1.0",
         "victory": "^34.3.12"
@@ -68,6 +70,7 @@
         "@types/redux": "^3.6.0",
         "@types/redux-saga": "^0.10.5",
         "@types/sinon": "^9.0.0",
+        "@types/styled-components": "^5.1.2",
         "@types/victory": "^33.1.4",
         "babel-eslint": "9.0.0",
         "babel-loader": "8.0.4",
@@ -99,9 +102,9 @@
         "stylelint-processor-styled-components": "^1.10.0",
         "terser-webpack-plugin": "1.2.3",
         "ts-jest": "^25.4.0",
-        "ts-loader": "6.2.1",
-        "typescript": "3.7.5",
-        "webpack": "4.41.6",
+        "ts-loader": "^8.0.2",
+        "typescript": "^3.9.7",
+        "webpack": "^4.44.1",
         "webpack-cli": "3.1.2",
         "webpack-dev-server": "3.10.3"
     },

@@ -50,6 +50,7 @@ const AppName = styled(Typography)`
 
 const SmallAppName = styled(AppName)`
     font-size: 24px;
+    margin-left: ${p => p.theme.spacing.ss8};
 `;
 
 const SmallScreenHeader = styled.div`

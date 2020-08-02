@@ -24,8 +24,7 @@ export const PollVotingPage: React.FC = () => {
 
     return (
         <Container>
-            <Typography variant={'h2'}>Poll Voting</Typography>
-            <Typography>{poll.title}</Typography>
+            <Typography variant={'h2'}>{poll.title}</Typography>
             <Typography>{poll.description}</Typography>
             <QuestionsContainer>
                 {poll.questions.map(q => (
