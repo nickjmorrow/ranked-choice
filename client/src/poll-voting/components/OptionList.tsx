@@ -4,6 +4,10 @@ import styled from 'styled-components';
 import { OrderedOption, FilledOrderedOption, QuestionWithVote } from '~/poll-voting/types/QuestionWithVote';
 import { Option } from '~/poll-voting/components/Option';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { Typography } from '~/core/Typography';
+import { pollVotingSelectors } from '~/poll-voting/state/pollVotingSelectors';
+import { useSelector, useDispatch } from 'react-redux';
+import { pollVotingActions } from '~/poll-voting/state/pollVotingActions';
 
 export const OptionList: React.FC<{ options: OrderedOption[]; question: QuestionWithVote }> = ({
     options,
@@ -11,6 +15,18 @@ export const OptionList: React.FC<{ options: OrderedOption[]; question: Question
 }) => {
     const orderedOptions = options.filter((o): o is FilledOrderedOption => o.orderId !== null);
     const unorderedOptions = options.filter(o => o.orderId === null);
+    const nextOrderId = useSelector(pollVotingSelectors.getNextOrderId(question));
+    const dispatch = useDispatch();
+
+    const getOrderIdValue = (isHovering: boolean, isSelected: boolean, option: OrderedOption) => {
+        if (isSelected) {
+            return option.orderId;
+        }
+        if (isHovering) {
+            return nextOrderId;
+        }
+        return ' ';
+    };
     return (
         <Droppable droppableId={question.questionId.toString()}>
             {provided => (
@@ -27,7 +43,21 @@ export const OptionList: React.FC<{ options: OrderedOption[]; question: Question
                                         {...provided.dragHandleProps}
                                         ref={provided.innerRef}
                                     >
-                                        <Option key={o.optionId} option={o} question={question} index={i} />
+                                        <Option
+                                            label={<Typography>{o.label}</Typography>}
+                                            sublabel={<Sublabel>{o.sublabel}</Sublabel>}
+                                            key={o.optionId}
+                                            option={o}
+                                            question={question}
+                                            onClick={() => {
+                                                dispatch(pollVotingActions.selectOption({ option: o, question }));
+                                            }}
+                                            order={(isHovering: boolean, isSelected: boolean) => (
+                                                <Order isHovering={isHovering} isSelected={isSelected}>
+                                                    {getOrderIdValue(isHovering, isSelected, o)}
+                                                </Order>
+                                            )}
+                                        />
                                     </div>
                                 )}
                             </Draggable>
@@ -36,9 +66,18 @@ export const OptionList: React.FC<{ options: OrderedOption[]; question: Question
                     {unorderedOptions.map((o, i) => (
                         <Option
                             key={o.optionId}
+                            label={<Typography>{o.label}</Typography>}
+                            sublabel={<Sublabel>{o.sublabel}</Sublabel>}
                             option={o}
                             question={question}
-                            index={Math.max(orderedOptions.length - 1, 0) + i}
+                            onClick={() => {
+                                dispatch(pollVotingActions.selectOption({ option: o, question }));
+                            }}
+                            order={(isHovering: boolean, isSelected: boolean) => (
+                                <Order isHovering={isHovering} isSelected={isSelected}>
+                                    {getOrderIdValue(isHovering, isSelected, o)}
+                                </Order>
+                            )}
                         />
                     ))}
                 </Container>
@@ -48,3 +87,14 @@ export const OptionList: React.FC<{ options: OrderedOption[]; question: Question
 };
 
 const Container = styled.div``;
+
+const Sublabel = styled(Typography)`
+    font-size: ${p => p.theme.fontSizes.fs2};
+    color: ${p => p.theme.neutralColor.cs6};
+`;
+
+const Order = styled(Typography)<{ isHovering: boolean; isSelected: boolean }>`
+    font-size: ${p => p.theme.fontSizes.fs4};
+    opacity: ${p => (p.isHovering || p.isSelected ? '1' : '0')};
+    transition: opacity ${p => p.theme.transitions.fast};
+`;

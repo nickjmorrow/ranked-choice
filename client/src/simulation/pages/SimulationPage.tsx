@@ -4,6 +4,7 @@ import { Typography } from '~/core/Typography';
 import { OptionsManager } from '~/simulation/components/OptionsManager';
 import { VotesManager } from '~/simulation/components/VotesManager';
 import { Results } from '~/simulation/components/Results';
+import { PollContainer } from '~/polling/components';
 
 export const SimulationPage: React.FC = () => {
     const states = [
@@ -11,10 +12,10 @@ export const SimulationPage: React.FC = () => {
         { component: VotesManager, label: 'Votes', stateId: 2 },
         { component: Results, label: 'Results', stateId: 3 },
     ];
-    const [currentState, setCurrentState] = React.useState(states[2]);
+    const [currentState, setCurrentState] = React.useState(states[0]);
 
     return (
-        <Container>
+        <PollContainer>
             <Typography variant={'h2'}>Voting Simulation</Typography>
             <StateListContainer>
                 {states.map(s => (
@@ -31,13 +32,11 @@ export const SimulationPage: React.FC = () => {
             <CurrentComponentContainer>
                 <currentState.component />
             </CurrentComponentContainer>
-        </Container>
+        </PollContainer>
     );
 };
 
 const CurrentComponentContainer = styled.div``;
-
-const Container = styled.div``;
 
 const StateListContainer = styled.div`
     display: flex;

@@ -8,21 +8,22 @@ import { TitleDescription } from '~/poll-creation/components/TitleDescription';
 import { pollCreationSelectors } from '~/poll-creation/state/pollCreationSelectors';
 import { CreateQuestionButton } from '~/poll-creation/components/CreateQuestionButton';
 import { CreatePollButton } from '~/poll-creation/components/CreatePollButton';
+import { PollContainer, QuestionListContainer } from '~/polling/components';
 
 export const CreatePollPage: React.FC = () => {
     const pollCreationState = useSelector(pollCreationSelectors.getPollCreationState);
 
     return (
-        <Container>
+        <PollContainer>
             <Typography variant={'h2'}>Create Poll</Typography>
             <TitleDescription />
-            {pollCreationState.questions.map(q => (
-                <Question question={q} key={q.orderId} />
-            ))}
+            <QuestionListContainer>
+                {pollCreationState.questions.map(q => (
+                    <Question question={q} key={q.orderId} />
+                ))}
+            </QuestionListContainer>
             <CreateQuestionButton />
             <CreatePollButton />
-        </Container>
+        </PollContainer>
     );
 };
-
-const Container = styled.div``;

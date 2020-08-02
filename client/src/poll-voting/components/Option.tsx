@@ -8,28 +8,27 @@ import { pollVotingActions } from '~/poll-voting/state/pollVotingActions';
 import { QuestionWithVote, OrderedOption } from '~/poll-voting/types/QuestionWithVote';
 import { Draggable } from 'react-beautiful-dnd';
 import { pollVotingSelectors } from '~/poll-voting/state/pollVotingSelectors';
+import { OptionContainer } from '~/polling/components';
 
-export const Option: React.FC<{ option: OrderedOption; question: QuestionWithVote; index: number }> = ({
+export const Option: React.FC<{
+    option: OrderedOption;
+    question: QuestionWithVote;
+    label: React.ReactNode;
+    sublabel: React.ReactNode;
+    order?: (isHovering: boolean, isSelected: boolean) => React.ReactNode;
+    onClick?: () => void;
+}> = ({
     option,
-    question,
-    index,
+    label,
+    sublabel,
+    order,
+    onClick: handleClick = () => {
+        return;
+    },
 }) => {
-    const dispatch = useDispatch();
-    const handleClick = () => {
-        dispatch(pollVotingActions.selectOption({ option, question }));
-    };
     const [isHovering, setIsHovering] = useState(false);
-    const nextOrderId = useSelector(pollVotingSelectors.getNextOrderId(question));
     const isSelected = option.orderId !== null;
-    const getOrderIdValue = () => {
-        if (isSelected) {
-            return option.orderId;
-        }
-        if (isHovering) {
-            return nextOrderId;
-        }
-        return ' ';
-    };
+
     return (
         <Container
             onMouseEnter={() => setIsHovering(true)}
@@ -37,30 +36,17 @@ export const Option: React.FC<{ option: OrderedOption; question: QuestionWithVot
             onClick={handleClick}
             isSelected={isSelected}
         >
-            <Order isHovering={isHovering} isSelected={isSelected}>
-                {getOrderIdValue()}
-            </Order>
+            {order ? order(isHovering, isSelected) : <div />}
             <Content>
-                <Typography>{option.label}</Typography>
-                <Sublabel>{option.sublabel}</Sublabel>
+                {label}
+                {sublabel}
             </Content>
         </Container>
     );
 };
 
-const Container = styled.div<{ isSelected: boolean }>`
-    cursor: pointer;
+const Container = styled(OptionContainer)<{ isSelected: boolean }>`
     background-color: ${p => (p.isSelected ? p.theme.coreColor.cs2 : p.theme.backgroundColor)};
-    padding: ${p => p.theme.spacing.ss4};
-    box-shadow: ${p => p.theme.boxShadow.bs1};
-    border-radius: ${p => p.theme.borderRadius.br1};
-    margin: ${p => p.theme.spacing.ss4} 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    transition: background-color ${p => p.theme.transitions.fast};
-    align-items: center;
-    min-height: ${p => p.theme.spacing.ss12};
     &: hover {
         background-color: ${p => (p.isSelected ? p.theme.coreColor.cs2 : p.theme.coreColor.cs1)};
     }
@@ -76,9 +62,4 @@ const Order = styled(Typography)<{ isHovering: boolean; isSelected: boolean }>`
     font-size: ${p => p.theme.fontSizes.fs4};
     opacity: ${p => (p.isHovering || p.isSelected ? '1' : '0')};
     transition: opacity ${p => p.theme.transitions.fast};
-`;
-
-const Sublabel = styled(Typography)`
-    font-size: ${p => p.theme.fontSizes.fs2};
-    color: ${p => p.theme.neutralColor.cs6};
 `;
