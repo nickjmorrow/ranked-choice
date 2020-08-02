@@ -27,7 +27,7 @@ export const Button = styled.button<Props>`
     border-radius: ${p => p.theme.borderRadius.br1};
     outline: none;
     border: none;
-    cursor: ${p => (p.isEnabled ? 'pointer' : 'none')};
+    cursor: ${p => (p.isEnabled === false ? 'not-allowed' : 'pointer')};
     background-color: ${p => getColor(p.theme, p, 'normal')};
     color: ${p => p.theme.backgroundColor};
     font-family: ${p => p.theme.fontFamilies.default};

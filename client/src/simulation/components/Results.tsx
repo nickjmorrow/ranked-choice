@@ -60,7 +60,8 @@ export const Results: React.FC = () => {
                                                 <Typography>
                                                     {o.label}:{' '}
                                                     {r.optionResults.some(ovr => ovr.optionId === o.optionId)
-                                                        ? r.optionResults.find(ovr => ovr.optionId === o.optionId)
+                                                        ? r.optionResults.find(ovr => ovr.optionId === o.optionId)!
+                                                              .optionId
                                                         : '0'}
                                                 </Typography>
                                             </OptionContainer>

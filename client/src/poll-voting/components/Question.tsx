@@ -2,27 +2,35 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Typography } from '~/core/Typography';
-import { Option } from '~/poll-voting/components/Option';
 import { QuestionWithVote, FilledOrderedOption } from '~/poll-voting/types/QuestionWithVote';
+import { DragDropContext, DropResult, ResponderProvided } from 'react-beautiful-dnd';
+import { OptionList } from '~/poll-voting/components/OptionList';
+import { useDispatch } from 'react-redux';
+import { pollVotingActions } from '~/poll-voting/state/pollVotingActions';
 
 export const Question: React.FC<{ question: QuestionWithVote }> = ({ question }) => {
-    const orderedOptions = question.options.filter((o): o is FilledOrderedOption => o.orderId !== null);
-    const unorderedOptions = question.options.filter(o => o.orderId === null);
+    const dispatch = useDispatch();
+    const handleDragEnd = (result: DropResult, provided: ResponderProvided) => {
+        const optionId = parseInt(result.draggableId, 10);
+        const option = question.options.find(o => o.optionId === optionId)! as FilledOrderedOption;
+        // for now, assume dragging an ordered option
+        console.log(result.source.index);
+        console.log(result.destination!.index);
+        const destinationIndex = result.destination!.index;
+        const newOrderId = destinationIndex + 1;
+        console.log(newOrderId);
+
+        dispatch(pollVotingActions.reorderOption({ option, newOrderId, question }));
+    };
     return (
         <Container>
             <Title>Question {question.orderId}</Title>
             <Content style={{ display: 'block' }}>{question.content}</Content>
             <Subheading style={{ display: 'block' }}>{question.subheading}</Subheading>
-            <OptionsContainer>
-                {orderedOptions
-                    .sort((a, b) => (a.orderId < b.orderId ? -1 : 1))
-                    .map(o => (
-                        <Option key={o.optionId} option={o} question={question} />
-                    ))}
-                {unorderedOptions.map(o => (
-                    <Option key={o.optionId} option={o} question={question} />
-                ))}
-            </OptionsContainer>
+
+            <DragDropContext onDragEnd={handleDragEnd}>
+                <OptionList options={question.options} question={question} />
+            </DragDropContext>
         </Container>
     );
 };
@@ -52,5 +60,4 @@ const Subheading = styled(Typography)`
     color: ${p => p.theme.neutralColor.cs5};
     font-size: ${p => p.theme.fontSizes.fs2};
     margin-bottom: ${p => p.theme.spacing.ss4};
-    line-height: 1.4rem;
 `;
