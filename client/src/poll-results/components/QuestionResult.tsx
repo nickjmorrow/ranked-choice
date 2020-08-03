@@ -12,7 +12,9 @@ export const QuestionResult: React.FC<{ questionResult: QuestionResultType }> = 
             {questionResult.question.questionId}
             {questionResult.question.content}
             {questionResult.rounds.map(r => (
-                <OptionBar onClick={() => setCurrentRoundId(r.roundId)}>Round {r.roundId}</OptionBar>
+                <OptionBar key={r.roundId} onClick={() => setCurrentRoundId(r.roundId)}>
+                    Round {r.roundId}
+                </OptionBar>
             ))}
             <ResultGraph
                 optionVoteResults={questionResult.rounds.find(r => r.roundId === currentRoundId)!.optionResults}
@@ -23,5 +25,3 @@ export const QuestionResult: React.FC<{ questionResult: QuestionResultType }> = 
 };
 
 const Container = styled.div``;
-
-

@@ -95,10 +95,6 @@ export class PollResultCalculationService {
             );
         }
 
-        // if (votes.length === 0) {
-        //     throw new Error('Expected vote list to contain at least one vote but it contained 0.');
-        // }
-
         const invalidVotes = []
             .concat(...votes.map(v => v.rankedOptions.map(c => c.optionId)))
             .filter(v => !optionIds.includes(v));

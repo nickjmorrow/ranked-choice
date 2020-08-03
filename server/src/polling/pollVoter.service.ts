@@ -11,7 +11,7 @@ interface PollVoteRequest {
 export class PollVoter {
     public constructor(private readonly connection: Connection) {}
     public async voteOnPoll(pollVoteRequest: PollVoteRequest): Promise<void> {
-        let maxSubmissionVote = await this.connection
+        const maxSubmissionVote = await this.connection
             .createQueryBuilder()
             .select()
             .from(Vote, 'vote')

@@ -5,7 +5,6 @@ import {
     CalculatePollResultRequest,
 } from '~/poll-result-calculation/poll-result-calculation.service';
 import { PollResult } from '~/polling/pollResult.dto';
-import { PollProvider } from '~/polling/pollProvider.service';
 import { Poll } from '~/polling/poll.entity';
 import { Question } from '~/polling/question.entity';
 import { Vote } from '~/polling/vote.entity';

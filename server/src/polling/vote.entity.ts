@@ -1,6 +1,5 @@
 import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { Option } from '~/polling/option.entity';
-import { Question } from '~/polling/question.entity';
 
 @Entity({ schema: 'public', name: 'votes' })
 export class Vote {
