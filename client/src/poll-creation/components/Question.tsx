@@ -4,8 +4,6 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 
 // inter
-import { Typography } from '~/core/Typography';
-import { Input } from '~/core/Input';
 import { CloseIcon } from '~/core/CloseIcon';
 import { CreateOption } from '~/polling/components/CreateOption';
 import { Question as QuestionType } from '~/polling/types/Question';
@@ -30,8 +28,6 @@ export const Question: React.FC<{ question: QuestionType }> = ({ question }) => 
     const handleRemoveQuestion = () => {
         dispatch(pollCreationActions.removeQuestion(question));
     };
-    const currentInteractiveQuestionId = useSelector(pollCreationSelectors.getPollCreationState)
-        .currentInteractingQuestionId;
 
     const handleCreate = (label: string) =>
         dispatch(pollCreationActions.createOption({ question, option: { label, sublabel: null } }));
