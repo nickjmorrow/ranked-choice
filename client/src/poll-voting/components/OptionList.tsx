@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { OrderedOption, FilledOrderedOption, QuestionWithVote } from '~/poll-voting/types/QuestionWithVote';
-import { Option } from '~/poll-voting/components/Option';
+import { Option } from '~/polling/components';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { Typography } from '~/core/Typography';
 import { pollVotingSelectors } from '~/poll-voting/state/pollVotingSelectors';
@@ -44,10 +44,9 @@ export const OptionList: React.FC<{ options: OrderedOption[]; question: Question
                                         ref={provided.innerRef}
                                     >
                                         <Option
-                                            label={<Typography>{o.label}</Typography>}
-                                            sublabel={<Sublabel>{o.sublabel}</Sublabel>}
+                                            label={o.label}
+                                            sublabel={o.sublabel}
                                             key={o.optionId}
-                                            question={question}
                                             isSelected={true}
                                             onClick={() => {
                                                 dispatch(pollVotingActions.selectOption({ option: o, question }));
@@ -66,9 +65,8 @@ export const OptionList: React.FC<{ options: OrderedOption[]; question: Question
                     {unorderedOptions.map((o, i) => (
                         <Option
                             key={o.optionId}
-                            label={<Typography>{o.label}</Typography>}
-                            sublabel={<Sublabel>{o.sublabel}</Sublabel>}
-                            question={question}
+                            label={o.label}
+                            sublabel={o.sublabel}
                             isSelected={false}
                             onClick={() => {
                                 dispatch(pollVotingActions.selectOption({ option: o, question }));
@@ -87,11 +85,6 @@ export const OptionList: React.FC<{ options: OrderedOption[]; question: Question
 };
 
 const Container = styled.div``;
-
-const Sublabel = styled(Typography)`
-    font-size: ${p => p.theme.fontSizes.fs2};
-    color: ${p => p.theme.neutralColor.cs6};
-`;
 
 const Order = styled(Typography)<{ isHovering: boolean; isSelected: boolean }>`
     font-size: ${p => p.theme.fontSizes.fs4};

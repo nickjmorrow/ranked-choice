@@ -35,8 +35,8 @@ export const pollCreationReducer = (
             });
         case PollCreationActionTypeKeys.CREATE_QUESTION:
             return produce(state, draftState => {
-                const questionId = Math.max(...state.questions.map(q => q.questionId)) + 1;
-                const orderId = Math.max(...state.questions.map(q => q.orderId)) + 1;
+                const questionId = Math.max(Math.max(...state.questions.map(q => q.questionId)) + 1, 1);
+                const orderId = Math.max(Math.max(...state.questions.map(q => q.orderId)) + 1, 1);
                 const question: Question = {
                     questionId,
                     orderId,

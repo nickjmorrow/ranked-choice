@@ -1,34 +1,57 @@
-import * as React from 'react';
+// external
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Option as OptionType } from '~/polling/types/Option';
+
+// inter
 import { Typography } from '~/core/Typography';
-import { RemoveIconButton } from '~/core/RemoveIconButton';
-import { Input } from '~/core/Input';
+
+// intra
 import { OptionContainer } from '~/polling/components/OptionContainer';
 
 export const Option: React.FC<{
-    option: OptionType;
-    isEditable?: boolean;
-    onChange?: (label: string) => void;
-    onRemove: (option: OptionType) => void;
-}> = ({ option, onRemove: handleRemove, onChange: handleChange, isEditable }) => {
+    label: React.ReactNode;
+    sublabel: React.ReactNode;
+    isSelected?: boolean;
+    order?: (isHovering: boolean) => React.ReactNode;
+    onClick?: () => void;
+}> = ({
+    label,
+    sublabel,
+    order,
+    isSelected = false,
+    onClick: handleClick = () => {
+        return;
+    },
+}) => {
+    const [isHovering, setIsHovering] = useState(false);
+
     return (
-        <OptionContainer>
-            <InnerContainer>
-                {isEditable ? (
-                    <Input value={option.label} onChange={e => handleChange!(e.currentTarget.value)} />
-                ) : (
-                    <Typography>{option.label}</Typography>
-                )}
-                <RemoveIconButton onClick={() => handleRemove(option)} />
-            </InnerContainer>
-        </OptionContainer>
+        <Container
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+            onClick={handleClick}
+            isSelected={isSelected}
+        >
+            {order ? order(isHovering) : <div />}
+            <Content>
+                <Typography>{label}</Typography>
+                <Sublabel>{sublabel}</Sublabel>
+            </Content>
+        </Container>
     );
 };
 
-const InnerContainer = styled.div`
+const Container = styled(OptionContainer)<{ isSelected: boolean }>`
+    background-color: ${p => (p.isSelected ? p.theme.coreColor.cs2 : p.theme.backgroundColor)};
+`;
+
+const Content = styled.div`
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-end;
+`;
+
+const Sublabel = styled(Typography)`
+    font-size: ${p => p.theme.fontSizes.fs2};
+    color: ${p => p.theme.neutralColor.cs6};
 `;

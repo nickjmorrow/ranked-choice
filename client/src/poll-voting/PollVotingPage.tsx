@@ -1,14 +1,13 @@
 // external
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { useParams } from 'react-router';
-import { useTypedSelector } from '~/redux/useTypedSelector';
-import { Typography } from '~/core/Typography';
 import { useDispatch } from 'react-redux';
-import { pollVotingActions } from '~/poll-voting/state/pollVotingActions';
-import { Question } from '~/poll-voting/components/Question';
+import { useParams } from 'react-router';
 import { VoteOnPollButton } from '~/poll-voting/components/VoteOnPollButton';
-import { QuestionListContainer, PollContainer } from '~/polling/components';
+import { pollVotingActions } from '~/poll-voting/state/pollVotingActions';
+import { PollContainer } from '~/polling/components';
+import { QuestionList } from '~/polling/components/QuestionList';
+import { TitleDescription } from '~/polling/components/TitleDescription';
+import { useTypedSelector } from '~/redux/useTypedSelector';
 
 export const PollVotingPage: React.FC = () => {
     const { link } = useParams();
@@ -25,18 +24,9 @@ export const PollVotingPage: React.FC = () => {
 
     return (
         <PollContainer>
-            <Typography variant={'h2'}>{poll.title}</Typography>
-            <Description>{poll.description}</Description>
-            <QuestionListContainer>
-                {poll.questions.map(q => (
-                    <Question question={q} key={q.questionId} />
-                ))}
-            </QuestionListContainer>
+            <TitleDescription title={poll.title} description={poll.description} />
+            <QuestionList questions={poll.questions} />
             <VoteOnPollButton />
         </PollContainer>
     );
 };
-
-const Description = styled(Typography)`
-    line-height: 1.4rem;
-`;
