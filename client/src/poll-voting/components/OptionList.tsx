@@ -47,14 +47,14 @@ export const OptionList: React.FC<{ options: OrderedOption[]; question: Question
                                             label={<Typography>{o.label}</Typography>}
                                             sublabel={<Sublabel>{o.sublabel}</Sublabel>}
                                             key={o.optionId}
-                                            option={o}
                                             question={question}
+                                            isSelected={true}
                                             onClick={() => {
                                                 dispatch(pollVotingActions.selectOption({ option: o, question }));
                                             }}
-                                            order={(isHovering: boolean, isSelected: boolean) => (
-                                                <Order isHovering={isHovering} isSelected={isSelected}>
-                                                    {getOrderIdValue(isHovering, isSelected, o)}
+                                            order={(isHovering: boolean) => (
+                                                <Order isHovering={isHovering} isSelected={true}>
+                                                    {getOrderIdValue(isHovering, true, o)}
                                                 </Order>
                                             )}
                                         />
@@ -68,14 +68,14 @@ export const OptionList: React.FC<{ options: OrderedOption[]; question: Question
                             key={o.optionId}
                             label={<Typography>{o.label}</Typography>}
                             sublabel={<Sublabel>{o.sublabel}</Sublabel>}
-                            option={o}
                             question={question}
+                            isSelected={false}
                             onClick={() => {
                                 dispatch(pollVotingActions.selectOption({ option: o, question }));
                             }}
-                            order={(isHovering: boolean, isSelected: boolean) => (
-                                <Order isHovering={isHovering} isSelected={isSelected}>
-                                    {getOrderIdValue(isHovering, isSelected, o)}
+                            order={(isHovering: boolean) => (
+                                <Order isHovering={isHovering} isSelected={false}>
+                                    {getOrderIdValue(isHovering, false, o)}
                                 </Order>
                             )}
                         />

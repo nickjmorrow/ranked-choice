@@ -11,23 +11,22 @@ import { pollVotingSelectors } from '~/poll-voting/state/pollVotingSelectors';
 import { OptionContainer } from '~/polling/components';
 
 export const Option: React.FC<{
-    option: OrderedOption;
     question: QuestionWithVote;
     label: React.ReactNode;
     sublabel: React.ReactNode;
-    order?: (isHovering: boolean, isSelected: boolean) => React.ReactNode;
+    isSelected: boolean;
+    order?: (isHovering: boolean) => React.ReactNode;
     onClick?: () => void;
 }> = ({
-    option,
     label,
     sublabel,
     order,
+    isSelected,
     onClick: handleClick = () => {
         return;
     },
 }) => {
     const [isHovering, setIsHovering] = useState(false);
-    const isSelected = option.orderId !== null;
 
     return (
         <Container
@@ -36,7 +35,7 @@ export const Option: React.FC<{
             onClick={handleClick}
             isSelected={isSelected}
         >
-            {order ? order(isHovering, isSelected) : <div />}
+            {order ? order(isHovering) : <div />}
             <Content>
                 {label}
                 {sublabel}
