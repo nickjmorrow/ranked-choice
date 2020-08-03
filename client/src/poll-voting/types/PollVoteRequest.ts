@@ -1,3 +1,4 @@
 export interface PollVoteRequest {
-    optionIds: number[];
+    link: string;
+    questions: { questionId: number; options: { optionId: number; orderId: number }[] }[];
 }

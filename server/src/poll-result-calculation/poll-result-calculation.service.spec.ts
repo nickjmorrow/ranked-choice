@@ -14,6 +14,7 @@ const byRoundId = (a: Round, b: Round) => (a.roundId < b.roundId ? -1 : 1);
 
 const byOptionId = (a: OptionResult, b: OptionResult) => (a.optionId < b.optionId ? -1 : 1);
 const sortedByRoundIdOptionId = (questionResult: QuestionResult): QuestionResult => ({
+    questionId: 1,
     rounds: questionResult.rounds
         .sort(byRoundId)
         .map(r => ({ roundId: r.roundId, optionResults: r.optionResults.sort(byOptionId) })),
@@ -46,6 +47,7 @@ describe('PollResultCalculationService', () => {
 
     it('single round', () => {
         const calculateQuestionResultRequest: CalculateQuestionResultRequest = {
+            questionId: 1,
             optionIds: [1, 2],
 
             votes: [
@@ -67,6 +69,7 @@ describe('PollResultCalculationService', () => {
         };
 
         const expectedQuestionResult: QuestionResult = {
+            questionId: 1,
             rounds: [
                 {
                     roundId: 1,
@@ -93,6 +96,7 @@ describe('PollResultCalculationService', () => {
 
     it('two rounds, three candidates', () => {
         const calculateQuestionResultRequest: CalculateQuestionResultRequest = {
+            questionId: 1,
             optionIds: [1, 2, 3],
             votes: [
                 {
@@ -132,6 +136,7 @@ describe('PollResultCalculationService', () => {
         };
 
         const expectedQuestionResult: QuestionResult = {
+            questionId: 1,
             rounds: [
                 {
                     roundId: 1,
@@ -157,6 +162,7 @@ describe('PollResultCalculationService', () => {
 
     it('plurality instead of majority', () => {
         const calculateQuestionResultRequest: CalculateQuestionResultRequest = {
+            questionId: 1,
             optionIds: [1, 2, 3],
             votes: [
                 {
@@ -181,6 +187,7 @@ describe('PollResultCalculationService', () => {
         };
 
         const expectedQuestionResult: QuestionResult = {
+            questionId: 1,
             rounds: [
                 {
                     roundId: 1,
@@ -206,6 +213,7 @@ describe('PollResultCalculationService', () => {
 
     it('tie between two candidates', () => {
         const calculateQuestionResultRequest: CalculateQuestionResultRequest = {
+            questionId: 1,
             optionIds: [1, 2, 3],
             votes: [
                 {
@@ -227,6 +235,7 @@ describe('PollResultCalculationService', () => {
         };
 
         const expectedQuestionResult: QuestionResult = {
+            questionId: 1,
             rounds: [
                 {
                     roundId: 1,
@@ -252,6 +261,7 @@ describe('PollResultCalculationService', () => {
 
     it('throws when there are no options', () => {
         const calculateQuestionResultRequest: CalculateQuestionResultRequest = {
+            questionId: 1,
             optionIds: [],
             votes: [
                 {
@@ -272,6 +282,7 @@ describe('PollResultCalculationService', () => {
 
     it('throws when there is only 1 option', () => {
         const calculateQuestionResultRequest: CalculateQuestionResultRequest = {
+            questionId: 1,
             optionIds: [1],
             votes: [
                 {
@@ -290,19 +301,9 @@ describe('PollResultCalculationService', () => {
         );
     });
 
-    it('throws when there are no votes', () => {
-        const calculateQuestionResultRequest: CalculateQuestionResultRequest = {
-            optionIds: [1, 2],
-            votes: [],
-        };
-
-        expect(() => pollResultCalculationService.calculateQuestionResult(calculateQuestionResultRequest)).toThrowError(
-            'Expected vote list to contain at least one vote but it contained 0.',
-        );
-    });
-
     it('throws when a vote was made for an option that does not exist', () => {
         const calculateQuestionResultRequest: CalculateQuestionResultRequest = {
+            questionId: 1,
             optionIds: [7, 8],
             votes: [
                 {
@@ -327,6 +328,7 @@ describe('PollResultCalculationService', () => {
 
     it('throws there are multiple options with the same optionId', () => {
         const calculateQuestionResultRequest: CalculateQuestionResultRequest = {
+            questionId: 1,
             optionIds: [1, 2, 2, 3, 3],
             votes: [
                 {

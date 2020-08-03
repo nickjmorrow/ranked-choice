@@ -10,7 +10,7 @@ const getFontSize = ({
 }: {
     theme: Theme;
     variant?: Variant;
-    fontSizeVariant?: FontSizeVariant;
+    fontSizeVariant?: SizeVariant;
 }) => {
     if (fontSizeVariant === 'inherit') {
         return 'inherit';
@@ -19,6 +19,7 @@ const getFontSize = ({
     if (fontSizeVariant !== undefined) {
         return theme.fontSizes[fontSizeVariant as keyof Theme['fontSizes']];
     }
+
     switch (variant) {
         case 'h1':
         case 'h2':
@@ -55,7 +56,7 @@ const getTag = (variant?: Variant) => {
 
 type ColorVariant = 'inherit';
 
-type FontSizeVariant = keyof Theme['fontSizes'] | 'inherit';
+type SizeVariant = keyof Theme['fontSizes'] | 'inherit';
 
 const getColor = (theme: Theme, colorVariant?: ColorVariant) => {
     switch (colorVariant) {
@@ -69,11 +70,11 @@ const getColor = (theme: Theme, colorVariant?: ColorVariant) => {
 interface TypographyProps {
     variant?: Variant;
     colorVariant?: ColorVariant;
-    fontSizeVariant?: FontSizeVariant;
+    sizeVariant?: SizeVariant;
 }
 
 export const Typography = styled('span').attrs((p: TypographyProps) => ({ as: getTag(p.variant) }))<TypographyProps>`
     font-family: ${p => p.theme.fontFamilies.default};
-    font-size: ${p => getFontSize({ theme: p.theme, variant: p.variant, fontSizeVariant: p.fontSizeVariant })};
+    font-size: ${p => getFontSize({ theme: p.theme, variant: p.variant, fontSizeVariant: p.sizeVariant })};
     color: ${p => getColor(p.theme, p.colorVariant)};
 `;

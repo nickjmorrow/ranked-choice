@@ -16,6 +16,7 @@ import { pollCreationActions } from '~/poll-creation/state/pollCreationActions';
 import { Input } from '~/core/Input';
 import { pollCreationSelectors } from '~/poll-creation/state/pollCreationSelectors';
 import { RemoveIconButton } from '~/core/RemoveIconButton';
+import { QuestionContainer } from '~/polling/components';
 
 export const Question: React.FC<{ question: QuestionType }> = ({ question }) => {
     const dispatch = useDispatch();
@@ -34,7 +35,7 @@ export const Question: React.FC<{ question: QuestionType }> = ({ question }) => 
     const isEditable = question.questionId === currentInteractiveQuestionId;
 
     return (
-        <Card
+        <QuestionContainer
             key={question.questionId}
             onClick={() => dispatch(pollCreationActions.setCurrentInteractiveQuestionId(question.questionId))}
         >
@@ -67,7 +68,7 @@ export const Question: React.FC<{ question: QuestionType }> = ({ question }) => 
             ) : (
                 <>
                     <Typography style={{ display: 'block', marginBottom: '4px' }}>{question.content}</Typography>
-                    <Typography style={{ display: 'block', marginBottom: '8px' }} fontSizeVariant={'fs2'}>
+                    <Typography style={{ display: 'block', marginBottom: '8px' }} sizeVariant={'fs2'}>
                         {question.subheading}
                     </Typography>
                 </>
@@ -76,7 +77,6 @@ export const Question: React.FC<{ question: QuestionType }> = ({ question }) => 
                 {question.options.map(o => (
                     <Option
                         key={o.optionId}
-                        style={{ marginBottom: '8px', boxShadow: 'none', paddingLeft: '0' }}
                         option={o}
                         onRemove={() => handleRemoveOption(question, o)}
                         isEditable={isEditable}
@@ -87,7 +87,7 @@ export const Question: React.FC<{ question: QuestionType }> = ({ question }) => 
                 ))}
                 <CreateOption onCreate={(label: string) => handleCreateOption(question, label)} />
             </OptionsContainer>
-        </Card>
+        </QuestionContainer>
     );
 };
 const OptionsContainer = styled.div``;

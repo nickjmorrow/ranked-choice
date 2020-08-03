@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Poll } from '~/poll-result-calculation/types/Poll';
 import { PollResult } from '~/poll-result-calculation/types/PollResult';
-import { Vote } from '~/poll-result-calculation/types/Vote';
+import { RankedQuestionVote } from '~/poll-result-calculation/types/Vote';
 import { QuestionResult } from '~/poll-result-calculation/types/QuestionResult';
 import { RankedOption } from '~/poll-result-calculation/types/RankedOption';
 import { Round } from '~/poll-result-calculation/types/Round';
@@ -12,7 +12,8 @@ export interface CalculatePollResultRequest {
 
 export interface CalculateQuestionResultRequest {
     optionIds: number[];
-    votes: Vote[];
+    votes: RankedQuestionVote[];
+    questionId: number;
 }
 
 @Injectable()
@@ -22,8 +23,8 @@ export class PollResultCalculationService {
             poll: { questions },
         } = request;
 
-        const questionResults = questions.map(({ optionIds, votes }) =>
-            this.calculateQuestionResult({ optionIds, votes }),
+        const questionResults = questions.map(({ optionIds, votes, questionId }) =>
+            this.calculateQuestionResult({ optionIds, votes, questionId }),
         );
 
         return { questionResults };
@@ -37,6 +38,7 @@ export class PollResultCalculationService {
         let roundId = 1;
         const questionResult: QuestionResult = {
             rounds: [],
+            questionId: request.questionId,
         };
 
         const validCandidates = new Map<number, boolean>();
@@ -93,13 +95,8 @@ export class PollResultCalculationService {
             );
         }
 
-        if (votes.length === 0) {
-            throw new Error('Expected vote list to contain at least one vote but it contained 0.');
-        }
-
-        const invalidVotes = votes
-            .map(v => v.rankedOptions.map(c => c.optionId))
-            .flat()
+        const invalidVotes = []
+            .concat(...votes.map(v => v.rankedOptions.map(c => c.optionId)))
             .filter(v => !optionIds.includes(v));
         if (invalidVotes.length > 0) {
             throw new Error(

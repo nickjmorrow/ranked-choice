@@ -124,7 +124,7 @@ export const themeInputs = {
         fontSizes: defaultFontSizeInputs,
         fontWeights: defaultFontWeightInputs,
         fontFamilies: {
-            default: 'Roboto, sans-serif',
+            default: 'Montserrat, sans-serif',
             title: 'Oleo Script Swash Caps, cursive',
             monospace: 'Fira Mono, monospace',
         },

@@ -1,7 +1,8 @@
 import { Controller, Get, Param, Post, Body } from '@nestjs/common';
-import { PollProvider } from '~/polling/poll-provider';
-import { PollVoter } from '~/polling/poll-voter';
-import { PollCreator } from '~/polling/poll-creator';
+import { PollProvider } from '~/polling/pollProvider.service';
+import { PollVoter } from '~/polling/pollVoter.service';
+import { PollCreator } from '~/polling/pollCreator.service';
+import { PollResultProvider } from '~/polling/pollResultProvider.service';
 
 @Controller('polls')
 export class PollingController {
@@ -9,11 +10,17 @@ export class PollingController {
         private readonly pollProvider: PollProvider,
         private readonly pollVoter: PollVoter,
         private readonly pollCreator: PollCreator,
+        private readonly pollResultsProvider: PollResultProvider,
     ) {}
 
     @Get(':link')
     async getPollByLink(@Param() params) {
         return await this.pollProvider.getOnePoll(params.link);
+    }
+
+    @Get('/results/:link')
+    async getPollResultsByLink(@Param() params) {
+        return await this.pollResultsProvider.getPollResult(params.link);
     }
 
     @Post('/vote')

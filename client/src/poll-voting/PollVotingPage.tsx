@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { pollVotingActions } from '~/poll-voting/state/pollVotingActions';
 import { Question } from '~/poll-voting/components/Question';
 import { VoteOnPollButton } from '~/poll-voting/components/VoteOnPollButton';
+import { QuestionListContainer, PollContainer } from '~/polling/components';
 
 export const PollVotingPage: React.FC = () => {
     const { link } = useParams();
@@ -23,22 +24,19 @@ export const PollVotingPage: React.FC = () => {
     }
 
     return (
-        <Container>
-            <Typography variant={'h2'}>Poll Voting</Typography>
-            <Typography>{poll.title}</Typography>
-            <Typography>{poll.description}</Typography>
-            <QuestionsContainer>
+        <PollContainer>
+            <Typography variant={'h2'}>{poll.title}</Typography>
+            <Description>{poll.description}</Description>
+            <QuestionListContainer>
                 {poll.questions.map(q => (
                     <Question question={q} key={q.questionId} />
                 ))}
-            </QuestionsContainer>
+            </QuestionListContainer>
             <VoteOnPollButton />
-        </Container>
+        </PollContainer>
     );
 };
 
-const Container = styled.div``;
-
-const QuestionsContainer = styled.div`
-    padding: ${p => p.theme.spacing.ss16} 0;
+const Description = styled(Typography)`
+    line-height: 1.4rem;
 `;

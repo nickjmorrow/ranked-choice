@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { simulationSelectors } from '~/simulation/state/simulationSelectors';
 import { Typography } from '~/core/Typography';
 import { ResultGraph } from '~/simulation/components/ResultGraph';
-import { OptionBar } from '~/simulation/components/OptionBar';
+import { OptionBar } from '~/polling/components/OptionBar';
 import { useMedia } from 'react-media';
 import { mediaQueries } from '~/core/mediaQueries';
 import { simulationActions } from '~/simulation/state/simulationActions';
@@ -48,20 +48,21 @@ export const Results: React.FC = () => {
             <Typography variant={'h3'}>Results</Typography>
             <MainContainer>
                 <RoundsContainer>
-                    {rounds
-                        .slice()
+                    {[...rounds]
                         .sort((a, b) => (a.roundId < b.roundId ? 1 : -1))
                         .map(r => (
                             <RoundButtonBar key={r.roundId} onClick={() => setActiveRound(r)}>
                                 <Typography variant={'h3'} style={{ margin: '0' }}>{`Round ${r.roundId}`}</Typography>
-                                {activeRound?.roundId === r.roundId && (
+                                {activeRound && activeRound.roundId === r.roundId && (
                                     <OptionListContainer>
                                         {options.map(o => (
                                             <OptionContainer key={o.optionId}>
                                                 <Typography>
                                                     {o.label}:{' '}
-                                                    {r.optionResults.find(ovr => ovr.optionId === o.optionId)
-                                                        ?.voteCount ?? '0'}
+                                                    {r.optionResults.some(ovr => ovr.optionId === o.optionId)
+                                                        ? r.optionResults.find(ovr => ovr.optionId === o.optionId)!
+                                                              .optionId
+                                                        : '0'}
                                                 </Typography>
                                             </OptionContainer>
                                         ))}
@@ -74,6 +75,7 @@ export const Results: React.FC = () => {
                     <ResultGraph
                         style={{ marginTop: screenSize.small ? '0' : '-64px' }}
                         optionVoteResults={activeRound.optionResults}
+                        options={options}
                     />
                 )}
             </MainContainer>

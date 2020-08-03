@@ -29,7 +29,7 @@ const getOrmConfig = (): ConnectionOptions => {
     return {
         ...commonOptions,
         host: 'localhost',
-        port: 5432,
+        port: 35432,
         username: 'devuser',
         password: 'pass',
         database: 'postgres',
@@ -37,5 +37,7 @@ const getOrmConfig = (): ConnectionOptions => {
 };
 
 const ormConfig = getOrmConfig();
+
+console.log(ormConfig);
 
 export = ormConfig;

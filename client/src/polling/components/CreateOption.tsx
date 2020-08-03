@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { OptionBar } from '~/simulation/components/OptionBar';
 import { Input } from '~/core/Input';
 import styled from 'styled-components';
 import { CreateIconButton } from '~/core/CreateIconButton';
+import { OptionContainer } from '~/polling/components/OptionContainer';
 
 export const CreateOption: React.FC<{ onCreate: (label: string) => void }> = ({ onCreate: handleCreate }) => {
     const [optionLabel, setOptionLabel] = React.useState('');
@@ -14,7 +14,7 @@ export const CreateOption: React.FC<{ onCreate: (label: string) => void }> = ({ 
         setOptionLabel('');
     };
     return (
-        <OptionBar>
+        <OptionContainer>
             <InnerContainer>
                 <StyledInput
                     placeholder={'New Option'}
@@ -23,7 +23,7 @@ export const CreateOption: React.FC<{ onCreate: (label: string) => void }> = ({ 
                 />
                 <CreateIconButton onClick={handleCreateInternal} />
             </InnerContainer>
-        </OptionBar>
+        </OptionContainer>
     );
 };
 

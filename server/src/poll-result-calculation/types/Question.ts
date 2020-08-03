@@ -1,6 +1,7 @@
-import { Vote } from '~/poll-result-calculation/types/Vote';
+import { RankedQuestionVote } from '~/poll-result-calculation/types/Vote';
 
 export interface Question {
     optionIds: number[];
-    votes: Vote[];
+    votes: RankedQuestionVote[];
+    questionId: number;
 }

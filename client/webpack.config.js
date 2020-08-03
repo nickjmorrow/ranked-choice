@@ -60,7 +60,7 @@ module.exports = {
         https: true,
         hot: true,
         historyApiFallback: true,
-        writeToDisk: true,
+        writeToDisk: false,
         stats: {
             colors: true,
             hash: false,

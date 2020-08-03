@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Connection } from 'typeorm';
 import { CreatePollRequest } from '~/polling/types/CreatePollRequest';
 import { Poll } from '~/polling/poll.entity';
-import { UniqueLinkProvider } from '~/polling/unique-link-provider';
+import { UniqueLinkProvider } from '~/polling/uniqueLinkProvider.service';
 import { Question } from '~/polling/question.entity';
 import { Option } from '~/polling/option.entity';
 
@@ -53,8 +53,6 @@ export class PollCreator {
                 ] as Option[];
                 return agg;
             }, []);
-
-        console.log(options);
 
         await manager
             .createQueryBuilder()
