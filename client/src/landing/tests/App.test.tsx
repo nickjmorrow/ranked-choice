@@ -4,9 +4,10 @@ import { act } from 'react-dom/test-utils';
 import { App } from '~/landing/App';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import { rootReducer } from '~/redux/rootReducer';
+import { createRootReducer } from '~/redux/createRootReducer';
 import { MemoryRouter } from 'react-router';
 import { ThemeProvider } from '~/theming/ThemeProvider';
+import { history } from '~/redux';
 
 let container = (null as unknown) as HTMLDivElement;
 
@@ -33,7 +34,7 @@ afterEach(() => {
 
 it('renders with an error', () => {
     act(() => {
-        const store = createStore(rootReducer);
+        const store = createStore(createRootReducer(history));
         render(
             <MemoryRouter>
                 <Provider store={store}>

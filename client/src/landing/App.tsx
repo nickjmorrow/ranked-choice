@@ -15,16 +15,16 @@ import { SideNav } from '~/landing/SideNav';
 import { Footer } from '~/landing/Footer';
 import { Provider } from 'react-redux';
 import { store } from '~/store';
-import { BrowserRouter } from 'react-router-dom';
+import { history } from '~/redux';
 import { ThemeProvider } from '~/theming/ThemeProvider';
 import { mediaQueries } from '~/core/mediaQueries';
-import { getBaseUrl } from '~/core/getBaseUrl';
+import { ConnectedRouter } from 'connected-react-router';
 
 export const App: React.SFC = () => {
     const screenSize = useMedia({ queries: mediaQueries });
     return (
         <Provider store={store}>
-            <BrowserRouter>
+            <ConnectedRouter history={history}>
                 <ThemeProvider>
                     <Container>
                         <Header />
@@ -47,7 +47,7 @@ export const App: React.SFC = () => {
                         <Footer />
                     </Container>
                 </ThemeProvider>
-            </BrowserRouter>
+            </ConnectedRouter>
         </Provider>
     );
 };

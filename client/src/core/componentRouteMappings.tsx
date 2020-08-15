@@ -3,6 +3,7 @@ import { SimulationPage } from '~/simulation/pages/SimulationPage';
 import { CreatePollPage } from '~/poll-creation/pages/CreatePollPage';
 import { PollVotingPage } from '~/poll-voting/PollVotingPage';
 import { PollResultPage } from '~/poll-results/pages/PollResultPage';
+import { VoteSuccessPage } from '~/poll-voting/pages/VoteSuccessPage';
 
 export const componentRouteMappings = [
     {
@@ -30,6 +31,13 @@ export const componentRouteMappings = [
         component: PollVotingPage,
         route: '/voting/:link',
         label: 'Voting',
+        isVisible: false,
+        exact: false,
+    },
+    {
+        component: VoteSuccessPage,
+        route: '/voting-success',
+        label: 'Voting Success',
         isVisible: false,
         exact: false,
     },

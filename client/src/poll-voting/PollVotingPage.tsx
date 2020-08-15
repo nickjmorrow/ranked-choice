@@ -1,16 +1,17 @@
 // external
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router';
 import { VoteOnPollButton } from '~/poll-voting/components/VoteOnPollButton';
 import { pollVotingActions } from '~/poll-voting/state/pollVotingActions';
 import { PollContainer } from '~/polling/components';
 import { QuestionList } from '~/polling/components/QuestionList';
 import { TitleDescription } from '~/polling/components/TitleDescription';
 import { useTypedSelector } from '~/redux/useTypedSelector';
+import { routingSelectors } from '~/routing/routingSelectors';
 
 export const PollVotingPage: React.FC = () => {
-    const { link } = useParams();
+    const link = useTypedSelector(routingSelectors.getParam('/voting/:id', 'id'));
+
     const poll = useTypedSelector(state => state.pollVotingState.poll);
     const dispatch = useDispatch();
 

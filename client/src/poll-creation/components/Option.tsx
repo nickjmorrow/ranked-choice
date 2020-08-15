@@ -1,11 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Option as OptionType } from '~/polling/types/Option';
-import { Typography } from '~/core/Typography';
-import { CloseIcon } from '~/core/CloseIcon';
 import { Input } from '~/core/Input';
 import { Option as GenericOption } from '~/polling/components';
-import { Question } from '~/polling/types/Question';
 
 export const Option: React.FC<{
     option: OptionType;
@@ -21,16 +18,6 @@ export const Option: React.FC<{
 
     return (
         <GenericOption label={label} sublabel={sublabel} />
-        // <OptionContainer>
-        //     <InnerContainer>
-        // {isEditable ? (
-        //     <Input value={option.label} onChange={e => handleChange!(e.currentTarget.value)} />
-        // ) : (
-        //     <Typography>{option.label}</Typography>
-        // )}
-        //         <RemoveIconButton onClick={() => handleRemove(option)} />
-        //     </InnerContainer>
-        // </OptionContainer>
     );
 };
 
