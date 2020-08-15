@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { VoteOnPollButton } from '~/poll-voting/components/VoteOnPollButton';
 import { pollVotingActions } from '~/poll-voting/state/pollVotingActions';
-import { PollContainer } from '~/polling/components';
+import { PollContainer } from '~/polling/components/PollContainer';
 import { QuestionList } from '~/polling/components/QuestionList';
 import { TitleDescription } from '~/polling/components/TitleDescription';
 import { useTypedSelector } from '~/redux/useTypedSelector';

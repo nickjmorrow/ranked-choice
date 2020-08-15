@@ -43,6 +43,7 @@ export const Option: React.FC<{
 
 const Container = styled(OptionContainer)<{ isSelected: boolean }>`
     background-color: ${p => (p.isSelected ? p.theme.coreColor.cs2 : p.theme.backgroundColor)};
+    max-width: ${p => p.theme.spacing.ss128};
 `;
 
 const Content = styled.div`

@@ -1,14 +1,15 @@
-import * as React from 'react';
-import { VictoryChart, VictoryTheme, VictoryBar, VictoryAxis } from 'victory';
-import { OptionVoteResult } from '~/simulation/types/OptionVoteResult';
-import { useSelector } from 'react-redux';
-import { simulationSelectors } from '~/simulation/state/simulationSelectors';
+// external
+import React from 'react';
 import styled from 'styled-components';
+import { VictoryChart, VictoryTheme, VictoryBar, VictoryAxis } from 'victory';
+
+// inter
 import { Option } from '~/polling/types/Option';
+import { OptionResult } from '~/polling/types/OptionResult';
 
 export const ResultGraph: React.FC<{
     options: Option[];
-    optionVoteResults: OptionVoteResult[];
+    optionVoteResults: OptionResult[];
     style?: React.CSSProperties;
 }> = ({ options, optionVoteResults, style }) => {
     return (
@@ -28,4 +29,7 @@ export const ResultGraph: React.FC<{
 const Container = styled.div`
     width: 100%;
     max-width: 500px;
+    position: relative;
+    left: -28px;
+    top: -28px;
 `;

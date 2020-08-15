@@ -5,13 +5,11 @@ import { Button } from '~/core/Button';
 import { useDispatch } from 'react-redux';
 import { pollCreationActions } from '~/poll-creation/state/pollCreationActions';
 
-export const CreateQuestionButton: React.FC = () => {
+export const CreateQuestionButton: React.FC<{ style?: React.CSSProperties }> = ({ style }) => {
     const dispatch = useDispatch();
     return (
-        <Container>
-            <Button onClick={() => dispatch(pollCreationActions.createQuestion())}>Add Question</Button>
-        </Container>
+        <Button style={style} onClick={() => dispatch(pollCreationActions.createQuestion())}>
+            Add Question
+        </Button>
     );
 };
-
-const Container = styled.div``;

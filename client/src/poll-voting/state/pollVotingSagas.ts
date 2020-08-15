@@ -1,8 +1,13 @@
+// external
 import axios from 'axios';
-import { call, put, takeEvery } from 'redux-saga/effects';
-import { handleError } from '~/core';
-import { pollVotingActions, PollVotingActionTypeKeys } from '~/poll-voting/state/pollVotingActions';
+import { call, takeEvery, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
+
+// inter
+import { handleError } from '~/core';
+
+// intra
+import { pollVotingActions, PollVotingActionTypeKeys } from '~/poll-voting/state/pollVotingActions';
 
 const apiRoutes = {
     getPoll: {
@@ -32,7 +37,7 @@ function* watchGetPollAsync() {
 function* voteOnPollAsync(action: ReturnType<typeof pollVotingActions.voteOnPoll.request>) {
     try {
         yield call(apiRoutes.voteOnPoll.method, apiRoutes.voteOnPoll.route, action.payload);
-        yield push('/voting-success');
+        yield put(push('/voting-success'));
     } catch (error) {
         handleError(error);
         yield put(pollVotingActions.voteOnPoll.failure(error));

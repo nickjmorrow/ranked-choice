@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { OrderedOption, FilledOrderedOption, QuestionWithVote } from '~/poll-voting/types/QuestionWithVote';
-import { Option } from '~/polling/components';
+import { Option } from '~/polling/components/Option';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { Typography } from '~/core/Typography';
 import { pollVotingSelectors } from '~/poll-voting/state/pollVotingSelectors';

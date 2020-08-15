@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Option as OptionType } from '~/polling/types/Option';
 import { Input } from '~/core/Input';
-import { Option as GenericOption } from '~/polling/components';
+import { Option as GenericOption } from '~/polling/components/Option';
 
 export const Option: React.FC<{
     option: OptionType;
@@ -16,9 +16,7 @@ export const Option: React.FC<{
         <SublabelInput value={option.sublabel || ''} onChange={e => handleSublabelChange(e.currentTarget.value)} />
     );
 
-    return (
-        <GenericOption label={label} sublabel={sublabel} />
-    );
+    return <GenericOption label={label} sublabel={sublabel} />;
 };
 
 const InnerContainer = styled.div`

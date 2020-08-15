@@ -6,7 +6,7 @@ import { pollCreationActions } from '~/poll-creation/state/pollCreationActions';
 import { CreatePollRequest } from '~/poll-creation/types/CreatePollRequest';
 import { useTypedSelector } from '~/redux/useTypedSelector';
 
-export const CreatePollButton: React.FC = () => {
+export const CreatePollButton: React.FC<{ style?: React.CSSProperties }> = ({ style }) => {
     const dispatch = useDispatch();
     const poll = useTypedSelector(state => state.pollCreationState);
     const createPollRequest: CreatePollRequest = {

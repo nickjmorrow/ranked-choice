@@ -21,7 +21,6 @@ const Container = styled.div``;
 
 const Title = styled(Typography)`
     display: inline-block;
-    color: ${p => p.theme.neutralColor.cs5};
     font-size: ${p => p.theme.fontSizes.fs1};
     margin-bottom: ${p => p.theme.spacing.ss4};
 `;
@@ -32,7 +31,7 @@ const Content = styled(Typography)`
 
 const Subheading = styled(Typography)`
     display: block;
-    color: ${p => p.theme.neutralColor.cs5};
+    color: ${p => p.theme.neutralColor.cs7};
     font-size: ${p => p.theme.fontSizes.fs2};
     margin-bottom: ${p => p.theme.spacing.ss4};
 `;

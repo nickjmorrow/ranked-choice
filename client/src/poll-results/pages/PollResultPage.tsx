@@ -1,16 +1,19 @@
 // external
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { useTypedSelector } from '~/redux/useTypedSelector';
 import { useDispatch } from 'react-redux';
-import { pollVotingActions } from '~/poll-voting/state/pollVotingActions';
-import { pollResultActions } from '~/poll-results/state/pollResultActions';
-import { QuestionResult } from '~/poll-results/components/QuestionResult';
+
+// inter
+import { useTypedSelector } from '~/redux/useTypedSelector';
+import { QuestionResult } from '~/polling/components/QuestionResult';
 import { TitleDescription } from '~/polling/components/TitleDescription';
-import { PollContainer, QuestionListContainer } from '~/polling/components';
-import { Typography } from '~/core/Typography';
-import { theme } from '~/theming/theme';
+import { PollContainer } from '~/polling/components/PollContainer';
+import { QuestionListContainer } from '~/polling/components/QuestionListContainer';
+import { QuestionHeader } from '~/polling/components/QuestionHeader';
 import { routingSelectors } from '~/routing/routingSelectors';
+
+// intra
+import { pollResultActions } from '~/poll-results/state/pollResultActions';
+import { QuestionContainer } from '~/polling/components/QuestionContainer';
 
 export const PollResultPage: React.FC = () => {
     const link = useTypedSelector(routingSelectors.getParam('/results/:link', 'link'));
@@ -28,27 +31,22 @@ export const PollResultPage: React.FC = () => {
         poll: { title, description },
         questionResults,
     } = pollResult;
-    const areAnyVotesCast = questionResults
-        .map(qr => qr.rounds.map(r => r.optionResults.map(or => or.voteCount)))
-        .flat(3)
-        .some(c => c !== 0);
-
-    let content = areAnyVotesCast ? (
-        <QuestionListContainer>
-            {questionResults.map(qr => (
-                <QuestionResult questionResult={qr} key={qr.question.questionId} />
-            ))}
-        </QuestionListContainer>
-    ) : (
-        <Typography style={{ marginTop: theme.spacing.ss16, display: 'block' }}>
-            No votes have yet been cast for this poll.
-        </Typography>
-    );
 
     return (
         <PollContainer>
             <TitleDescription title={title} description={description} />
-            {content}
+            <QuestionListContainer>
+                {questionResults.map(qr => (
+                    <QuestionContainer key={qr.question.questionId}>
+                        <QuestionHeader
+                            orderId={qr.question.questionId}
+                            content={qr.question.content}
+                            subheading={qr.question.subheading}
+                        />
+                        <QuestionResult options={qr.question.options} rounds={qr.rounds} key={qr.question.questionId} />
+                    </QuestionContainer>
+                ))}
+            </QuestionListContainer>
         </PollContainer>
     );
 };

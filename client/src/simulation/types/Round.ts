@@ -1,6 +1,6 @@
-import { OptionVoteResult } from '~/simulation/types/OptionVoteResult';
+import { OptionResult } from '~/polling/types/OptionResult';
 
 export interface Round {
     roundId: number;
-    optionVoteResults: OptionVoteResult[];
+    optionVoteResults: OptionResult[];
 }

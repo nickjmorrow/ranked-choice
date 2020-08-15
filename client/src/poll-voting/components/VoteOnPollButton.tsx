@@ -15,9 +15,5 @@ export const VoteOnPollButton: React.FC = () => {
     const handleClick = () => {
         dispatch(pollVotingActions.voteOnPoll.request(request));
     };
-    return (
-        <Button style={{ width: '100%' }} onClick={handleClick}>
-            Vote
-        </Button>
-    );
+    return <Button onClick={handleClick}>Vote</Button>;
 };
