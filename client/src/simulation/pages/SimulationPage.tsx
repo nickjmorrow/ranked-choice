@@ -3,9 +3,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 // inter
-import { OptionsManager } from '~/simulation/components/OptionsManager';
-import { VotesManager } from '~/simulation/components/VotesManager';
-import { Results } from '~/simulation/components/Results';
+import { CreateOptionsPage } from '~/simulation/pages/CreateOptionsPage';
+import { VotingPage } from '~/simulation/pages/VotingPage';
+import { ResultsPage } from '~/simulation/pages/ResultsPage';
 
 // intra
 import { PollContainer } from '~/polling/components/PollContainer';
@@ -16,9 +16,9 @@ import { routingSelectors } from '~/routing';
 
 export const SimulationPage: React.FC = () => {
     const states = [
-        { component: OptionsManager, label: 'Create', stateId: 1, route: 'create' },
-        { component: VotesManager, label: 'Vote', stateId: 2, route: 'vote' },
-        { component: Results, label: 'Results', stateId: 3, route: 'results' },
+        { component: CreateOptionsPage, label: 'Create', stateId: 1, route: 'create' },
+        { component: VotingPage, label: 'Vote', stateId: 2, route: 'vote' },
+        { component: ResultsPage, label: 'Results', stateId: 3, route: 'results' },
     ];
     const subRoute = useTypedSelector(routingSelectors.getParam('/simulation/:link', 'link'));
 
@@ -37,19 +37,16 @@ export const SimulationPage: React.FC = () => {
                     </Link>
                 ))}
             </StateListContainer>
-            <CurrentComponentContainer>
-                <Component />
-            </CurrentComponentContainer>
+            <Component />
         </PollContainer>
     );
 };
-
-const CurrentComponentContainer = styled.div``;
 
 const StateListContainer = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    margin-bottom: ${p => p.theme.spacing.ss16};
 `;
 
 const StateContainer = styled.div<{ isActive: boolean }>`
@@ -60,7 +57,6 @@ const StateContainer = styled.div<{ isActive: boolean }>`
     background-color: ${p => (p.isActive ? p.theme.coreColor.cs3 : p.theme.coreColor.cs2)};
     transition: all ${p => p.theme.transitions.fast};
     cursor: pointer;
-
     &: hover {
         background-color: ${p => (p.isActive ? p.theme.coreColor.cs3 : p.theme.coreColor.cs1)};
         transition: all ${p => p.theme.transitions.fast};

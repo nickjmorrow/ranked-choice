@@ -12,6 +12,7 @@ import { Option } from '~/polling/components/Option';
 import { OrderedOption, FilledOrderedOption, QuestionWithVote } from '~/poll-voting/types/QuestionWithVote';
 import { pollVotingSelectors } from '~/poll-voting/state/pollVotingSelectors';
 import { pollVotingActions } from '~/poll-voting/state/pollVotingActions';
+import { OptionListContainer } from '~/polling/components/OptionListContainer';
 
 export const OptionList: React.FC<{ options: OrderedOption[]; question: QuestionWithVote }> = ({
     options,
@@ -34,7 +35,7 @@ export const OptionList: React.FC<{ options: OrderedOption[]; question: Question
     return (
         <Droppable droppableId={question.questionId.toString()}>
             {provided => (
-                <Container ref={provided.innerRef} {...provided.droppableProps}>
+                <OptionListContainer ref={provided.innerRef} {...provided.droppableProps}>
                     {orderedOptions
                         .slice()
                         .sort((a, b) => (a.orderId < b.orderId ? -1 : 1))
@@ -82,13 +83,11 @@ export const OptionList: React.FC<{ options: OrderedOption[]; question: Question
                             )}
                         />
                     ))}
-                </Container>
+                </OptionListContainer>
             )}
         </Droppable>
     );
 };
-
-const Container = styled.div``;
 
 const Order = styled(Typography)<{ isHovering: boolean; isSelected: boolean }>`
     font-size: ${p => p.theme.fontSizes.fs4};

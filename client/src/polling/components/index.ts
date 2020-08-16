@@ -1,6 +1,6 @@
 export { CreateOption } from '~/polling/components/CreateOption';
 export { Option } from '~/polling/components/Option';
-export { OptionBar } from '~/polling/components/OptionBar';
+export { Paper } from '~/polling/components/Paper';
 export { OptionContainer } from '~/polling/components/OptionContainer';
 export { PollContainer } from '~/polling/components/PollContainer';
 export { Question } from '~/polling/components/Question';

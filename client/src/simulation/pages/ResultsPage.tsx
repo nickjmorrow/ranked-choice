@@ -5,7 +5,7 @@ import { QuestionResult } from '~/polling/components/QuestionResult';
 import { simulationActions } from '~/simulation/state/simulationActions';
 import { simulationSelectors } from '~/simulation/state/simulationSelectors';
 
-export const Results: React.FC = () => {
+export const ResultsPage: React.FC = () => {
     const options = useSelector(simulationSelectors.getOptions);
     const votes = useSelector(simulationSelectors.getVotes);
     const pollResult = useSelector(simulationSelectors.getPollResult);

@@ -1,26 +1,29 @@
-import * as React from 'react';
+import React from 'react';
 import { Input } from '~/core/Input';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { OptionContainer } from '~/polling/components/OptionContainer';
 import { Option } from '~/polling/components/Option';
 
-export const CreateOption: React.FC<{ onCreate: (label: string) => void }> = ({ onCreate: handleCreate }) => {
-    const [optionLabel, setOptionLabel] = React.useState('');
-    const handleChange = (label: string) => {
-        handleCreate(label);
-        setOptionLabel('');
-    };
+interface Props {
+    onChange: (label: string) => void;
+}
+
+export const CreateOption: React.FC<Props> = ({ onChange: handleChange }) => {
     return (
+        // <OptionContainer>
+        //     <InnerContainer>
+
+        //     </InnerContainer>
+        // </OptionContainer>
         <Option
             label={
                 <StyledInput
                     placeholder={'New Option'}
-                    style={{ textAlign: 'right' }}
-                    value={optionLabel}
+                    value={''}
                     onChange={e => handleChange(e.currentTarget.value)}
+                    style={{ textAlign: 'right' }}
                 />
             }
-            sublabel={<div />}
         />
     );
 };

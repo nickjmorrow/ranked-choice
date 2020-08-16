@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Link } from '~/core/Link';
 import styled from 'styled-components';
 import { componentRouteMappings } from '~/core/componentRouteMappings';

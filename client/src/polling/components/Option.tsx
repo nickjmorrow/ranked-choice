@@ -15,22 +15,22 @@ const noOp = () => {
 
 export const Option: React.FC<{
     label: React.ReactNode;
-    sublabel: React.ReactNode;
+    sublabel?: React.ReactNode;
     isSelected?: boolean;
-    onRemove?: () => void;
+    removeButton?: React.ReactNode;
     showOrderIdFunc?: (isHovering: boolean) => React.ReactNode;
     onClick?: () => void;
+    containerStyle?: React.CSSProperties;
 }> = ({
     label,
     sublabel,
     showOrderIdFunc,
     isSelected = false,
+    removeButton,
     onClick: handleClick = noOp,
-    onRemove: handleRemove,
+    containerStyle,
 }) => {
     const [isHovering, setIsHovering] = useState(false);
-
-    const isRemovable = handleRemove !== undefined;
 
     return (
         <Container
@@ -38,14 +38,13 @@ export const Option: React.FC<{
             onMouseLeave={() => setIsHovering(false)}
             onClick={handleClick}
             isSelected={isSelected}
+            style={containerStyle}
         >
-            {isRemovable && (
-                <CloseIcon style={{ position: 'absolute', top: '5px', right: '0px', height: '20px', width: '20px' }} onClick={handleRemove} />
-            )}
+            {removeButton}
             {showOrderIdFunc ? showOrderIdFunc(isHovering) : <div />}
             <Content>
                 <Typography>{label}</Typography>
-                <Sublabel>{sublabel}</Sublabel>
+                {sublabel && <Sublabel>{sublabel}</Sublabel>}
             </Content>
         </Container>
     );
@@ -53,7 +52,6 @@ export const Option: React.FC<{
 
 const Container = styled(OptionContainer)<{ isSelected: boolean }>`
     background-color: ${p => (p.isSelected ? p.theme.coreColor.cs2 : p.theme.backgroundColor)};
-    max-width: ${p => p.theme.spacing.ss128};
     position: relative;
 `;
 

@@ -6,20 +6,22 @@ import { CalculatePollResultRequest } from '~/polling/types/CalculatePollResultR
 import { PollResult } from '~/polling/types/PollResult';
 
 export enum SimulationActionTypeKeys {
-    ADD_OPTION = 'ADD_OPTION',
-    UPDATE_OPTION = 'UPDATE_OPTION',
-    REMOVE_OPTION = 'REMOVE_OPTION',
-    ADD_VOTE = 'ADD_VOTE',
-    UPDATE_VOTE = 'UPDATE_VOTE',
-    REMOVE_VOTE = 'REMOVE_VOTE',
-    ADD_CHOICE = 'ADD_CHOICE',
-    REMOVE_CHOICE = 'REMOVE_CHOICE',
-    CALCULATE_POLL_RESULT = 'CALCULATE_POLL_RESULT',
-    CALCULATE_POLL_RESULT_SUCCESS = 'CALCULATE_POLL_RESULT_SUCCESS',
-    CALCULATE_POLL_RESULT_FAILURE = 'CALCULATE_POLL_RESULT_FAILURE',
+    ADD_OPTION = 'SIMULATION_ADD_OPTION',
+    UPDATE_OPTION = 'SIMULATION_UPDATE_OPTION',
+    REMOVE_OPTION = 'SIMULATION_REMOVE_OPTION',
+    ADD_VOTE = 'SIMULATION_ADD_VOTE',
+    UPDATE_VOTE = 'SIMULATION_UPDATE_VOTE',
+    REMOVE_VOTE = 'SIMULATION_REMOVE_VOTE',
+    ADD_CHOICE = 'SIMULATION_ADD_CHOICE',
+    REMOVE_CHOICE = 'SIMULATION_REMOVE_CHOICE',
+    CALCULATE_POLL_RESULT = 'SIMULATION_CALCULATE_POLL_RESULT',
+    CALCULATE_POLL_RESULT_SUCCESS = 'SIMULATION_CALCULATE_POLL_RESULT_SUCCESS',
+    CALCULATE_POLL_RESULT_FAILURE = 'SIMULATION_CALCULATE_POLL_RESULT_FAILURE',
 }
 
 const addOption = (label: Option['label']) => action(SimulationActionTypeKeys.ADD_OPTION, label);
+
+const updateOption = (option: Option) => action(SimulationActionTypeKeys.UPDATE_OPTION, option);
 
 const removeOption = (option: Option) => action(SimulationActionTypeKeys.REMOVE_OPTION, option);
 
@@ -41,6 +43,7 @@ const calculatePollResult = {
 
 export const simulationActions = {
     addOption,
+    updateOption,
     removeOption,
     addVote,
     addChoice,
