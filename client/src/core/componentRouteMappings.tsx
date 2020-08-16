@@ -23,10 +23,10 @@ export const componentRouteMappings = [
     },
     {
         component: SimulationPage,
-        route: '/simulation',
+        route: '/simulation/*',
         label: 'Simulation',
         isVisible: true,
-        exact: true,
+        exact: false,
     },
     {
         component: PollVotingPage,

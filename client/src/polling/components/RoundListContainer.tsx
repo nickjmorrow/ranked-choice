@@ -1,6 +1,8 @@
 // external
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+
+// inter
 import { Round } from '~/polling/types/Round';
 import { Option } from '~/polling/types/Option';
 import { RoundButtonBar } from '~/polling/components/RoundButtonBar';
@@ -15,15 +17,18 @@ export const RoundListContainer: React.FC<{
     const isExpanded = (round: Round) => round.roundId === activeRound.roundId;
     return (
         <Container style={style}>
-            {rounds.map(r => (
-                <RoundButtonBar
-                    key={r.roundId}
-                    round={r}
-                    options={options}
-                    isExpanded={isExpanded(r)}
-                    onClick={() => handleClick(r)}
-                />
-            ))}
+            {rounds
+                .slice()
+                .sort((a, b) => (a.roundId < b.roundId ? 1 : -1))
+                .map(r => (
+                    <RoundButtonBar
+                        key={r.roundId}
+                        round={r}
+                        options={options}
+                        isExpanded={isExpanded(r)}
+                        onClick={() => handleClick(r)}
+                    />
+                ))}
         </Container>
     );
 };

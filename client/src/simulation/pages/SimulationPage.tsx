@@ -1,36 +1,44 @@
-import * as React from 'react';
+// external
+import React from 'react';
 import styled from 'styled-components';
-import { Typography } from '~/core/Typography';
+
+// inter
 import { OptionsManager } from '~/simulation/components/OptionsManager';
 import { VotesManager } from '~/simulation/components/VotesManager';
 import { Results } from '~/simulation/components/Results';
+
+// intra
 import { PollContainer } from '~/polling/components/PollContainer';
+import { Typography } from '~/core/Typography';
+import { Link } from '~/core/Link';
+import { useTypedSelector } from '~/redux';
+import { routingSelectors } from '~/routing';
 
 export const SimulationPage: React.FC = () => {
     const states = [
-        { component: OptionsManager, label: 'Options', stateId: 1 },
-        { component: VotesManager, label: 'Votes', stateId: 2 },
-        { component: Results, label: 'Results', stateId: 3 },
+        { component: OptionsManager, label: 'Create', stateId: 1, route: 'create' },
+        { component: VotesManager, label: 'Vote', stateId: 2, route: 'vote' },
+        { component: Results, label: 'Results', stateId: 3, route: 'results' },
     ];
-    const [currentState, setCurrentState] = React.useState(states[0]);
+    const subRoute = useTypedSelector(routingSelectors.getParam('/simulation/:link', 'link'));
+
+    const activeState = states.find(s => s.route === subRoute)!;
+    const Component = activeState.component;
 
     return (
         <PollContainer>
             <Typography variant={'h2'}>Voting Simulation</Typography>
             <StateListContainer>
                 {states.map(s => (
-                    <StateContainer
-                        isActive={currentState.stateId === s.stateId}
-                        key={s.stateId}
-                        onClick={() => setCurrentState(s)}
-                    >
-                        <Typography> {s.label}</Typography>
-                    </StateContainer>
+                    <Link key={s.route} route={`/simulation/${s.route}`}>
+                        <StateContainer key={s.stateId} isActive={s.route === activeState.route}>
+                            <Typography> {s.label}</Typography>
+                        </StateContainer>
+                    </Link>
                 ))}
             </StateListContainer>
-
             <CurrentComponentContainer>
-                <currentState.component />
+                <Component />
             </CurrentComponentContainer>
         </PollContainer>
     );
