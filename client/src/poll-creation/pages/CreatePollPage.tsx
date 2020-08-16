@@ -21,12 +21,12 @@ export const CreatePollPage: React.FC = () => {
     const pollCreationState = useSelector(pollCreationSelectors.getPollCreationState);
     const { title, description } = pollCreationState;
     const dispatch = useDispatch();
-    const maxWidth = 400;
+    const maxWidth = 500;
     const titleNode = (
         <TextArea
             value={title}
             placeholder={'Untitled Poll'}
-            style={{ maxWidth: `${maxWidth}px`, marginLeft: '-5px' }}
+            style={{ maxWidth: `${maxWidth}px`, width: '100%', marginLeft: '-5px' }}
             onChange={e => dispatch(pollCreationActions.updateTitle(e.currentTarget.value))}
         />
     );
@@ -40,17 +40,19 @@ export const CreatePollPage: React.FC = () => {
         />
     );
     return (
-        <PollContainer style={{ maxWidth: theme.spacing.ss128 }}>
-            <TitleDescription title={titleNode} description={descriptionNode} />
-            <QuestionListContainer>
-                {pollCreationState.questions.map(q => (
-                    <Question question={q} key={q.orderId} />
-                ))}
-            </QuestionListContainer>
-            <ButtonsContainer>
-                <CreateQuestionButton style={{ marginBottom: theme.spacing.ss8 }} />
-                <CreatePollButton />
-            </ButtonsContainer>
+        <PollContainer>
+            <InnerContainer>
+                <TitleDescription title={titleNode} description={descriptionNode} />
+                <QuestionListContainer>
+                    {pollCreationState.questions.map(q => (
+                        <Question question={q} key={q.orderId} />
+                    ))}
+                </QuestionListContainer>
+                <ButtonsContainer>
+                    <CreateQuestionButton style={{ marginBottom: theme.spacing.ss8 }} />
+                    <CreatePollButton />
+                </ButtonsContainer>
+            </InnerContainer>
         </PollContainer>
     );
 };
@@ -59,3 +61,5 @@ const ButtonsContainer = styled.div`
     display: flex;
     flex-direction: column;
 `;
+
+const InnerContainer = styled.div``;

@@ -13,7 +13,6 @@ import { componentRouteMappings } from '~/core/componentRouteMappings';
 
 // intra
 import { Header } from '~/landing/Header';
-import { SideNav } from '~/landing/SideNav';
 import { Footer } from '~/landing/Footer';
 import { store } from '~/store';
 import { history } from '~/redux';
@@ -21,7 +20,6 @@ import { ThemeProvider } from '~/theming/ThemeProvider';
 import { mediaQueries } from '~/core/mediaQueries';
 
 export const App: React.SFC = () => {
-    const screenSize = useMedia({ queries: mediaQueries });
     return (
         <Provider store={store}>
             <ConnectedRouter history={history}>
@@ -29,7 +27,6 @@ export const App: React.SFC = () => {
                     <Container>
                         <Header />
                         <Body>
-                            {!screenSize.small && <SideNav />}
                             <Main>
                                 <Switch>
                                     {componentRouteMappings.map(crm => (
@@ -55,12 +52,16 @@ export const App: React.SFC = () => {
 const Body = styled.div`
     display: flex;
     flex: 1;
+    justify-content: center;
 `;
 
 const Main = styled.main`
     ${({ theme }) => `
+		display:
     	flex: 1;
-    	margin: ${theme.spacing.ss8} ${theme.spacing.ss8} ${theme.spacing.ss12} ${theme.spacing.ss8};
+		margin: ${theme.spacing.ss8};
+		max-width: 800px;
+		width: 100%;
 	`}
 `;
 

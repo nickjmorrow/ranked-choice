@@ -1,8 +1,10 @@
+// external
 import React from 'react';
-import { Link } from '~/core/Link';
 import styled from 'styled-components';
+
+// inter
+import { Link } from '~/core/Link';
 import { componentRouteMappings } from '~/core/componentRouteMappings';
-import { MenuIcon } from '~/core/MenuIcon';
 
 export const SmallScreenMenu: React.FC<{ onRequestClose: () => void }> = ({ onRequestClose: handleRequestClose }) => {
     return (
@@ -11,7 +13,7 @@ export const SmallScreenMenu: React.FC<{ onRequestClose: () => void }> = ({ onRe
                 .filter(crm => crm.isVisible)
                 .map(crm => (
                     <NavLink key={crm.route} onClick={handleRequestClose}>
-                        <StyledLink route={crm.route}>{crm.label}</StyledLink>
+                        <StyledLink route={crm.link || crm.route}>{crm.label}</StyledLink>
                     </NavLink>
                 ))}
         </Container>

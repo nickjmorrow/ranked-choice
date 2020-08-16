@@ -10,7 +10,7 @@ export const SideNav: React.FC = () => {
                 .filter(crm => crm.isVisible)
                 .map(crm => (
                     <NavLink key={crm.route}>
-                        <StyledLink route={crm.route}>{crm.label}</StyledLink>
+                        <StyledLink route={crm.link || crm.route}>{crm.label}</StyledLink>
                     </NavLink>
                 ))}
         </StyledNav>

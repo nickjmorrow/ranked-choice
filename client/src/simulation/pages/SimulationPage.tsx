@@ -27,20 +27,24 @@ export const SimulationPage: React.FC = () => {
 
     return (
         <PollContainer>
-            <Typography variant={'h2'}>Voting Simulation</Typography>
-            <StateListContainer>
-                {states.map(s => (
-                    <Link key={s.route} route={`/simulation/${s.route}`}>
-                        <StateContainer key={s.stateId} isActive={s.route === activeState.route}>
-                            <Typography> {s.label}</Typography>
-                        </StateContainer>
-                    </Link>
-                ))}
-            </StateListContainer>
-            <Component />
+            <InnerContainer>
+                <Typography variant={'h2'}>Voting Simulation</Typography>
+                <StateListContainer>
+                    {states.map(s => (
+                        <Link key={s.route} route={`/simulation/${s.route}`}>
+                            <StateContainer key={s.stateId} isActive={s.route === activeState.route}>
+                                <Typography> {s.label}</Typography>
+                            </StateContainer>
+                        </Link>
+                    ))}
+                </StateListContainer>
+                <Component />
+            </InnerContainer>
         </PollContainer>
     );
 };
+
+const InnerContainer = styled.div``;
 
 const StateListContainer = styled.div`
     display: flex;

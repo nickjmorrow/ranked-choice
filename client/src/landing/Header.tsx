@@ -6,10 +6,12 @@ import { useMedia } from 'react-media';
 import { mediaQueries } from '~/core/mediaQueries';
 import { MenuIcon } from '~/core/MenuIcon';
 import { SmallScreenMenu } from '~/landing/SmallScreenMenu';
+import { componentRouteMappings } from '~/core/componentRouteMappings';
 
 export const Header: React.FC = () => {
     const screenSize = useMedia({ queries: mediaQueries });
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const appName = 'Ranked Choice';
     return (
         <>
             {screenSize.small ? (
@@ -20,7 +22,7 @@ export const Header: React.FC = () => {
                             onClick={() => setIsMenuOpen(c => !c)}
                         />
                         <Link route={'/'}>
-                            <SmallAppName variant={'h1'}>Unnamed Voting Project</SmallAppName>
+                            <SmallAppName variant={'h1'}>{appName}</SmallAppName>
                         </Link>
                     </SmallScreenHeader>
                     {isMenuOpen && <SmallScreenMenu onRequestClose={() => setIsMenuOpen(false)} />}
@@ -28,8 +30,17 @@ export const Header: React.FC = () => {
             ) : (
                 <StyledHeader>
                     <Link route={'/'}>
-                        <AppName variant={'h1'}>Unnamed Voting Project</AppName>
+                        <AppName variant={'h1'}>{appName}</AppName>
                     </Link>
+                    <RightAlignedLinks>
+                        {componentRouteMappings
+                            .filter(crm => crm.isVisible)
+                            .map(crm => (
+                                <Link route={crm.link || crm.route}>
+                                    <StyledLink>{crm.label}</StyledLink>
+                                </Link>
+                            ))}
+                    </RightAlignedLinks>
                 </StyledHeader>
             )}
         </>
@@ -60,3 +71,11 @@ const SmallScreenHeader = styled.div`
     background-color: ${p => p.theme.neutralColor.cs2};
     padding: 24px 12px;
 `;
+
+const StyledLink = styled(Typography)`
+    ${({ theme }) => `
+		margin: 0 ${theme.spacing.ss4};
+	`}
+`;
+
+const RightAlignedLinks = styled.div``;
