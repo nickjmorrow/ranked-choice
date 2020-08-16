@@ -1,4 +1,6 @@
-import { rootReducer } from '~/redux/rootReducer';
+import { createRootReducer } from '~/redux/createRootReducer';
+import { StateType } from 'typesafe-actions';
 
 export {};
-export type RootState = ReturnType<typeof rootReducer>;
+// export type RootState = ReturnType<typeof createRootReducer>;
+export type RootState = StateType<ReturnType<typeof createRootReducer>>;

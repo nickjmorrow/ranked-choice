@@ -4,7 +4,7 @@ import { Typography } from '~/core/Typography';
 import { OptionsManager } from '~/simulation/components/OptionsManager';
 import { VotesManager } from '~/simulation/components/VotesManager';
 import { Results } from '~/simulation/components/Results';
-import { PollContainer } from '~/polling/components';
+import { PollContainer } from '~/polling/components/PollContainer';
 
 export const SimulationPage: React.FC = () => {
     const states = [

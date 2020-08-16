@@ -5,4 +5,5 @@ export const QuestionContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     margin: ${p => p.theme.spacing.ss4} 0;
+    position: relative;
 `;

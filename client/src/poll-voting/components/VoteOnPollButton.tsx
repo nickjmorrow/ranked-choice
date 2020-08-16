@@ -1,11 +1,12 @@
 // external
 import React from 'react';
-import { Button } from '~/core/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTypedSelector } from '~/redux/useTypedSelector';
+
+// inter
+import { Button } from '~/core/Button';
+
+// intra
 import { pollVotingActions } from '~/poll-voting/state/pollVotingActions';
-import { Typography } from '~/core/Typography';
-import { QuestionWithVote, FilledOrderedOption } from '~/poll-voting/types/QuestionWithVote';
 import { getPollVotingRequest } from '~/poll-voting/state/pollVotingSelectors';
 
 export const VoteOnPollButton: React.FC = () => {
@@ -15,9 +16,5 @@ export const VoteOnPollButton: React.FC = () => {
     const handleClick = () => {
         dispatch(pollVotingActions.voteOnPoll.request(request));
     };
-    return (
-        <Button style={{ width: '100%' }} onClick={handleClick}>
-            Vote
-        </Button>
-    );
+    return <Button onClick={handleClick}>Vote</Button>;
 };

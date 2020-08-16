@@ -1,29 +1,27 @@
 import * as React from 'react';
 import { Input } from '~/core/Input';
 import styled from 'styled-components';
-import { CreateIconButton } from '~/core/CreateIconButton';
-import { OptionContainer } from '~/polling/components/OptionContainer';
+import { useDispatch } from 'react-redux';
+import { Option } from '~/polling/components/Option';
 
 export const CreateOption: React.FC<{ onCreate: (label: string) => void }> = ({ onCreate: handleCreate }) => {
     const [optionLabel, setOptionLabel] = React.useState('');
-    const handleCreateInternal = (): void => {
-        if (optionLabel.length === 0) {
-            return;
-        }
-        handleCreate(optionLabel);
+    const handleChange = (label: string) => {
+        handleCreate(label);
         setOptionLabel('');
     };
     return (
-        <OptionContainer>
-            <InnerContainer>
+        <Option
+            label={
                 <StyledInput
                     placeholder={'New Option'}
+                    style={{ textAlign: 'right' }}
                     value={optionLabel}
-                    onChange={e => setOptionLabel(e.currentTarget.value)}
+                    onChange={e => handleChange(e.currentTarget.value)}
                 />
-                <CreateIconButton onClick={handleCreateInternal} />
-            </InnerContainer>
-        </OptionContainer>
+            }
+            sublabel={<div />}
+        />
     );
 };
 

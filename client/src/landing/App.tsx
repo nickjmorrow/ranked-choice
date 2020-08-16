@@ -3,6 +3,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router';
 import { useMedia } from 'react-media';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
 import 'normalize.css';
 
 // inter
@@ -13,18 +15,16 @@ import { componentRouteMappings } from '~/core/componentRouteMappings';
 import { Header } from '~/landing/Header';
 import { SideNav } from '~/landing/SideNav';
 import { Footer } from '~/landing/Footer';
-import { Provider } from 'react-redux';
 import { store } from '~/store';
-import { BrowserRouter } from 'react-router-dom';
+import { history } from '~/redux';
 import { ThemeProvider } from '~/theming/ThemeProvider';
 import { mediaQueries } from '~/core/mediaQueries';
-import { getBaseUrl } from '~/core/getBaseUrl';
 
 export const App: React.SFC = () => {
     const screenSize = useMedia({ queries: mediaQueries });
     return (
         <Provider store={store}>
-            <BrowserRouter>
+            <ConnectedRouter history={history}>
                 <ThemeProvider>
                     <Container>
                         <Header />
@@ -47,7 +47,7 @@ export const App: React.SFC = () => {
                         <Footer />
                     </Container>
                 </ThemeProvider>
-            </BrowserRouter>
+            </ConnectedRouter>
         </Provider>
     );
 };
@@ -58,8 +58,10 @@ const Body = styled.div`
 `;
 
 const Main = styled.main`
-    flex: 1;
-    margin: ${p => p.theme.spacing.ss6} ${p => p.theme.spacing.ss8};
+    ${({ theme }) => `
+    	flex: 1;
+    	margin: ${theme.spacing.ss8} ${theme.spacing.ss8} ${theme.spacing.ss12} ${theme.spacing.ss8};
+	`}
 `;
 
 const Container = styled.div`

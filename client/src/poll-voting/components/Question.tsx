@@ -7,7 +7,7 @@ import { DragDropContext, DropResult, ResponderProvided } from 'react-beautiful-
 import { OptionList } from '~/poll-voting/components/OptionList';
 import { useDispatch } from 'react-redux';
 import { pollVotingActions } from '~/poll-voting/state/pollVotingActions';
-import { QuestionContainer } from '~/polling/components';
+import { Question as GenericQuestion } from '~/polling/components/Question';
 
 export const Question: React.FC<{ question: QuestionWithVote }> = ({ question }) => {
     const dispatch = useDispatch();
@@ -20,16 +20,19 @@ export const Question: React.FC<{ question: QuestionWithVote }> = ({ question })
         dispatch(pollVotingActions.reorderOption({ option, newOrderId, question }));
     };
 
-    return (
-        <QuestionContainer>
-            <Title>Question {question.orderId}</Title>
-            <Content style={{ display: 'block' }}>{question.content}</Content>
-            <Subheading style={{ display: 'block' }}>{question.subheading}</Subheading>
+    const optionList = (
+        <DragDropContext onDragEnd={handleDragEnd}>
+            <OptionList options={question.options} question={question} />
+        </DragDropContext>
+    );
 
-            <DragDropContext onDragEnd={handleDragEnd}>
-                <OptionList options={question.options} question={question} />
-            </DragDropContext>
-        </QuestionContainer>
+    return (
+        <GenericQuestion
+            question={question}
+            optionList={optionList}
+            content={question.content}
+            subheading={question.subheading}
+        />
     );
 };
 

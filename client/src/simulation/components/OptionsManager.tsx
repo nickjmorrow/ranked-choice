@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { simulationSelectors } from '~/simulation/state/simulationSelectors';
 import { Typography } from '~/core/Typography';
 
-import { Option } from '~/polling/components/Option';
+import { Option } from '~/poll-creation/components/Option';
 import { OptionBarListContainer } from '~/simulation/components/OptionBarListContainer';
 import { CreateOption } from '~/polling/components/CreateOption';
 import { Option as OptionType } from '~/polling/types/Option';
@@ -20,12 +20,21 @@ export const OptionsManager: React.FC = () => {
     const handleCreate = (label: string) => {
         dispatch(simulationActions.addOption(label));
     };
+    const noOp = () => {
+        return;
+    };
     return (
         <Container>
             <Typography variant={'h3'}>Options</Typography>
             <OptionBarListContainer>
                 {options.map(o => (
-                    <Option option={o} key={o.optionId} onRemove={handleRemove} />
+                    <Option
+                        option={o}
+                        key={o.optionId}
+                        onRemove={() => handleRemove(o)}
+                        onLabelChange={noOp}
+                        onSublabelChange={noOp}
+                    />
                 ))}
                 <CreateOption onCreate={handleCreate} />
             </OptionBarListContainer>

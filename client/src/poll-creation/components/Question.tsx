@@ -1,28 +1,22 @@
 // external
 import React from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 // inter
-import { Typography } from '~/core/Typography';
+import { CloseIcon } from '~/core/CloseIcon';
+import { TextArea } from '~/core/TextArea';
 import { CreateOption } from '~/polling/components/CreateOption';
 import { Question as QuestionType } from '~/polling/types/Question';
-import { Option } from '~/polling/components/Option';
 import { Option as OptionType } from '~/polling/types/Option';
+import { Question as GenericQuestion } from '~/polling/components/Question';
 
 // intra
-import { Card } from '~/core/Card';
+import { Option } from '~/poll-creation/components/Option';
 import { pollCreationActions } from '~/poll-creation/state/pollCreationActions';
-import { Input } from '~/core/Input';
-import { pollCreationSelectors } from '~/poll-creation/state/pollCreationSelectors';
-import { RemoveIconButton } from '~/core/RemoveIconButton';
-import { QuestionContainer } from '~/polling/components';
 
 export const Question: React.FC<{ question: QuestionType }> = ({ question }) => {
     const dispatch = useDispatch();
-    const handleCreateOption = (question: QuestionType, label: string) => {
-        dispatch(pollCreationActions.createOption({ question, option: { label, sublabel: null } }));
-    };
     const handleRemoveOption = (question: QuestionType, option: OptionType) => {
         dispatch(pollCreationActions.removeOption({ question, option }));
     };
@@ -30,64 +24,80 @@ export const Question: React.FC<{ question: QuestionType }> = ({ question }) => 
     const handleRemoveQuestion = () => {
         dispatch(pollCreationActions.removeQuestion(question));
     };
-    const currentInteractiveQuestionId = useSelector(pollCreationSelectors.getPollCreationState)
-        .currentInteractingQuestionId;
-    const isEditable = question.questionId === currentInteractiveQuestionId;
+
+    const handleCreate = (label: string) =>
+        dispatch(pollCreationActions.createOption({ question, option: { label, sublabel: null } }));
+
+    const optionList = (
+        <OptionsContainer>
+            {question.options.map(o => (
+                <Option
+                    key={o.optionId}
+                    option={o}
+                    onRemove={() => handleRemoveOption(question, o)}
+                    onSublabelChange={(sublabel: string) =>
+                        dispatch(pollCreationActions.updateOption({ question, option: { ...o, sublabel } }))
+                    }
+                    onLabelChange={(label: string) =>
+                        dispatch(pollCreationActions.updateOption({ question, option: { ...o, label } }))
+                    }
+                />
+            ))}
+            <CreateOption onCreate={handleCreate} />
+        </OptionsContainer>
+    );
+
+    const content = (
+        <CustomTextArea
+            value={question.content}
+            placeholder={'Untitled Question'}
+            onChange={e =>
+                dispatch(pollCreationActions.updateQuestionContent({ content: e.currentTarget.value, question }))
+            }
+        />
+    );
+
+    const subheading = (
+        <SubheadingTextArea
+            value={question.subheading}
+            placeholder={'Subheading'}
+            style={{ fontSize: '14px' }}
+            onChange={e =>
+                dispatch(
+                    pollCreationActions.updateQuestionSubheading({
+                        subheading: e.currentTarget.value,
+                        question,
+                    }),
+                )
+            }
+        />
+    );
+
+    const handleClick = () => dispatch(pollCreationActions.setCurrentInteractiveQuestionId(question.questionId));
+
+    const removeButton = (
+        <CloseIcon onClick={handleRemoveQuestion} style={{ position: 'absolute', top: '-5px', right: '-5px', height: '20px', width: '20px' }} />
+    );
 
     return (
-        <QuestionContainer
-            key={question.questionId}
-            onClick={() => dispatch(pollCreationActions.setCurrentInteractiveQuestionId(question.questionId))}
-        >
-            <RemoveIconButton onClick={handleRemoveQuestion} />
-            {isEditable ? (
-                <>
-                    <Input
-                        value={question.content}
-                        placeholder={'Untitled Question'}
-                        onChange={e =>
-                            dispatch(
-                                pollCreationActions.updateQuestionContent({ content: e.currentTarget.value, question }),
-                            )
-                        }
-                    />
-                    <Input
-                        value={question.subheading}
-                        placeholder={'Subheading'}
-                        style={{ fontSize: '14px' }}
-                        onChange={e =>
-                            dispatch(
-                                pollCreationActions.updateQuestionSubheading({
-                                    subheading: e.currentTarget.value,
-                                    question,
-                                }),
-                            )
-                        }
-                    />
-                </>
-            ) : (
-                <>
-                    <Typography style={{ display: 'block', marginBottom: '4px' }}>{question.content}</Typography>
-                    <Typography style={{ display: 'block', marginBottom: '8px' }} sizeVariant={'fs2'}>
-                        {question.subheading}
-                    </Typography>
-                </>
-            )}
-            <OptionsContainer>
-                {question.options.map(o => (
-                    <Option
-                        key={o.optionId}
-                        option={o}
-                        onRemove={() => handleRemoveOption(question, o)}
-                        isEditable={isEditable}
-                        onChange={(label: string) =>
-                            dispatch(pollCreationActions.updateOption({ question, option: { ...o, label } }))
-                        }
-                    />
-                ))}
-                <CreateOption onCreate={(label: string) => handleCreateOption(question, label)} />
-            </OptionsContainer>
-        </QuestionContainer>
+        <GenericQuestion
+            question={question}
+            content={content}
+            subheading={subheading}
+            optionList={optionList}
+            onClick={handleClick}
+            removeButton={removeButton}
+        />
     );
 };
 const OptionsContainer = styled.div``;
+
+const CustomTextArea = styled(TextArea)`
+    min-width: ${p => p.theme.spacing.ss64};
+    max-width: ${p => p.theme.spacing.ss128};
+    width: 100%;
+`;
+
+const SubheadingTextArea = styled(CustomTextArea)`
+    color: inherit;
+`;
