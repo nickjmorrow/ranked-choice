@@ -59,9 +59,8 @@ const Main = styled.main`
     ${({ theme }) => `
 		display:
     	flex: 1;
-		margin: ${theme.spacing.ss8};
-		max-width: 800px;
 		width: 100%;
+		justify-content: center;
 	`}
 `;
 

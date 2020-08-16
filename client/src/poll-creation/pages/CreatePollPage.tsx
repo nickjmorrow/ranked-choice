@@ -21,12 +21,11 @@ export const CreatePollPage: React.FC = () => {
     const pollCreationState = useSelector(pollCreationSelectors.getPollCreationState);
     const { title, description } = pollCreationState;
     const dispatch = useDispatch();
-    const maxWidth = 500;
     const titleNode = (
         <TextArea
             value={title}
             placeholder={'Untitled Poll'}
-            style={{ maxWidth: `${maxWidth}px`, width: '100%', marginLeft: '-5px' }}
+            style={{ width: '100%', marginLeft: '-5px' }}
             onChange={e => dispatch(pollCreationActions.updateTitle(e.currentTarget.value))}
         />
     );
@@ -36,23 +35,21 @@ export const CreatePollPage: React.FC = () => {
             value={description}
             placeholder={'Poll Description'}
             onChange={e => dispatch(pollCreationActions.updateDescription(e.currentTarget.value))}
-            style={{ maxWidth: `${maxWidth}px`, marginLeft: '-5px' }}
+            style={{ width: '100%', marginLeft: '-5px' }}
         />
     );
     return (
         <PollContainer>
-            <InnerContainer>
-                <TitleDescription title={titleNode} description={descriptionNode} />
-                <QuestionListContainer>
-                    {pollCreationState.questions.map(q => (
-                        <Question question={q} key={q.orderId} />
-                    ))}
-                </QuestionListContainer>
-                <ButtonsContainer>
-                    <CreateQuestionButton style={{ marginBottom: theme.spacing.ss8 }} />
-                    <CreatePollButton />
-                </ButtonsContainer>
-            </InnerContainer>
+            <TitleDescription title={titleNode} description={descriptionNode} />
+            <QuestionListContainer>
+                {pollCreationState.questions.map(q => (
+                    <Question question={q} key={q.orderId} />
+                ))}
+            </QuestionListContainer>
+            <ButtonsContainer>
+                <CreateQuestionButton style={{ marginBottom: theme.spacing.ss8 }} />
+                <CreatePollButton />
+            </ButtonsContainer>
         </PollContainer>
     );
 };
@@ -60,6 +57,5 @@ export const CreatePollPage: React.FC = () => {
 const ButtonsContainer = styled.div`
     display: flex;
     flex-direction: column;
+    width: 100%;
 `;
-
-const InnerContainer = styled.div``;

@@ -27,6 +27,7 @@ const Title = styled(Typography)`
 
 const Content = styled(Typography)`
     margin-bottom: ${p => p.theme.spacing.ss2};
+    width: 100%;
 `;
 
 const Subheading = styled(Typography)`
@@ -34,4 +35,5 @@ const Subheading = styled(Typography)`
     color: ${p => p.theme.neutralColor.cs7};
     font-size: ${p => p.theme.fontSizes.fs2};
     margin-bottom: ${p => p.theme.spacing.ss4};
+    width: 100%;
 `;

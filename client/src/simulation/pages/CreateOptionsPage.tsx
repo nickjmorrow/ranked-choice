@@ -41,4 +41,6 @@ export const CreateOptionsPage: React.FC = () => {
     );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+    width: 100%;
+`;

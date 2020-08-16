@@ -27,15 +27,21 @@ export const VotingPage: React.FC = () => {
     );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+    width: 100%;
+`;
 
 const VotesContainer = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
 `;
 
 const VoteContainer = styled.div`
-    margin-right: ${p => p.theme.spacing.ss6};
     margin-bottom: ${p => p.theme.spacing.ss6};
+    margin-right: ${p => p.theme.spacing.ss8};
+    width: 42%;
+    max-width: 250px;
 `;

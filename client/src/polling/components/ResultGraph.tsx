@@ -28,7 +28,7 @@ export const ResultGraph: React.FC<{
 
 const Container = styled.div`
     width: 100%;
-    max-width: 500px;
+    max-width: 400px;
     position: relative;
     left: -28px;
     top: -28px;

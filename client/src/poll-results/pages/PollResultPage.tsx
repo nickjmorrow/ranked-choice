@@ -33,7 +33,7 @@ export const PollResultPage: React.FC = () => {
     } = pollResult;
 
     return (
-        <PollContainer>
+        <PollContainer style={{ maxWidth: '800px' }}>
             <TitleDescription title={title} description={description} />
             <QuestionListContainer>
                 {questionResults.map(qr => (

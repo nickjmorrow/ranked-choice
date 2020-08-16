@@ -9,7 +9,6 @@ export const OptionContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    max-width: ${p => p.theme.spacing.ss96};
     transition: background-color ${p => p.theme.transitions.fast};
     align-items: center;
     min-height: ${p => p.theme.spacing.ss12};
