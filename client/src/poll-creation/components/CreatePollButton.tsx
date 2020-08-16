@@ -1,10 +1,10 @@
 // external
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Button } from '~/core/Button';
 import { pollCreationActions } from '~/poll-creation/state/pollCreationActions';
 import { CreatePollRequest } from '~/poll-creation/types/CreatePollRequest';
 import { useTypedSelector } from '~/redux/useTypedSelector';
+import { WideButton } from '~/core/WideButton';
 
 export const CreatePollButton: React.FC<{ style?: React.CSSProperties }> = ({ style }) => {
     const dispatch = useDispatch();
@@ -28,8 +28,8 @@ export const CreatePollButton: React.FC<{ style?: React.CSSProperties }> = ({ st
         }
     };
     return (
-        <Button isEnabled={isEnabled} onClick={handleClick}>
+        <WideButton isEnabled={isEnabled} onClick={handleClick}>
             Submit
-        </Button>
+        </WideButton>
     );
 };

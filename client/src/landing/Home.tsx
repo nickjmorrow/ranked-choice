@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Typography } from '~/core/Typography';
 
 export const Home: React.FC = () => {

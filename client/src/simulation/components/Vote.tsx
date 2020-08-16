@@ -1,14 +1,19 @@
-import * as React from 'react';
+// external
+import React from 'react';
 import styled from 'styled-components';
-import { Vote as VoteType } from '~/simulation/types/Vote';
-import { Typography } from '~/core/Typography';
-import { OptionBar } from '~/polling/components/OptionBar';
 import { Collapse } from 'react-collapse';
 import { useSelector, useDispatch } from 'react-redux';
-import { simulationSelectors } from '~/simulation/state/simulationSelectors';
 import Select from 'react-select';
+
+// inter
+import { Typography } from '~/core/Typography';
+import { CloseIcon } from '~/core/CloseIcon';
+import { Paper } from '~/polling/components/Paper';
+
+// intra
+import { Vote as VoteType } from '~/simulation/types/Vote';
+import { simulationSelectors } from '~/simulation/state/simulationSelectors';
 import { simulationActions } from '~/simulation/state/simulationActions';
-import { DangerIconButton } from '~/simulation/components/DangerIconButton';
 import { RankedOption } from '~/simulation/types/RankedOption';
 
 interface SelectOption {
@@ -29,6 +34,7 @@ export const Vote: React.FC<{ vote: VoteType }> = ({ vote }) => {
     const handleRemove = (choice: RankedOption): void => {
         dispatch(simulationActions.removeChoice({ choice, vote }));
     };
+
     return (
         <Container>
             <Typography onClick={() => setIsOpen(s => !s)}>{`VoterId ${vote.voterId}`}</Typography>
@@ -43,7 +49,7 @@ export const Vote: React.FC<{ vote: VoteType }> = ({ vote }) => {
                                     <Typography style={{ marginRight: '16px' }}>{c.orderId}</Typography>
                                     <Typography>{options.find(o => o.optionId === c.optionId)!.label}</Typography>
                                 </div>
-                                <DangerIconButton onClick={() => handleRemove(c)} />
+                                <CloseIcon onClick={() => handleRemove(c)} />
                             </Choice>
                         ))}
                     <Typography>
@@ -68,6 +74,6 @@ const Choice = styled.div`
     align-items: center;
 `;
 
-const Container = styled(OptionBar)`
+const Container = styled(Paper)`
     width: ${p => p.theme.spacing.ss64};
 `;

@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // inter
-import { Button } from '~/core/Button';
+import { WideButton } from '~/core/WideButton';
 
 // intra
 import { pollVotingActions } from '~/poll-voting/state/pollVotingActions';
@@ -16,5 +16,5 @@ export const VoteOnPollButton: React.FC = () => {
     const handleClick = () => {
         dispatch(pollVotingActions.voteOnPoll.request(request));
     };
-    return <Button onClick={handleClick}>Vote</Button>;
+    return <WideButton onClick={handleClick}>Vote</WideButton>;
 };

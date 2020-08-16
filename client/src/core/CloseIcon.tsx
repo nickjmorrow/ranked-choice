@@ -18,4 +18,5 @@ export const CloseIcon: React.FC<React.HTMLProps<HTMLOrSVGElement>> = props => {
 
 const CustomSvg = styled(Svg)`
     fill: ${p => p.theme.dangerColor.cs5};
+    cursor: pointer;
 `;

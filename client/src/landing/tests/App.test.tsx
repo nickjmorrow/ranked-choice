@@ -32,7 +32,7 @@ afterEach(() => {
     (container as unknown) = null;
 });
 
-it('renders with an error', () => {
+it('renders without error', () => {
     act(() => {
         const store = createStore(createRootReducer(history));
         render(
