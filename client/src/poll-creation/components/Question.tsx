@@ -1,10 +1,11 @@
 // external
 import React from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 // inter
 import { CloseIcon } from '~/core/CloseIcon';
+import { TextArea } from '~/core/TextArea';
 import { CreateOption } from '~/polling/components/CreateOption';
 import { Question as QuestionType } from '~/polling/types/Question';
 import { Option as OptionType } from '~/polling/types/Option';
@@ -13,14 +14,9 @@ import { Question as GenericQuestion } from '~/polling/components/Question';
 // intra
 import { Option } from '~/poll-creation/components/Option';
 import { pollCreationActions } from '~/poll-creation/state/pollCreationActions';
-import { pollCreationSelectors } from '~/poll-creation/state/pollCreationSelectors';
-import { TextArea } from '~/core/TextArea';
 
 export const Question: React.FC<{ question: QuestionType }> = ({ question }) => {
     const dispatch = useDispatch();
-    const handleCreateOption = (question: QuestionType, label: string) => {
-        dispatch(pollCreationActions.createOption({ question, option: { label, sublabel: null } }));
-    };
     const handleRemoveOption = (question: QuestionType, option: OptionType) => {
         dispatch(pollCreationActions.removeOption({ question, option }));
     };
@@ -80,7 +76,7 @@ export const Question: React.FC<{ question: QuestionType }> = ({ question }) => 
     const handleClick = () => dispatch(pollCreationActions.setCurrentInteractiveQuestionId(question.questionId));
 
     const removeButton = (
-        <CloseIcon onClick={handleRemoveQuestion} style={{ position: 'absolute', top: '0px', right: '0px' }} />
+        <CloseIcon onClick={handleRemoveQuestion} style={{ position: 'absolute', top: '-5px', right: '-5px', height: '20px', width: '20px' }} />
     );
 
     return (

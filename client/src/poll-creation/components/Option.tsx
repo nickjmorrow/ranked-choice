@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { createRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { Option as OptionType } from '~/polling/types/Option';
 import { Input } from '~/core/Input';
@@ -8,23 +8,26 @@ export const Option: React.FC<{
     option: OptionType;
     onLabelChange: (label: string) => void;
     onSublabelChange: (sublabel: string) => void;
-    onRemove: (option: OptionType) => void;
+    onRemove: () => void;
 }> = ({ option, onRemove: handleRemove, onLabelChange: handleLabelChange, onSublabelChange: handleSublabelChange }) => {
-    const label = <CustomInput value={option.label} onChange={e => handleLabelChange(e.currentTarget.value)} />;
+    const ref = createRef<HTMLInputElement>();
+
+    const label = (
+        <CustomInput ref={ref} value={option.label} onChange={e => handleLabelChange(e.currentTarget.value)} />
+    );
 
     const sublabel = (
         <SublabelInput value={option.sublabel || ''} onChange={e => handleSublabelChange(e.currentTarget.value)} />
     );
 
-    return <GenericOption label={label} sublabel={sublabel} />;
-};
+    useEffect(() => {
+        if (ref.current) {
+            ref.current.focus();
+        }
+    }, []);
 
-const InnerContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-`;
+    return <GenericOption onRemove={handleRemove} label={label} sublabel={sublabel} />;
+};
 
 const CustomInput = styled(Input)`
     text-align: right;

@@ -15,6 +15,7 @@ export const CreateOption: React.FC<{ onCreate: (label: string) => void }> = ({ 
             label={
                 <StyledInput
                     placeholder={'New Option'}
+                    style={{ textAlign: 'right' }}
                     value={optionLabel}
                     onChange={e => handleChange(e.currentTarget.value)}
                 />

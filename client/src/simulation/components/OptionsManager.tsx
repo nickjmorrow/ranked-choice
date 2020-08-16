@@ -31,7 +31,7 @@ export const OptionsManager: React.FC = () => {
                     <Option
                         option={o}
                         key={o.optionId}
-                        onRemove={handleRemove}
+                        onRemove={() => handleRemove(o)}
                         onLabelChange={noOp}
                         onSublabelChange={noOp}
                     />

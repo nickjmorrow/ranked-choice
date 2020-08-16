@@ -5,6 +5,7 @@ import { Poll } from '~/polling/poll.entity';
 import { UniqueLinkProvider } from '~/polling/uniqueLinkProvider.service';
 import { Question } from '~/polling/question.entity';
 import { Option } from '~/polling/option.entity';
+import { CreatePollResponse } from '~/polling/types/CreatePollResponse';
 
 @Injectable()
 export class PollCreator {
@@ -12,17 +13,18 @@ export class PollCreator {
         private readonly connection: Connection,
         private readonly uniqueLinkProvider: UniqueLinkProvider,
     ) {}
-    public async createPoll(createPollRequest: CreatePollRequest): Promise<void> {
+    public async createPoll(createPollRequest: CreatePollRequest): Promise<CreatePollResponse> {
         const manager = this.connection.manager;
         const {
             poll: { title, description, questions },
         } = createPollRequest;
+        const link = await this.uniqueLinkProvider.getUniqueLink();
         const { pollId } = (
             await manager.insert(Poll, {
                 title,
                 description,
                 questions,
-                link: await this.uniqueLinkProvider.getUniqueLink(),
+                link,
             })
         ).identifiers[0];
         const questionIds = (
@@ -60,5 +62,7 @@ export class PollCreator {
             .into(Option)
             .values(options)
             .execute();
+
+        return { link };
     }
 }

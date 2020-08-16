@@ -4,6 +4,7 @@ import { CreatePollPage } from '~/poll-creation/pages/CreatePollPage';
 import { PollVotingPage } from '~/poll-voting/PollVotingPage';
 import { PollResultPage } from '~/poll-results/pages/PollResultPage';
 import { VoteSuccessPage } from '~/poll-voting/pages/VoteSuccessPage';
+import { CreatePollSuccessPage } from '~/poll-creation/pages/CreatePollSuccessPage';
 
 export const componentRouteMappings = [
     {
@@ -38,6 +39,13 @@ export const componentRouteMappings = [
         component: VoteSuccessPage,
         route: '/voting-success',
         label: 'Voting Success',
+        isVisible: false,
+        exact: false,
+    },
+    {
+        component: CreatePollSuccessPage,
+        route: '/creation-success/:link',
+        label: 'Creation Success',
         isVisible: false,
         exact: false,
     },

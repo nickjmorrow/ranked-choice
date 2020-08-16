@@ -1,12 +1,16 @@
 // external
 import React from 'react';
 import styled from 'styled-components';
-import { OrderedOption, FilledOrderedOption, QuestionWithVote } from '~/poll-voting/types/QuestionWithVote';
-import { Option } from '~/polling/components/Option';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
-import { Typography } from '~/core/Typography';
-import { pollVotingSelectors } from '~/poll-voting/state/pollVotingSelectors';
 import { useSelector, useDispatch } from 'react-redux';
+
+// inter
+import { Typography } from '~/core/Typography';
+import { Option } from '~/polling/components/Option';
+
+// intra
+import { OrderedOption, FilledOrderedOption, QuestionWithVote } from '~/poll-voting/types/QuestionWithVote';
+import { pollVotingSelectors } from '~/poll-voting/state/pollVotingSelectors';
 import { pollVotingActions } from '~/poll-voting/state/pollVotingActions';
 
 export const OptionList: React.FC<{ options: OrderedOption[]; question: QuestionWithVote }> = ({
@@ -51,7 +55,7 @@ export const OptionList: React.FC<{ options: OrderedOption[]; question: Question
                                             onClick={() => {
                                                 dispatch(pollVotingActions.selectOption({ option: o, question }));
                                             }}
-                                            order={(isHovering: boolean) => (
+                                            showOrderIdFunc={(isHovering: boolean) => (
                                                 <Order isHovering={isHovering} isSelected={true}>
                                                     {getOrderIdValue(isHovering, true, o)}
                                                 </Order>
@@ -71,7 +75,7 @@ export const OptionList: React.FC<{ options: OrderedOption[]; question: Question
                             onClick={() => {
                                 dispatch(pollVotingActions.selectOption({ option: o, question }));
                             }}
-                            order={(isHovering: boolean) => (
+                            showOrderIdFunc={(isHovering: boolean) => (
                                 <Order isHovering={isHovering} isSelected={false}>
                                     {getOrderIdValue(isHovering, false, o)}
                                 </Order>

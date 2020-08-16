@@ -1,16 +1,17 @@
+// external
 import axios from 'axios';
 import { call, put, takeEvery } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
+
+// inter
 import { handleError } from '~/core';
-import { pollVotingActions, PollVotingActionTypeKeys } from '~/poll-voting/state/pollVotingActions';
+
+// intra
 import { pollCreationActions, PollCreationActionTypeKeys } from '~/poll-creation/state/pollCreationActions';
 
 const apiRoutes = {
     createPoll: {
-        route: '/polls',
-        method: axios.post,
-    },
-    voteOnPoll: {
-        route: '/polls/vote',
+        route: '/polls/create',
         method: axios.post,
     },
 };
@@ -19,6 +20,7 @@ function* createPollAsync(action: ReturnType<typeof pollCreationActions.createPo
     try {
         const { data } = yield call(apiRoutes.createPoll.method, apiRoutes.createPoll.route, action.payload);
         yield put(pollCreationActions.createPoll.success(data));
+        yield put(push(`/creation-success/${data.link}`));
     } catch (error) {
         handleError(error);
         yield put(pollCreationActions.createPoll.failure(error));
