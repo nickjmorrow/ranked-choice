@@ -75,5 +75,5 @@ const Choice = styled.div`
 `;
 
 const Container = styled(Paper)`
-    width: ${p => p.theme.spacing.ss64};
+    width: 100%;
 `;

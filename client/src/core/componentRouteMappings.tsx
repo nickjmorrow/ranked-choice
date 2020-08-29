@@ -24,6 +24,7 @@ export const componentRouteMappings = [
     {
         component: SimulationPage,
         route: '/simulation/*',
+        link: '/simulation/create',
         label: 'Simulation',
         isVisible: true,
         exact: false,

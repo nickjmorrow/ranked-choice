@@ -25,8 +25,9 @@ export const SimulationPage: React.FC = () => {
     const activeState = states.find(s => s.route === subRoute)!;
     const Component = activeState.component;
 
+    const style = activeState === states[2] ? { maxWidth: '800px' } : {};
     return (
-        <PollContainer>
+        <PollContainer style={style}>
             <Typography variant={'h2'}>Voting Simulation</Typography>
             <StateListContainer>
                 {states.map(s => (
@@ -56,6 +57,7 @@ const StateContainer = styled.div<{ isActive: boolean }>`
     padding: ${p => p.theme.spacing.ss4} 0;
     background-color: ${p => (p.isActive ? p.theme.coreColor.cs3 : p.theme.coreColor.cs2)};
     transition: all ${p => p.theme.transitions.fast};
+    width: 100%;
     cursor: pointer;
     &: hover {
         background-color: ${p => (p.isActive ? p.theme.coreColor.cs3 : p.theme.coreColor.cs1)};

@@ -12,5 +12,4 @@ export const OptionContainer = styled.div`
     transition: background-color ${p => p.theme.transitions.fast};
     align-items: center;
     min-height: ${p => p.theme.spacing.ss12};
-    max-width: ${p => p.theme.spacing.ss96};
 `;

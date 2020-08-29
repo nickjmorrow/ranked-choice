@@ -21,12 +21,11 @@ export const CreatePollPage: React.FC = () => {
     const pollCreationState = useSelector(pollCreationSelectors.getPollCreationState);
     const { title, description } = pollCreationState;
     const dispatch = useDispatch();
-    const maxWidth = 400;
     const titleNode = (
         <TextArea
             value={title}
             placeholder={'Untitled Poll'}
-            style={{ maxWidth: `${maxWidth}px`, marginLeft: '-5px' }}
+            style={{ width: '100%', marginLeft: '-5px' }}
             onChange={e => dispatch(pollCreationActions.updateTitle(e.currentTarget.value))}
         />
     );
@@ -36,11 +35,11 @@ export const CreatePollPage: React.FC = () => {
             value={description}
             placeholder={'Poll Description'}
             onChange={e => dispatch(pollCreationActions.updateDescription(e.currentTarget.value))}
-            style={{ maxWidth: `${maxWidth}px`, marginLeft: '-5px' }}
+            style={{ width: '100%', marginLeft: '-5px' }}
         />
     );
     return (
-        <PollContainer style={{ maxWidth: theme.spacing.ss128 }}>
+        <PollContainer>
             <TitleDescription title={titleNode} description={descriptionNode} />
             <QuestionListContainer>
                 {pollCreationState.questions.map(q => (
@@ -58,4 +57,5 @@ export const CreatePollPage: React.FC = () => {
 const ButtonsContainer = styled.div`
     display: flex;
     flex-direction: column;
+    width: 100%;
 `;

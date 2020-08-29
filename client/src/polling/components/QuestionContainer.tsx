@@ -6,4 +6,5 @@ export const QuestionContainer = styled.div`
     justify-content: center;
     margin: ${p => p.theme.spacing.ss4} 0;
     position: relative;
+    width: 100%;
 `;

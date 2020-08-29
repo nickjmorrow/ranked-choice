@@ -11,4 +11,6 @@ export const VoteSuccessPage: React.FC = () => {
     );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+    margin-top: ${p => p.theme.spacing.ss16};
+`;

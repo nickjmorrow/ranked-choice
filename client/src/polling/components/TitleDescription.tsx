@@ -20,7 +20,7 @@ export const TitleDescription: React.FC<{ title: React.ReactNode; description: R
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    max-width: ${p => p.theme.spacing.ss128};
+    width: 100%;
 `;
 
 const Title = styled.h2`
