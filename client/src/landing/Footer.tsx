@@ -12,7 +12,9 @@ export const Footer: React.FC = () => {
     return (
         <StyledFooter>
             <Typography style={{ marginRight: theme.spacing.ss8, color }}>Nicholas Morrow</Typography>
-            <GithubIcon style={{ color }} />
+            <a href="https://github.com/nickjmorrow" target="_blank" rel="noopener noreferrer">
+                <GithubIcon style={{ color }} />
+            </a>
         </StyledFooter>
     );
 };

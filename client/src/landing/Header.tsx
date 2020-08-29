@@ -36,7 +36,7 @@ export const Header: React.FC = () => {
                         {componentRouteMappings
                             .filter(crm => crm.isVisible)
                             .map(crm => (
-                                <Link route={crm.link || crm.route}>
+                                <Link route={crm.link || crm.route} key={crm.link || crm.route}>
                                     <StyledLink>{crm.label}</StyledLink>
                                 </Link>
                             ))}

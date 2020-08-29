@@ -32,6 +32,12 @@ export const simulationReducer = (
         case SimulationActionTypeKeys.REMOVE_OPTION:
             return produce(state, draftState => {
                 draftState.options = draftState.options.filter(o => o.optionId !== action.payload.optionId);
+                draftState.votes = draftState.votes.map(v => ({
+                    ...v,
+                    rankedOptions: v.rankedOptions
+                        .filter(ro => ro.optionId !== action.payload.optionId)
+                        .map((ro, i) => ({ ...ro, orderId: i + 1 })),
+                }));
             });
         case SimulationActionTypeKeys.ADD_CHOICE:
             return produce(state, draftState => {
