@@ -14,7 +14,7 @@ export const pollCreationReducer = (
             return produce(state, draftState => {
                 const options = draftState.questions.find(q => q.questionId === action.payload.question.questionId)!
                     .options;
-                const optionId = Math.max(...options.map(o => o.optionId)) + 1;
+                const optionId = Math.max(Math.max(...options.map(o => o.optionId)) + 1, 1);
                 options.push({ optionId, ...action.payload.option });
             });
         case PollCreationActionTypeKeys.REMOVE_OPTION:
