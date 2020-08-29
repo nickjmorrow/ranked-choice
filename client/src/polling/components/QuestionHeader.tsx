@@ -1,7 +1,7 @@
 // external
 import React from 'react';
 import styled from 'styled-components';
-import { Typography } from '~/core/Typography';
+import { Typography } from '~/core/atoms/Typography';
 
 export const QuestionHeader: React.FC<{ orderId: number; content: React.ReactNode; subheading?: React.ReactNode }> = ({
     orderId,

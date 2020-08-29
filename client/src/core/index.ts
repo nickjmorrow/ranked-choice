@@ -1,1 +1,1 @@
-export { handleError } from '~/core/handleError';
+export { handleError } from '~/core/services/handleError';

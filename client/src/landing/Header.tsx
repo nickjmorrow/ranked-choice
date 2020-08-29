@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Typography } from '~/core/Typography';
-import { Link } from '~/core/Link';
+import { Typography } from '~/core/atoms/Typography';
+import { Link } from '~/core/molecules/Link';
 import { useMedia } from 'react-media';
 import { mediaQueries } from '~/core/mediaQueries';
-import { MenuIcon } from '~/core/MenuIcon';
+import { MenuIcon } from '~/core/atoms/MenuIcon';
 import { SmallScreenMenu } from '~/landing/SmallScreenMenu';
 import { componentRouteMappings } from '~/core/componentRouteMappings';
 

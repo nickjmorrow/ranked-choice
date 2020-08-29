@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { pollCreationActions } from '~/poll-creation/state/pollCreationActions';
 import { CreatePollRequest } from '~/poll-creation/types/CreatePollRequest';
 import { useTypedSelector } from '~/redux/useTypedSelector';
-import { WideButton } from '~/core/WideButton';
+import { WideButton } from '~/core/atoms/WideButton';
 
 export const CreatePollButton: React.FC<{ style?: React.CSSProperties }> = ({ style }) => {
     const dispatch = useDispatch();

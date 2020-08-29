@@ -1,9 +1,9 @@
 import React, { createRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { Option as OptionType } from '~/polling/types/Option';
-import { Input } from '~/core/Input';
+import { Input } from '~/core/atoms/Input';
 import { Option as GenericOption } from '~/polling/components/Option';
-import { CloseIcon } from '~/core/CloseIcon';
+import { CloseIcon } from '~/core/atoms/CloseIcon';
 
 export const Option: React.FC<{
     option: OptionType;

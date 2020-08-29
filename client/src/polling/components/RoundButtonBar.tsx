@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 // inter
-import { Typography } from '~/core/Typography';
+import { Typography } from '~/core/atoms/Typography';
 
 // intra
 import { Round } from '~/polling/types/Round';
@@ -36,7 +36,6 @@ export const RoundButtonBar: React.FC<{
     );
 };
 
-// TODO: why was I getting cyclic dependencies when this was just imported from its file?
 const OptionBar = styled.div`
     box-shadow: ${p => p.theme.boxShadow.bs1};
     max-width: ${p => p.theme.spacing.ss64};

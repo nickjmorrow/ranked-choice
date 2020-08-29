@@ -24,20 +24,8 @@ const getOrmConfig = (): ConnectionOptions => {
             ...commonOptions,
         };
     }
-
-    // typeorm CLI, TODO: move to development environment variables
-    return {
-        ...commonOptions,
-        host: 'localhost',
-        port: 35432,
-        username: 'devuser',
-        password: 'pass',
-        database: 'postgres',
-    };
 };
 
 const ormConfig = getOrmConfig();
-
-console.log(ormConfig);
 
 export = ormConfig;

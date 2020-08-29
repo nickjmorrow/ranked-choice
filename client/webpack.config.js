@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: 'development',
@@ -40,6 +41,12 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'public', 'index.html'),
+        }),
+        new CopyPlugin({
+            patterns: [
+                { from: 'public/_redirects', to: '' },
+                { from: 'public/favicon.ico', to: '' },
+            ],
         }),
         new CircularDependencyPlugin({
             // exclude detection of files based on a RegExp

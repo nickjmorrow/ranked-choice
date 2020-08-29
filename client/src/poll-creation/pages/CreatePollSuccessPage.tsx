@@ -3,8 +3,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 // inter
-import { Typography } from '~/core/Typography';
-import { Link } from '~/core/Link';
+import { Typography } from '~/core/atoms/Typography';
+import { Link } from '~/core/molecules/Link';
 import { useTypedSelector } from '~/redux';
 import { routingSelectors } from '~/routing';
 import { theme } from '~/theming';

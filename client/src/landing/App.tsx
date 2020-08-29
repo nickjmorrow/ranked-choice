@@ -8,7 +8,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import 'normalize.css';
 
 // inter
-import { NotFound } from '~/core/NotFound';
+import { NotFound } from '~/core/molecules/NotFound';
 import { componentRouteMappings } from '~/core/componentRouteMappings';
 
 // intra
@@ -17,7 +17,6 @@ import { Footer } from '~/landing/Footer';
 import { store } from '~/store';
 import { history } from '~/redux';
 import { ThemeProvider } from '~/theming/ThemeProvider';
-import { mediaQueries } from '~/core/mediaQueries';
 
 export const App: React.SFC = () => {
     return (

@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 
 // inter
-import { CloseIcon } from '~/core/CloseIcon';
-import { TextArea } from '~/core/TextArea';
+import { CloseIcon } from '~/core/atoms/CloseIcon';
+import { TextArea } from '~/core/atoms/TextArea';
 import { CreateOption } from '~/polling/components/CreateOption';
 import { Question as QuestionType } from '~/polling/types/Question';
 import { Option as OptionType } from '~/polling/types/Option';

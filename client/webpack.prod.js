@@ -43,7 +43,10 @@ module.exports = {
             __DEV__: true,
         }),
         new CopyPlugin({
-            patterns: [{ from: 'public/_redirects', to: '' }],
+            patterns: [
+                { from: 'public/_redirects', to: '' },
+                { from: 'public/favicon.ico', to: '' },
+            ],
         }),
     ],
 };

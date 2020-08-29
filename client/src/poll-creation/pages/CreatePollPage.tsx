@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 
 // inter
-import { TextArea } from '~/core/TextArea';
+import { TextArea } from '~/core/atoms/TextArea';
 import { PollContainer } from '~/polling/components/PollContainer';
 import { QuestionListContainer } from '~/polling/components/QuestionListContainer';
 import { TitleDescription } from '~/polling/components/TitleDescription';

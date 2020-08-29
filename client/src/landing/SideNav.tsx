@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from '~/core/Link';
+import { Link } from '~/core/molecules/Link';
 import styled from 'styled-components';
 import { componentRouteMappings } from '~/core/componentRouteMappings';
 
