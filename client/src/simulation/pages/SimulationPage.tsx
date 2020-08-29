@@ -9,8 +9,8 @@ import { ResultsPage } from '~/simulation/pages/ResultsPage';
 
 // intra
 import { PollContainer } from '~/polling/components/PollContainer';
-import { Typography } from '~/core/Typography';
-import { Link } from '~/core/Link';
+import { Typography } from '~/core/atoms/Typography';
+import { Link } from '~/core/molecules/Link';
 import { useTypedSelector } from '~/redux';
 import { routingSelectors } from '~/routing';
 

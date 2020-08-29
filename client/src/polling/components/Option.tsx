@@ -3,11 +3,11 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 // inter
-import { Typography } from '~/core/Typography';
+import { Typography } from '~/core/atoms/Typography';
 
 // intra
 import { OptionContainer } from '~/polling/components/OptionContainer';
-import { CloseIcon } from '~/core/CloseIcon';
+import { CloseIcon } from '~/core/atoms/CloseIcon';
 
 const noOp = () => {
     return;

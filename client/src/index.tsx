@@ -1,12 +1,8 @@
-import ReactDOM from 'react-dom';
-import React from 'react';
-import { Provider } from 'react-redux';
-import { store } from './store';
-import { App } from '~/landing/App';
-import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider } from '~/theming/ThemeProvider';
 import axios from 'axios';
-import { getBaseUrl } from '~/core/getBaseUrl';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { getBaseUrl } from '~/core/services/getBaseUrl';
+import { App } from '~/landing/App';
 
 axios.defaults.baseURL = getBaseUrl();
 

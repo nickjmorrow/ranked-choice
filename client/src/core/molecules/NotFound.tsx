@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Typography } from '~/core/Typography';
+import { Typography } from '~/core/atoms/Typography';
 
 export const NotFound = () => (
     <Container>

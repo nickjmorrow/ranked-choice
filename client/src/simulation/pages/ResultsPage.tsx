@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Typography } from '~/core/Typography';
+import { Typography } from '~/core/atoms/Typography';
 import { QuestionResult } from '~/polling/components/QuestionResult';
 import { simulationActions } from '~/simulation/state/simulationActions';
 import { simulationSelectors } from '~/simulation/state/simulationSelectors';

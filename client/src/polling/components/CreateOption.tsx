@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input } from '~/core/Input';
+import { Input } from '~/core/atoms/Input';
 import styled from 'styled-components';
 import { OptionContainer } from '~/polling/components/OptionContainer';
 import { Option } from '~/polling/components/Option';

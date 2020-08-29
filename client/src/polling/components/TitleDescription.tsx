@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 // inter
-import { Typography } from '~/core/Typography';
+import { Typography } from '~/core/atoms/Typography';
 
 export const TitleDescription: React.FC<{ title: React.ReactNode; description: React.ReactNode }> = ({
     title,

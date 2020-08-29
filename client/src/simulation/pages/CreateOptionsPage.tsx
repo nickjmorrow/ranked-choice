@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { simulationSelectors } from '~/simulation/state/simulationSelectors';
-import { Typography } from '~/core/Typography';
+import { Typography } from '~/core/atoms/Typography';
 
 import { Option } from '~/poll-creation/components/Option';
 import { CreateOption } from '~/polling/components/CreateOption';

@@ -1,7 +1,7 @@
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
 import React from 'react';
-import { Typography } from '~/core/Typography';
+import { Typography } from '~/core/atoms/Typography';
 
 export const Link: React.FC<{
     route: string;

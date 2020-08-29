@@ -1,7 +1,7 @@
 // external
 import React from 'react';
 import styled from 'styled-components';
-import { Typography } from '~/core/Typography';
+import { Typography } from '~/core/atoms/Typography';
 import { Question as QuestionType } from '~/polling/types/Question';
 import { QuestionHeader } from '~/polling/components/QuestionHeader';
 import { QuestionContainer } from '~/polling/components/QuestionContainer';

@@ -1,7 +1,7 @@
 # ranked-choice
 
 CircleCI
-[![nickjmorrow](https://circleci.com/gh/nickjmorrow/unnamed-voting-project.svg?style=svg)](https://circleci.com/gh/nickjmorrow/unnamed-voting-project)
+[![nickjmorrow](https://circleci.com/gh/nickjmorrow/ranked-choice.svg?style=svg)](https://circleci.com/gh/nickjmorrow/ranked-choice)
 
 Short description of what the project is and what it can do (can match project header at top).
 

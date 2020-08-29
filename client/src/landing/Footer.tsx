@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { GithubIcon } from '@nickjmorrow/react-component-library';
 
 // inter
-import { Typography } from '~/core/Typography';
+import { Typography } from '~/core/atoms/Typography';
 import { theme } from '~/theming';
 
 export const Footer: React.FC = () => {

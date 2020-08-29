@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 // inter
-import { Link } from '~/core/Link';
+import { Link } from '~/core/molecules/Link';
 import { componentRouteMappings } from '~/core/componentRouteMappings';
 
 export const SmallScreenMenu: React.FC<{ onRequestClose: () => void }> = ({ onRequestClose: handleRequestClose }) => {

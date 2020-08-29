@@ -1,7 +1,7 @@
 // external
 import React from 'react';
 import styled from 'styled-components';
-import { Typography } from '~/core/Typography';
+import { Typography } from '~/core/atoms/Typography';
 import { QuestionWithVote, FilledOrderedOption } from '~/poll-voting/types/QuestionWithVote';
 import { DragDropContext, DropResult, ResponderProvided } from 'react-beautiful-dnd';
 import { OptionList } from '~/poll-voting/components/OptionList';

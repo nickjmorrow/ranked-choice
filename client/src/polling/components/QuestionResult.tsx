@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 // inter
-import { Typography } from '~/core/Typography';
+import { Typography } from '~/core/atoms/Typography';
 
 // intra
 import { ResultGraph } from '~/polling/components/ResultGraph';

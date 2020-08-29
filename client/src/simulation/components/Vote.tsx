@@ -6,8 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import Select from 'react-select';
 
 // inter
-import { Typography } from '~/core/Typography';
-import { CloseIcon } from '~/core/CloseIcon';
+import { Typography } from '~/core/atoms/Typography';
+import { CloseIcon } from '~/core/atoms/CloseIcon';
 import { Paper } from '~/polling/components/Paper';
 
 // intra

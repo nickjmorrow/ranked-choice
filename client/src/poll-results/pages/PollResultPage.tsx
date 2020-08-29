@@ -36,10 +36,10 @@ export const PollResultPage: React.FC = () => {
         <PollContainer style={{ maxWidth: '800px' }}>
             <TitleDescription title={title} description={description} />
             <QuestionListContainer>
-                {questionResults.map(qr => (
+                {questionResults.map((qr, i) => (
                     <QuestionContainer key={qr.question.questionId}>
                         <QuestionHeader
-                            orderId={qr.question.questionId}
+                            orderId={i + 1}
                             content={qr.question.content}
                             subheading={qr.question.subheading}
                         />
