@@ -2,7 +2,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router';
-import { useMedia } from 'react-media';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import 'normalize.css';
@@ -10,13 +9,14 @@ import 'normalize.css';
 // inter
 import { NotFound } from '~/core/molecules/NotFound';
 import { componentRouteMappings } from '~/core/componentRouteMappings';
+import { history } from '~/redux';
+import { store } from '~/store';
+import { ThemeProvider } from '~/theming/ThemeProvider';
 
 // intra
 import { Header } from '~/landing/Header';
 import { Footer } from '~/landing/Footer';
-import { store } from '~/store';
-import { history } from '~/redux';
-import { ThemeProvider } from '~/theming/ThemeProvider';
+import { Home } from '~/landing/Home';
 
 export const App: React.SFC = () => {
     return (
@@ -33,9 +33,10 @@ export const App: React.SFC = () => {
                                             exact={crm.exact}
                                             key={crm.route}
                                             path={crm.route}
-                                            component={crm.component}
+                                            component={crm.component as any}
                                         />
                                     ))}
+                                    <Route exact={true} route={'/'} component={Home} />
                                     <Route component={NotFound} />
                                 </Switch>
                             </Main>

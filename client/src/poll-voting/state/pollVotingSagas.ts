@@ -37,7 +37,7 @@ function* watchGetPollAsync() {
 function* voteOnPollAsync(action: ReturnType<typeof pollVotingActions.voteOnPoll.request>) {
     try {
         yield call(apiRoutes.voteOnPoll.method, apiRoutes.voteOnPoll.route, action.payload);
-        yield put(push('/voting-success'));
+        yield put(push(`/voting-success/${action.payload.link}`));
     } catch (error) {
         handleError(error);
         yield put(pollVotingActions.voteOnPoll.failure(error));
