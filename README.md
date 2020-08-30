@@ -3,7 +3,7 @@
 CircleCI
 [![nickjmorrow](https://circleci.com/gh/nickjmorrow/ranked-choice.svg?style=svg)](https://circleci.com/gh/nickjmorrow/ranked-choice)
 
-Short description of what the project is and what it can do (can match project header at top).
+Create, vote, and simulate polls that use the ranked choice voting algorithm.
 
 The demo can be found [here](https://ranked-choice.netlify.app).
 
