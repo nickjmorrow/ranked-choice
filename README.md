@@ -5,7 +5,7 @@ CircleCI
 
 Short description of what the project is and what it can do (can match project header at top).
 
-The demo can be found [here](link to demo).
+The demo can be found [here](https://ranked-choice.netlify.app).
 
 ## At a Glance
 

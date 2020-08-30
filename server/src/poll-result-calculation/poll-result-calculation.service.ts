@@ -76,6 +76,8 @@ export class PollResultCalculationService {
 
             this.removeFewestVotedCandidates(round, validCandidates);
 
+            console.log(round);
+            console.log(validCandidates);
             if (roundId > optionIds.length) {
                 throw new Error('RoundId exceeds number of available options. Infinite loop has likely occurred.');
             }
@@ -126,7 +128,9 @@ export class PollResultCalculationService {
 
     private removeFewestVotedCandidates = (round: Round, validCandidates: Map<number, boolean>) => {
         const { optionResults: results } = round;
-        const fewestVotes = results.reduce((agg, cur) => Math.min(agg, cur.voteCount), Infinity);
+        const fewestVotes = results
+            .filter(r => validCandidates.has(r.optionId))
+            .reduce((agg, cur) => Math.min(agg, cur.voteCount), Infinity);
         round.optionResults.filter(r => r.voteCount === fewestVotes).forEach(r => validCandidates.delete(r.optionId));
     };
 
