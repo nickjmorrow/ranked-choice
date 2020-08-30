@@ -12,7 +12,7 @@ export const Home: React.FC = () => {
                 {componentRouteMappings
                     .filter(crm => crm.description !== undefined)
                     .map(crm => (
-                        <Section>
+                        <Section key={crm.exampleLink || crm.link || crm.route}>
                             <Link route={crm.exampleLink || crm.link || crm.route}>
                                 <Label>{crm.label}</Label>
                             </Link>
