@@ -9,51 +9,47 @@ The demo can be found [here](https://ranked-choice.netlify.app).
 
 ## At a Glance
 
-- what is it (web app, CLI, chrome extension) / what does it produce
-- what can it do
-- what technologies are used
-- what is the stage of the project
+I tried finding an easy site that lets you vote on polls using ranked choice voting, but couldn't find any. This is that site.
+
+Create polls in which voters can select none or many of the available options and order their options in terms of priority. This lets you pick choices that might not win while still ensuring that your vote is counted.
 
 ## How to Run
 
-Serve with hot reload at localhost:8080.
+This application is comprised of a backend Node.js app and a frontend React.js app. The backend references a PostgreSQL database and will apply any unapplied migrations upon connection.
 
-`npm run dev`
+To start the Node.js app and PostgreSQL database inside separate containers from the project root:
 
-Build for production with minification.
+```
+cd server && docker-compose up
+```
 
-`npm run build`
+To start the frontend application from the project root:
 
-Run unit tests and snapshot tests.
+```
+cd client && npm run dev
+```
 
-`npm run test`
+## Purpose / Future
 
-## Purpose
+I really wanted a simple, standalone app to let me do fundamental poll-related user flows (creation, voting, results viewing). But there's so much more that could be done here:
 
-- describe the ambition
-- what problems does it solve
+- animate the ranked choice algorithm to make it more apparent how votes are "reused" across "rounds"
+- allow for more structured voting rules, e.g. prevent people from voting twice, only allow certain people to vote
+- allow for more configurable poll voting options, e.g. mark questions as required
+
+This project will likely stay as just a simple demo and will not evolve to fulfill the use cases above. Please feel free to fork it.
 
 ## Technical Stack
 
-- The **front-end** is built with X because Y
-- The **back-end** is built with W because Z
-- The **deployment tool** is A because B
-- The **database** is G because H
-
-## Improvements
-
-- any known issues
-- where the project could go
-
-## Future
-
-- intents for the project (e.g. stay as hobby, or should be OS and good to commit to)
+- The **front-end** uses React.js and TypeScript. I work mainly with React and enjoy thinking in components. TypeScript for static type-checking and making it easier to scale code without needing to remember what props go to which component.
+- The **back-end** is built with Node.js (using Nest.js framework) with TypeScript. This was my first project using Nest.js and I absolutely love it. The imposition of structure, reasonable opinions, and easy scaffolding have made it a joy to work with.
+- The **database** is Postgres. I wanted something relational because polls, questions, and options all have distinct schemas and relationships. Out of various SQL databases, I chose Postgres because the provider (ElephantSQL) is easy to work with for small projects.
+- The **deployment tool** is CircleCI. This was my first project using CircleCI (transitioning from TravisCI) and, after hammering out the `config.yml`, it was a complete joy.
 
 ## Callouts
 
-- what do you want to draw attention to
-- how is this project different
-- what do you want recruiters / other companies to take away
+- I really like the "reorder voted-upon options within a question to denote higher priority" poll-voting UI that uses drag-and-drop. It just feels natural.
+- I'm particularly happy with how each "module" is separate (simulation, poll creation, poll voting, poll results viewing) but uses the same interfaces and data structures where possible. It feels like a good mix of designing shared abstractions while not over-genericizing those abstractions.
 
 ## Tracking
 
