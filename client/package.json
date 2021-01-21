@@ -28,7 +28,7 @@
         "connected-react-router": "^6.4.0",
         "history": "^4.10.1",
         "html-webpack-plugin": "^4.3.0",
-        "immer": "^6.0.3",
+        "immer": "^8.0.1",
         "normalize.css": "^8.0.1",
         "prop-types": "15.7.2",
         "react": "16.8.6",
