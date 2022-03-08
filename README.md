@@ -5,7 +5,9 @@ CircleCI
 
 Create, vote, and simulate polls that use the ranked choice voting algorithm.
 
-The demo can be found [here](https://ranked-choice.netlify.app).
+~The demo can be found [here](https://ranked-choice.netlify.app).~
+
+EDIT: I've stopped paying for the database for this, but if you want to check out just the (broken) frontend, you still can at the link above :) 
 
 ## At a Glance
 
