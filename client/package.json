@@ -4,6 +4,7 @@
     "description": "",
     "scripts": {
         "dev": "webpack-dev-server",
+        "prebuild": "npm install",
         "build": "webpack --config ./webpack.prod.js --mode production",
         "lint": "eslint '*/**/*.{ts,tsx}' --quiet --fix",
         "lint:css": "stylelint './src/**/*.tsx'",
