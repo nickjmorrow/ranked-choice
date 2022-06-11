@@ -28,7 +28,7 @@ export const CreatePollButton: React.FC<{ style?: React.CSSProperties }> = ({ st
         }
     };
     return (
-        <WideButton isEnabled={isEnabled} onClick={handleClick}>
+        <WideButton isEnabled={isEnabled} onClick={handleClick} title="All questions must have at least two options.">
             Submit
         </WideButton>
     );

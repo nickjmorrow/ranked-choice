@@ -52,9 +52,11 @@ export const Vote: React.FC<{ vote: VoteType }> = ({ vote }) => {
                                 <CloseIcon onClick={() => handleRemove(c)} />
                             </Choice>
                         ))}
-                    <Typography>
-                        <Select options={selectOptions} value={null} onChange={handleChange as any} />
-                    </Typography>
+                    {vote.rankedOptions.length < options.length && (
+                        <Typography>
+                            <Select options={selectOptions} value={null} onChange={handleChange as any} />
+                        </Typography>
+                    )}
                 </ChoicesContainer>
             </Collapse>
         </Container>

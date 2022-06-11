@@ -12,7 +12,7 @@ export class PollCreator {
     public constructor(
         private readonly connection: Connection,
         private readonly uniqueLinkProvider: UniqueLinkProvider,
-    ) { }
+    ) {}
     public async createPoll(createPollRequest: CreatePollRequest): Promise<CreatePollResponse> {
         const manager = this.connection.manager;
         const {

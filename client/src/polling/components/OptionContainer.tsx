@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const OptionContainer = styled.div`
-    cursor: pointer;
     padding: ${p => p.theme.spacing.ss4};
     box-shadow: ${p => p.theme.boxShadow.bs1};
     border-radius: ${p => p.theme.borderRadius.br1};

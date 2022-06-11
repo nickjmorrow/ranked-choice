@@ -80,11 +80,11 @@ export const pollCreationReducer = (
             });
         case PollCreationActionTypeKeys.CREATE_POLL_SUCCESS:
             return produce(state, draftState => {
-                draftState.currentInteractingQuestionId = pollCreationInitialState.currentInteractingQuestionId
-                draftState.description = pollCreationInitialState.description
-                draftState.questions = pollCreationInitialState.questions
-                draftState.title = pollCreationInitialState.title
-            })
+                draftState.currentInteractingQuestionId = pollCreationInitialState.currentInteractingQuestionId;
+                draftState.description = pollCreationInitialState.description;
+                draftState.questions = pollCreationInitialState.questions;
+                draftState.title = pollCreationInitialState.title;
+            });
         default:
             return state;
     }

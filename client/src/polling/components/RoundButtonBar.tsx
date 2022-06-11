@@ -16,7 +16,7 @@ export const RoundButtonBar: React.FC<{
     options: Option[];
 }> = ({ onClick: handleClick, round: { roundId, optionResults }, isExpanded, options }) => {
     return (
-        <Container key={roundId} onClick={handleClick}>
+        <Container key={roundId} onClick={handleClick} isExpanded={isExpanded}>
             <Typography variant={'h3'} style={{ margin: '0' }}>{`Round ${roundId}`}</Typography>
             {isExpanded && (
                 <OptionListContainer>
@@ -44,9 +44,17 @@ const OptionBar = styled.div`
     height: max-content;
 `;
 
-const Container = styled(OptionBar)`
+const Container = styled(OptionBar)<{ isExpanded: boolean }>`
     margin-bottom: ${p => p.theme.spacing.ss8};
     cursor: pointer;
+    &:hover {
+        ${({ isExpanded, theme }) =>
+            !isExpanded &&
+            `
+            background-color: ${theme.coreColor.cs1};
+            transition: all ${theme.transitions.fast};
+        `}
+    }
 `;
 
 const OptionListContainer = styled.div`
