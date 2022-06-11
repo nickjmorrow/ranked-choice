@@ -1,8 +1,8 @@
-import { ActionType } from 'typesafe-actions';
 import { produce } from 'immer';
-import { PollCreationState } from '~/poll-creation/types/PollCreationState';
-import { pollCreationInitialState } from '~/poll-creation/state/pollCreationInitialState';
+import { ActionType } from 'typesafe-actions';
 import { pollCreationActions, PollCreationActionTypeKeys } from '~/poll-creation/state/pollCreationActions';
+import { pollCreationInitialState } from '~/poll-creation/state/pollCreationInitialState';
+import { PollCreationState } from '~/poll-creation/types/PollCreationState';
 import { Question } from '~/polling/types/Question';
 
 export const pollCreationReducer = (
@@ -78,6 +78,13 @@ export const pollCreationReducer = (
                 );
                 draftState.questions.forEach((q, i) => (q.orderId = i + 1));
             });
+        case PollCreationActionTypeKeys.CREATE_POLL_SUCCESS:
+            return produce(state, draftState => {
+                draftState.currentInteractingQuestionId = pollCreationInitialState.currentInteractingQuestionId
+                draftState.description = pollCreationInitialState.description
+                draftState.questions = pollCreationInitialState.questions
+                draftState.title = pollCreationInitialState.title
+            })
         default:
             return state;
     }

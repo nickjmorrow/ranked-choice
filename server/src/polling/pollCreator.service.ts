@@ -12,13 +12,15 @@ export class PollCreator {
     public constructor(
         private readonly connection: Connection,
         private readonly uniqueLinkProvider: UniqueLinkProvider,
-    ) {}
+    ) { }
     public async createPoll(createPollRequest: CreatePollRequest): Promise<CreatePollResponse> {
         const manager = this.connection.manager;
         const {
             poll: { title, description, questions },
         } = createPollRequest;
+
         const link = await this.uniqueLinkProvider.getUniqueLink();
+
         const { pollId } = (
             await manager.insert(Poll, {
                 title,
@@ -27,6 +29,7 @@ export class PollCreator {
                 link,
             })
         ).identifiers[0];
+
         const questionIds = (
             await manager
                 .createQueryBuilder()
