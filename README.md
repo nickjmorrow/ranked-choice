@@ -34,7 +34,7 @@ cd client && npm run dev
 
 ## Deployment Setup
 
-Deployment of both the backend and frontend is performed by CircleCI. The frontend is deployed to Netlify, and new deploys are triggered from CircleCI. Same for the backend hosted on Heroku, but builds are triggered by CircleCI. 
+The frontend is deployed to Netlify and the backend is deployed to Heroku. New deploys are triggered for both apps by a passing CircleCI build. I've found this is the easiest setup if I want to have unit tests run on each commit and only deploy the backend and frontend if all unit tests pass from across both applications. 
 
 ## Purpose / Future
 
