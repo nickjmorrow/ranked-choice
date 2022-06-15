@@ -5,9 +5,10 @@ CircleCI
 
 Create, vote, and simulate polls that use the ranked choice voting algorithm.
 
-~The demo can be found [here](https://ranked-choice.netlify.app).~
+The demo can be found [here](https://ranked-choice.netlify.app).
 
-EDIT: I've stopped paying for the database for this, but if you want to check out just the (broken) frontend, you still can at the link above :) 
+![Simulation results](./images//simulation_results.png "Simulation Results")
+
 
 ## At a Glance
 
@@ -33,7 +34,7 @@ cd client && npm run dev
 
 ## Deployment Setup
 
-TODO
+Deployment of both the backend and frontend is performed by CircleCI. The frontend is deployed to Netlify, and new deploys are triggered from CircleCI. Same for the backend hosted on Heroku, but builds are triggered by CircleCI. 
 
 ## Purpose / Future
 

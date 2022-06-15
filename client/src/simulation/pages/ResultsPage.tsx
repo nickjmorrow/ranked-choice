@@ -27,7 +27,7 @@ export const ResultsPage: React.FC = () => {
     }, []);
 
     if (pollResult === null) {
-        return null;
+        return <Typography>Loading Results...</Typography>;
     }
 
     const { questionResults } = pollResult;
