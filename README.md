@@ -31,6 +31,10 @@ To start the frontend application from the project root:
 cd client && npm run dev
 ```
 
+## Deployment Setup
+
+TODO
+
 ## Purpose / Future
 
 I really wanted a simple, standalone app to let me do fundamental poll-related user flows (creation, voting, results viewing). But there's so much more that could be done here:

@@ -76,8 +76,6 @@ export class PollResultCalculationService {
 
             this.removeFewestVotedCandidates(round, validCandidates);
 
-            console.log(round);
-            console.log(validCandidates);
             if (roundId > optionIds.length) {
                 throw new Error('RoundId exceeds number of available options. Infinite loop has likely occurred.');
             }
