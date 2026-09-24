@@ -136,6 +136,12 @@ failure rather than a skip.
 It is the same script as clinical-copilot's and payout-ledger's, and shares a
 server with them: everything it creates is named after the app. Caddy
 terminates TLS; nginx in the frontend container serves the bundle and proxies
-`/api`; the backend and Postgres are never published. `scripts/reset-demo.sh`
-wipes the demo nightly and refuses to run unless `.env.prod` says
-`DEMO_RESET=true`.
+`/api`; the backend and Postgres are never published.
+
+`scripts/reset-demo.sh` runs nightly and calls `backend/src/demo/resetDemo.ts`
+inside the running backend: the example poll goes back to its seeded ballots
+(visitors' votes would otherwise erode the comeback it exists to show) and
+polls visitors created are deleted after 30 days. It does not wipe everything
+nightly, because a shared poll link that dies overnight is the demo breaking.
+It refuses to run unless `DEMO_RESET=true`, in `.env.prod` and again in the
+backend's own environment.

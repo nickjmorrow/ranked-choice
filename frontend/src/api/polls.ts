@@ -1,5 +1,15 @@
 import { apiFetch } from 'src/api/client';
-import type { BallotRequest, NewPoll, Poll, PollResults, Tally, TallyRequest } from 'src/api/types';
+import type {
+  BallotRequest,
+  Meta,
+  NewPoll,
+  Poll,
+  PollResults,
+  Tally,
+  TallyRequest,
+} from 'src/api/types';
+
+export const getMeta = () => apiFetch<Meta>('/meta');
 
 export const getPoll = (link: string) => apiFetch<Poll>(`/polls/${encodeURIComponent(link)}`);
 

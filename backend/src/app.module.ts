@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { loadConfig } from './config';
 import { dataSourceOptions } from './data-source';
 import { HealthController } from './health/health.controller';
+import { MetaController } from './health/meta.controller';
 import { PollsController } from './polls/polls.controller';
 import { PollsService } from './polls/polls.service';
 import { TallyController } from './tally/tally.controller';
@@ -16,7 +17,7 @@ import { TallyController } from './tally/tally.controller';
     // ceiling for anything that does not.
     ThrottlerModule.forRoot([{ name: 'default', ttl: 60_000, limit: 120 }]),
   ],
-  controllers: [HealthController, PollsController, TallyController],
+  controllers: [HealthController, MetaController, PollsController, TallyController],
   providers: [PollsService, { provide: APP_GUARD, useClass: ThrottlerGuard }],
 })
 export class AppModule {}

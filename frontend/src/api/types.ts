@@ -60,6 +60,11 @@ export interface PollResults {
   questions: { questionId: number; tally: Tally }[];
 }
 
+export interface Meta {
+  /** Set on the public demo, where visitors' polls are deleted after this many days. */
+  pollRetentionDays: null | number;
+}
+
 export interface NewPoll {
   title: string;
   description: string | null;

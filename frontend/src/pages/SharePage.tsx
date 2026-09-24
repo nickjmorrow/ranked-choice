@@ -7,6 +7,7 @@ import PollNotFound from 'src/components/PollNotFound';
 import PollSkeleton from 'src/components/PollSkeleton';
 import useDocumentTitle from 'src/hooks/useDocumentTitle';
 import usePoll from 'src/hooks/usePoll';
+import useRetentionNote from 'src/hooks/useRetentionNote';
 import { absoluteUrl, paths } from 'src/paths';
 
 /** Where a new poll lands: the two links to hand out, and where to go next. */
@@ -14,6 +15,7 @@ export default function SharePage() {
   const { link = '' } = useParams();
   const poll = usePoll(link);
   useDocumentTitle(poll.data === undefined ? 'Share' : `Share: ${poll.data.title}`);
+  const retention = useRetentionNote();
 
   if (poll.isPending) return <PollSkeleton />;
   if (poll.isError) {
@@ -32,6 +34,7 @@ export default function SharePage() {
         <p className={'mt-1 text-sm text-ink-muted'}>
           Your poll is live. Anyone with the voting link can vote; there is no sign-in.
         </p>
+        {retention !== null && <p className={'mt-1 text-sm text-ink-muted'}>{retention}</p>}
       </header>
       <CopyLinkField
         hint={'Send this to voters.'}

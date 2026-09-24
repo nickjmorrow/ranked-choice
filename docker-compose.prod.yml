@@ -63,6 +63,9 @@ services:
       DATABASE_URL: *database_url
       PORT: 8000
       LOG_FORMAT: json
+      # The public demo: /api/meta tells the share page polls expire, and
+      # scripts/reset-demo.sh may run. See .env.prod.example.
+      DEMO_RESET: ${DEMO_RESET:-false}
     depends_on:
       db:
         condition: service_healthy

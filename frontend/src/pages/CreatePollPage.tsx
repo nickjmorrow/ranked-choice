@@ -8,6 +8,7 @@ import TextField from 'src/components/TextField';
 import useCreatePoll from 'src/hooks/useCreatePoll';
 import useDocumentTitle from 'src/hooks/useDocumentTitle';
 import usePollDraft from 'src/hooks/usePollDraft';
+import useRetentionNote from 'src/hooks/useRetentionNote';
 import { paths } from 'src/paths';
 import {
   ADD_QUESTION_ID,
@@ -34,6 +35,7 @@ export default function CreatePollPage() {
   useDocumentTitle('New poll');
   const navigate = useNavigate();
   const creation = useCreatePoll();
+  const retention = useRetentionNote();
   const { clear, draft, setDraft } = usePollDraft();
   const [submitted, setSubmitted] = useState(false);
   const summary = useRef<HTMLDivElement>(null);
@@ -76,6 +78,7 @@ export default function CreatePollPage() {
         <p className={'mt-1 max-w-prose text-sm text-ink-muted'}>
           Voters rank the options for each question, and each question is counted by instant runoff.
           You get a link to share when you are done.
+          {retention !== null && ` ${retention}`}
         </p>
       </header>
 

@@ -9,7 +9,8 @@ won.
 **Live demo: [ranked-choice.204-168-227-216.sslip.io](https://ranked-choice.204-168-227-216.sslip.io)** —
 open [the example poll's results](https://ranked-choice.204-168-227-216.sslip.io/polls/example/results)
 and press *Replay the count* to watch Kyoto overtake Lisbon on transferred
-votes. No sign-in; the demo resets every night.
+votes. No sign-in. The example poll resets every night; polls you create are
+kept for 30 days.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/results-dark.png">
@@ -60,8 +61,11 @@ Postgres + NestJS + React, three containers, one command. First written in
 - **No accounts, on purpose.** Anyone can create a poll or vote, and a poll is
   addressed by an unguessable ten-character link. The cost is controlled
   instead: per-IP rate limits on the endpoints that write, strict validation
-  of every id against the poll it claims to belong to, and a nightly reset of
-  the public demo. *Trade-off:* nothing stops someone voting twice. The ballot
+  of every id against the poll it claims to belong to, and on the public demo
+  a nightly tidy-up: the example poll goes back to its seeded ballots, and
+  visitors' polls are deleted after 30 days — long enough to share and use,
+  and said on the page when you create one. *Trade-off:* nothing stops
+  someone voting twice. The ballot
   page says so when this browser has voted before; it does not pretend to
   enforce it.
 - **Accessibility is part of the definition of done.** Every drag has a button
@@ -132,6 +136,7 @@ Postgres that `docker compose up db -d` publishes.
 | `POST` | `/api/polls/:link/ballots` | Cast a ballot: a ranking of option ids per question |
 | `GET` | `/api/polls/:link/results` | Every question's count, round by round |
 | `POST` | `/api/tally` | Count hypothetical ballots — the simulator. Stores nothing |
+| `GET` | `/api/meta` | On the public demo, how long a new poll is kept |
 | `GET` | `/api/health` | Up if the database answers |
 
 ## Stack
@@ -157,7 +162,7 @@ scripts/deploy.sh root@203.0.113.5 ranked-choice.203-0-113-5.sslip.io
 One server over SSH, safe to re-run. It installs Docker and Caddy, writes a
 `.env.prod` with a generated database password, builds and starts the
 production stack, puts Caddy in front for HTTPS, and installs the nightly demo
-reset. nginx is published on `127.0.0.1` only — on `0.0.0.0` the plain-HTTP
+tidy-up. nginx is published on `127.0.0.1` only — on `0.0.0.0` the plain-HTTP
 port would be reachable past the firewall, because Docker writes its own
 iptables rules. It is the same script as
 [clinical-copilot](https://github.com/nickjmorrow/clinical-copilot)'s and

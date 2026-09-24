@@ -24,8 +24,8 @@
 #   3. copies the code (rsync, so later runs send only what changed), builds and
 #      starts — the migrate container creates the schema and the example poll;
 #   4. puts Caddy in front, which gets and renews the certificate itself;
-#   5. installs a nightly reset (scripts/reset-demo.sh), because anyone can
-#      create polls and vote without an account.
+#   5. installs a nightly tidy-up (scripts/reset-demo.sh): the example poll back
+#      to its seeded ballots, and visitors' polls deleted after 30 days.
 set -euo pipefail
 
 target="${1:?usage: [APP=name] scripts/deploy.sh user@host [domain]}"
@@ -122,8 +122,8 @@ POSTGRES_DB=app
 # Caddy, on this machine, is the only thing that reaches nginx.
 PUBLIC_BIND_ADDRESS=127.0.0.1
 PUBLIC_PORT=$free_port
-# The public demo, reset nightly. Also the flag scripts/reset-demo.sh checks
-# before it deletes anything.
+# The public demo: the example poll is restored nightly and visitors' polls
+# expire after 30 days. Also the flag the reset checks before deleting anything.
 DEMO_RESET=true
 ENV
   echo "wrote .env.prod (local port $free_port; database password generated; nightly reset on)"
@@ -157,8 +157,7 @@ SITE
 
 say "Nightly reset"
 # 04:23 server time: after midnight everywhere this is likely to be looked at
-# from, off the hour, and a few minutes clear of payout-ledger's 04:17 so two
-# demos on one small server do not rebuild their databases at once.
+# from, off the hour, and a few minutes clear of payout-ledger's 04:17.
 remote "cat > /etc/cron.d/$app-reset" <<CRON
 23 4 * * * root APP=$app $remote_dir/scripts/reset-demo.sh >> /var/log/$app-reset.log 2>&1
 CRON

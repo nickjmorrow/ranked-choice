@@ -7,6 +7,11 @@ export interface Config {
   port: number;
   /** JSON lines in production, for a log collector; readable text in dev. */
   logJson: boolean;
+  /**
+   * This deployment is the public demo: the example poll is restored nightly
+   * and visitors' polls expire. Also what the reset checks before deleting.
+   */
+  demoReset: boolean;
 }
 
 export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
@@ -18,5 +23,6 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     databaseUrl,
     port: Number(env.PORT ?? 8000),
     logJson: env.LOG_FORMAT === 'json',
+    demoReset: env.DEMO_RESET === 'true',
   };
 }

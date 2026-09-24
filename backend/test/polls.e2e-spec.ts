@@ -8,6 +8,7 @@ import { DataSource } from 'typeorm';
 import { AppModule } from '../src/app.module';
 import { configureApp } from '../src/app.setup';
 import { dataSourceOptions } from '../src/data-source';
+import { resetDemo } from '../src/demo/resetDemo';
 import type { PollResultsView, PollView } from '../src/polls/polls.views';
 
 /**
@@ -313,5 +314,43 @@ describe('the simulator’s tally endpoint', () => {
     expect((response.body as { message: string }).message).toBe(
       'A count needs at least two options, but got 1.',
     );
+  });
+});
+
+describe('the nightly demo reset', () => {
+  const ballots = async (link: string) =>
+    ((await api().get(`/api/polls/${link}/results`).expect(200)).body as PollResultsView).ballots;
+
+  it('restores the example poll and expires only old polls', async () => {
+    const example = (await api().get('/api/polls/example').expect(200)).body as PollView;
+    await api()
+      .post('/api/polls/example/ballots')
+      .set('X-Forwarded-For', asNewClient())
+      .send({
+        rankings: example.questions.map((q) => ({
+          optionIds: [q.options[0]!.optionId],
+          questionId: q.questionId,
+        })),
+      })
+      .expect(204);
+    expect(await ballots('example')).toBeGreaterThan(21);
+
+    const fresh = await createPoll();
+    const old = await createPoll();
+    const dataSource = app.get(DataSource);
+    await dataSource.query(`update polls set date_created = current_date - 31 where link = $1`, [
+      old.link,
+    ]);
+
+    const report = await dataSource.transaction((manager) => resetDemo(manager));
+
+    expect(report.expired).toEqual([old.link]);
+    expect(await ballots('example')).toBe(21);
+    await api().get(`/api/polls/${fresh.link}`).expect(200);
+    await api().get(`/api/polls/${old.link}`).expect(404);
+  });
+
+  it('reports no retention limit outside the demo', async () => {
+    await api().get('/api/meta').expect(200, { pollRetentionDays: null });
   });
 });

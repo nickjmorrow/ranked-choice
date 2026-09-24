@@ -1,24 +1,23 @@
 #!/usr/bin/env bash
 #
-# Wipe the public demo's database and bring it back with only the example
-# poll. Runs on the server, nightly, from the cron file scripts/deploy.sh
-# installs.
+# The public demo's nightly tidy-up. Runs on the server from the cron file
+# scripts/deploy.sh installs.
 #
 #   APP=ranked-choice /opt/ranked-choice/scripts/reset-demo.sh
 #
-# There are no accounts, so anyone can create polls and vote as often as they
-# like — which is the point of a demo, and means the example poll drifts and
-# the database fills with other people's tests. A reset every night keeps the
-# first thing a visitor sees the thing it should be.
+# Two things, in one transaction (backend/src/demo/resetDemo.ts):
 #
-# `down -v` removes this Compose project's volumes and nothing else: -p scopes
-# it, so another project sharing the server keeps its database. The images are
-# already built, so `up` is a restart, not a rebuild; the migrate container
-# re-creates the schema and the example poll on the way up.
+# - The example poll goes back to its 21 seeded ballots, so visitors' votes
+#   cannot pile up until it stops showing a comeback on transfers.
+# - Polls visitors created are deleted once they are 30 days old. Not
+#   nightly: sharing a poll's link is the point of the app, and a link that
+#   dies overnight is a broken demo.
 #
-# **It refuses to run unless DEMO_RESET=true.** That is the flag that says
-# "this deployment is a demo", and the only thing standing between a cron line
-# and deleting real polls every night at four.
+# It runs inside the backend container that is already up, so nothing
+# restarts and the site stays up while it happens.
+#
+# **It refuses to run unless DEMO_RESET=true** — here, and again inside the
+# backend — because on anything but the public demo those polls are real.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -30,7 +29,4 @@ if ! grep -qx 'DEMO_RESET=true' .env.prod 2>/dev/null; then
 fi
 
 compose="docker compose -p $app -f docker-compose.prod.yml --env-file .env.prod"
-echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) resetting $app"
-$compose down -v --remove-orphans
-$compose up -d
-echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) reset $app"
+$compose exec -T backend node dist/reset-demo
