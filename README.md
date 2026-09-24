@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/nickjmorrow/ranked-choice/actions/workflows/ci.yml/badge.svg)](https://github.com/nickjmorrow/ranked-choice/actions/workflows/ci.yml)
 
-Polls you answer by ranking, counted by instant runoff — and a results page
+Polls you answer by ranking, counted by instant runoff — with a results page
 that shows the count happen, round by round, instead of only announcing who
 won.
 
@@ -17,27 +17,28 @@ kept for 30 days.
   <img alt="The example poll's results: Kyoto wins in round three with 12 of 20 votes still counting. Each bar is split into first choices and votes gained by transfer, with a dashed majority line; Mexico City and Reykjavík are shown as eliminated in rounds two and one." src="docs/screenshots/results-light.png">
 </picture>
 
-A ranked ballot lets you vote for your favourite without wasting your vote: if
-it cannot win, your ballot moves to your next choice. That is easy to say and
-hard to trust, so every question's results here are the whole count — the
-votes each option had in each round, which were first choices and which
-arrived by transfer, who was eliminated and why, and how many ballots ran out
-of choices along the way.
+I built this because I wanted a simple way to run a ranked-choice poll and
+could not find one I liked. A ranked ballot lets you vote for your favourite
+without wasting your vote: if it cannot win, your ballot moves to your next
+choice. That is easy to say and hard to trust, so I made the results the whole
+count rather than a winner — the votes each option had in each round, which
+were first choices and which arrived by transfer, who was eliminated and why,
+and how many ballots ran out of choices along the way.
 
-Three ways in:
+There are three ways in:
 
 - **[Vote on the example poll](https://ranked-choice.204-168-227-216.sslip.io/polls/example)**,
   then see where your ballot went.
 - **[The simulator](https://ranked-choice.204-168-227-216.sslip.io/simulator)** —
-  make up the ballots and watch the count change as you edit. Four scenarios
-  to start from: a comeback on transfers, a first-round majority, ballots that
-  run out, and a dead heat.
+  make up the ballots and watch the count change as you edit. There are four
+  scenarios to start from: a comeback on transfers, a first-round majority,
+  ballots that run out, and a dead heat.
 - **[Create a poll](https://ranked-choice.204-168-227-216.sslip.io/polls/new)**
   and share one link.
 
-Postgres + NestJS + React, three containers, one command. First written in
-2020; rebuilt in 2026 — see [History](#history).
-[AGENTS.md](./AGENTS.md) has the conventions and the reasoning behind them.
+It is Postgres, NestJS and React in three containers, started with one
+command. The conventions I hold the code to, and my reasoning for each, are in
+[AGENTS.md](./AGENTS.md).
 
 ## Design decisions and trade-offs
 
@@ -52,29 +53,30 @@ Postgres + NestJS + React, three containers, one command. First written in
   counts, eliminations and exhausted ballots; the frontend splits every bar
   into first choices and transfers, draws the majority line, and narrates each
   round in a sentence. *Trade-off:* a bigger response and a view model
-  (`frontend/src/rounds.ts`) to keep in step with the count's rules.
+  (`frontend/src/rounds.ts`) that I keep in step with the count's rules.
 - **Two simplifications, stated rather than hidden.** Options tied for last are
   eliminated together, and a count where every remaining option is level stops
-  as a tie. Real elections break those ties by lot or by earlier rounds; a
-  poll app would have to pick one and explain it. *Trade-off:* the rare poll
-  that ties for last eliminates more than one option in a round — and says so.
+  as a tie. Real elections break those ties by lot or by earlier rounds; I
+  would rather state a simple rule than pick one of those and hide it.
+  *Trade-off:* the rare poll that ties for last eliminates more than one
+  option in a round — and says so.
 - **No accounts, on purpose.** Anyone can create a poll or vote, and a poll is
-  addressed by an unguessable ten-character link. The cost is controlled
-  instead: per-IP rate limits on the endpoints that write, strict validation
-  of every id against the poll it claims to belong to, and on the public demo
-  a nightly tidy-up: the example poll goes back to its seeded ballots, and
-  visitors' polls are deleted after 30 days — long enough to share and use,
-  and said on the page when you create one. *Trade-off:* nothing stops
-  someone voting twice. The ballot
-  page says so when this browser has voted before; it does not pretend to
-  enforce it.
-- **Accessibility is part of the definition of done.** Every drag has a button
+  addressed by an unguessable ten-character link. I control the cost
+  instead, with per-IP rate limits on the endpoints that write and strict
+  validation of every id against the poll it claims to belong to. On the
+  public demo, a nightly tidy-up puts the example poll back to its seeded
+  ballots and deletes visitors' polls after 30 days, which is long enough to
+  share and use one, and the page says so when you create it.
+  *Trade-off:* nothing stops someone voting twice. The ballot page says so
+  when this browser has voted before; I did not want it to pretend to
+  enforce something it cannot.
+- **Accessibility is part of my definition of done.** Every drag has a button
   equivalent, focus is managed when a control removes itself, ranking changes
   and round narration are announced, and the results chart is text with
   decorative bars. [The rules](./AGENTS.md#accessibility)
-- **Architecture rules are tests.** `frontend/src/structure.test.ts` fails the
-  build on a literal palette colour, a component file not named after its
-  export, or a pure module without a test. The backend's end-to-end suite
+- **I write architecture rules as tests.** `frontend/src/structure.test.ts`
+  fails the build on a literal palette colour, a component file not named
+  after its export, or a pure module without a test. The backend's end-to-end suite
   runs every migration against a real Postgres, and asserts the rate limit.
 
 ## Screenshots
@@ -164,10 +166,10 @@ One server over SSH, safe to re-run. It installs Docker and Caddy, writes a
 production stack, puts Caddy in front for HTTPS, and installs the nightly demo
 tidy-up. nginx is published on `127.0.0.1` only — on `0.0.0.0` the plain-HTTP
 port would be reachable past the firewall, because Docker writes its own
-iptables rules. It is the same script as
-[clinical-copilot](https://github.com/nickjmorrow/clinical-copilot)'s and
-[payout-ledger](https://github.com/nickjmorrow/payout-ledger)'s, and shares a
-server with them.
+iptables rules. It is the same script I use for
+[Clinical Copilot](https://github.com/nickjmorrow/clinical-copilot) and
+[Payout Ledger](https://github.com/nickjmorrow/payout-ledger), and all three
+share one server.
 
 By hand, on any host with Docker Compose:
 
@@ -190,13 +192,13 @@ docker compose -f docker-compose.prod.yml --env-file .env.prod up --build -d
 ```
 backend/src/tally/       The counting rules, as a pure function, and its tests
 backend/src/polls/       Polls, questions, options, ballots: entities, DTOs, views
-backend/src/migrations/  The schema's history, 2020 onwards, and the example poll
+backend/src/migrations/  The schema's history, and the example poll
 backend/test/            End-to-end tests against a real Postgres
 frontend/src/            Pure view-model modules (rounds, scenarios, pollForm…)
 frontend/src/components/ One component per file
 frontend/src/pages/      One component per route
 scripts/                 setup.sh, check.sh, deploy.sh, reset-demo.sh
-docs/                    Screenshots, and the 2020 requirements notes
+docs/                    Screenshots, and my original requirements notes
 AGENTS.md                The conventions, and the reasoning
 ```
 
@@ -204,34 +206,11 @@ AGENTS.md                The conventions, and the reasoning
 
 - **Voter identity.** One ballot per person needs accounts, invite tokens or
   at least a cookie with teeth; each is a product decision as much as a
-  technical one. The seam is `castBallot` in `backend/src/polls/polls.service.ts`.
+  technical one, and I have not needed it yet. The seam is `castBallot` in `backend/src/polls/polls.service.ts`.
 - **Editing a poll after creation.** Changing options under ballots already
   cast changes what those ballots meant. A poll is closed to edits instead.
 - **Optional questions.** The schema has `is_required` and the API enforces it,
   but the create form makes every question required; the UI to choose is small
-  and has not been needed.
+  and I have not needed it.
 - **Real-time results.** The results page refetches every fifteen seconds. A
   push channel would be more machinery than a poll of this size needs.
-
-## History
-
-The 2020 version was React 16 with Redux-Saga and a personal component library,
-NestJS 7 and TypeORM 0.2 on Node 10, built by CircleCI and deployed to Netlify
-and Heroku's free tier — which no longer exists. The 2026 rebuild kept the
-idea, the NestJS backend and the counting algorithm's tests, and:
-
-- rebuilt the frontend on the stack above, with a theme picker, accessible
-  ranking, a results page that narrates each round, and a simulator built on
-  ballot groups instead of one card per voter;
-- fixed three bugs the old version shipped with: ballots cast at the same
-  moment could be merged into one (their ids were `max + 1`); on a fresh
-  database the first poll created collided with the seed data's ids; and a
-  ballot naming another poll's option was stored, and broke that question's
-  results for everyone;
-- added validation, rate limiting, transactions, a health check and
-  end-to-end tests; and
-- moved hosting to the same one-server Docker and Caddy setup as the author's
-  other projects, with CI on GitHub Actions.
-
-The original requirements notes are in
-[docs/original-requirements/](./docs/original-requirements/).
