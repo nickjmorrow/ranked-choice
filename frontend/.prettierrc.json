@@ -1,0 +1,6 @@
+{
+  "printWidth": 100,
+  "singleQuote": true,
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "tailwindStylesheet": "./src/index.css"
+}

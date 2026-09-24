@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ranked Choice</title>
+    <meta
+      name="description"
+      content="Create a poll, rank the options, and watch an instant-runoff count move ballots between rounds until something has a majority."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#fcfcfd" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1b1a21" media="(prefers-color-scheme: dark)" />
+    <!-- The author's own mark, the same icons nickjmorrow.com serves. -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Link previews (Slack, LinkedIn, iMessage…). Scrapers need absolute
+         URLs, so these name the public demo; change them if you deploy
+         somewhere else. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ranked Choice" />
+    <meta property="og:title" content="Ranked Choice" />
+    <meta
+      property="og:description"
+      content="Polls you answer by ranking, counted round by round — watch ballots move until something has a majority."
+    />
+    <meta property="og:url" content="https://ranked-choice.204-168-227-216.sslip.io/" />
+    <meta property="og:image" content="https://ranked-choice.204-168-227-216.sslip.io/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Ranked Choice showing a three-round count in which Kyoto overtakes Lisbon on transferred votes."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Sets the theme before first paint. See public/theme.js for why it is a
+         file and not an inline block. -->
+    <script src="/theme.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

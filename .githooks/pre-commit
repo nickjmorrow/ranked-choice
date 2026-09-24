@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+#
+# Runs the checks before a commit is made.
+#
+# Enable it once per clone:
+#
+#     git config core.hooksPath .githooks     # or run scripts/setup.sh
+#
+# Two decisions worth knowing before you are annoyed by them.
+#
+# **It checks the working tree, not the index.** If you staged a subset with
+# `git add -p`, this checks what is on disk rather than what you are about to
+# commit. A stash-and-restore that goes wrong in the middle of a commit is a
+# good way to lose work; CI checks the real commit, and this is an early
+# warning. The trade is deliberate.
+#
+# **It only checks the halves you touched,** and it uses --fast, so it needs
+# no database and does not rebuild anything. It is the fast subset of the same
+# script CI runs, not a different set of rules.
+#
+# `git commit --no-verify` skips it. CI is what makes that safe.
+
+set -uo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)"
+cd "$ROOT" || exit 1
+
+STAGED="$(git diff --cached --name-only --diff-filter=ACMR)"
+[ -z "$STAGED" ] && exit 0
+
+ARGS=()
+grep -qE '^backend/'  <<<"$STAGED" && ARGS+=(backend)
+grep -qE '^frontend/' <<<"$STAGED" && ARGS+=(frontend)
+
+# Nothing in either half — a docs or deploy commit. Nothing to run.
+[ ${#ARGS[@]} -eq 0 ] && exit 0
+[ ${#ARGS[@]} -eq 2 ] && ARGS=(all)
+
+if ! scripts/check.sh "${ARGS[@]}" --fast; then
+  cat >&2 <<'MSG'
+
+Commit aborted: the checks above failed.
+
+  scripts/check.sh --fast        run them again
+  cd backend  && corepack pnpm format && corepack pnpm lint:fix
+  cd frontend && corepack pnpm format && corepack pnpm lint:fix
+
+  git commit --no-verify         commit anyway (CI will still run)
+MSG
+  exit 1
+fi

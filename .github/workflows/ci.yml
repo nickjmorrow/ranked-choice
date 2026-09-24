@@ -1,0 +1,94 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Two independent jobs rather than one. A frontend typo should not cost you the
+# backend signal, and they run in parallel for free.
+#
+# Each job installs dependencies and then hands off to `scripts/check.sh`, which
+# is the SAME script the pre-commit hook runs. A hook that checks something
+# different from CI is worse than no hook — it teaches you to trust a green that
+# does not mean anything.
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        # Same major as the compose files.
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: app
+          POSTGRES_PASSWORD: app
+          POSTGRES_DB: postgres
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U app"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      TEST_DATABASE_ADMIN_URL: postgresql://app:app@localhost:5432/postgres
+      # Turns "no database, so I skipped the end-to-end suite" from a note into
+      # a failure. Without it a Postgres service that failed to start would make
+      # CI green while the API was never exercised.
+      CHECK_REQUIRE_DB: '1'
+
+    steps:
+      - uses: actions/checkout@v7
+
+      # No `version:` — it reads `packageManager` from backend/package.json, so
+      # CI, the Dockerfile and your machine all run the same pnpm.
+      - uses: pnpm/action-setup@v6
+        with:
+          package_json_file: backend/package.json
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: backend/pnpm-lock.yaml
+
+      - run: pnpm install --frozen-lockfile
+        working-directory: backend
+
+      # eslint, prettier --check, tsc, jest unit tests, nest build, and the
+      # end-to-end suite against the Postgres above — migrations included.
+      - name: Checks
+        run: scripts/check.sh backend
+
+  frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+        with:
+          package_json_file: frontend/package.json
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+
+      - run: pnpm install --frozen-lockfile
+        working-directory: frontend
+
+      # eslint, prettier --check, tsc, vitest, and `vite build` — which is not
+      # redundant with tsc: it proves the bundle actually resolves and builds.
+      - name: Checks
+        run: scripts/check.sh frontend

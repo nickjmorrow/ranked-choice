@@ -1,0 +1,73 @@
+# The DEVELOPMENT stack. `docker-compose.prod.yml` is the production one.
+#
+#   docker compose up
+#
+# Then open http://localhost:3002. Source is mounted into the app containers,
+# so edits reload without a rebuild; only a dependency change needs one.
+name: ranked-choice
+
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: app
+    ports:
+      # 5435, not 5432: so it can run beside a Postgres you already have, and
+      # beside the other projects that publish 5433 and 5434.
+      - '5435:5432'
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U app -d app']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Runs to completion before the API starts: migrations, and with them the
+  # example poll. `docker compose up` stays one command, and data survives it.
+  migrate:
+    build:
+      context: ./backend
+      target: build
+    command: ['node', 'dist/migrate']
+    environment:
+      DATABASE_URL: postgresql://app:app@db:5432/app
+    depends_on:
+      db:
+        condition: service_healthy
+
+  backend:
+    build:
+      context: ./backend
+      target: dev
+    environment:
+      DATABASE_URL: postgresql://app:app@db:5432/app
+      PORT: 8000
+    ports:
+      - '8002:8000'
+    volumes:
+      - ./backend/src:/srv/src
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+
+  frontend:
+    build:
+      context: ./frontend
+      target: dev
+    environment:
+      BACKEND_ORIGIN: http://backend:8000
+    ports:
+      - '3002:3000'
+    volumes:
+      - ./frontend/src:/srv/src
+      - ./frontend/public:/srv/public
+    depends_on:
+      - backend
+
+volumes:
+  db_data:

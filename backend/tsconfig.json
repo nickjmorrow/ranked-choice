@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    // The NestJS 12 starter's settings: Nest itself is ESM-only now, and a
+    // CommonJS app loads it through Node's require(esm). Emitting CommonJS keeps
+    // `emitDecoratorMetadata` — which Nest's dependency injection and
+    // class-validator both read — working without an ESM loader.
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "resolvePackageJsonExports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2023",
+    "types": ["node", "jest"],
+    "sourceMap": true,
+    "outDir": "./dist",
+    "rootDir": ".",
+    "incremental": true,
+    "skipLibCheck": true,
+
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    // TypeORM entities and validated DTOs are filled in by the framework, not
+    // by a constructor.
+    "strictPropertyInitialization": false
+  },
+  "include": ["src", "test", "jest.config.ts"]
+}

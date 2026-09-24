@@ -1,0 +1,19 @@
+# Secrets — never commit.
+#
+# Deny every .env* and then allow back the examples, rather than listing the
+# ones to ignore: a deny-list of secret files is only ever one filename away
+# from leaking one.
+.env*
+!.env.prod.example
+
+# Node
+node_modules/
+dist/
+.vite/
+*.tsbuildinfo
+coverage/
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/

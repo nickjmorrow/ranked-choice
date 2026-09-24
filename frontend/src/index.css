@@ -1,0 +1,53 @@
+/* Tailwind v4: customization lives in @theme, not a config file. */
+@import 'tailwindcss';
+
+@theme {
+  --color-surface: oklch(0.99 0.002 290);
+  --color-surface-raised: oklch(0.97 0.004 290);
+  --color-ink: oklch(0.22 0.015 290);
+  --color-ink-muted: oklch(0.52 0.02 290);
+  --color-accent: oklch(0.5 0.17 285);
+  /* The part of a bar that arrived by transfer: the accent, lighter. */
+  --color-accent-soft: oklch(0.78 0.09 285);
+  /* Text on the accent, in either theme. */
+  --color-on-accent: oklch(0.99 0 0);
+  --color-danger: oklch(0.52 0.2 25);
+  --color-success: oklch(0.5 0.13 150);
+  /* Behind a modal or a drag: dims without hiding. */
+  --color-scrim: oklch(0.22 0.015 290 / 0.25);
+}
+
+/* Keyed off `data-theme`, which `useTheme` (and public/theme.js, before React
+   loads) sets from the resolved preference. */
+:root[data-theme='dark'] {
+  --color-surface: oklch(0.2 0.012 290);
+  --color-surface-raised: oklch(0.25 0.015 290);
+  --color-ink: oklch(0.95 0.006 290);
+  --color-ink-muted: oklch(0.72 0.02 290);
+  --color-accent: oklch(0.72 0.14 285);
+  --color-accent-soft: oklch(0.47 0.09 285);
+  --color-on-accent: oklch(0.2 0.012 290);
+  --color-danger: oklch(0.72 0.17 25);
+  --color-success: oklch(0.74 0.15 150);
+  --color-scrim: oklch(0 0 0 / 0.55);
+}
+
+html {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-surface);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* One focus ring for everything, visible in both themes. */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}

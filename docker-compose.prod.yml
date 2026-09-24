@@ -1,0 +1,88 @@
+# The PRODUCTION stack. `docker-compose.yml` is the development one.
+#
+#   docker compose -f docker-compose.prod.yml --env-file .env.prod up --build -d
+#
+# What differs, and why each one matters:
+#
+#   * The frontend is a BUILT BUNDLE served by nginx, not a dev server. nginx
+#     also proxies /api to the backend, which is what reproduces Vite's dev
+#     proxy — without it the bundle has no route to the API at all, because the
+#     client calls /api on its own origin by design.
+#   * No source mounts. The image is the artifact.
+#   * No hot reload, and the backend runs as the image's unprivileged `node`
+#     user.
+#   * restart: unless-stopped everywhere, so a crash or a reboot recovers.
+#   * Healthchecks on everything; the backend's asks the database, not just
+#     whether the process is up.
+#
+# Still missing, deliberately, because they depend on where you deploy: TLS
+# (terminate it at your platform's load balancer or put Caddy in front, as
+# scripts/deploy.sh does), secrets management, log shipping, and backups.
+name: ranked-choice-prod
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER_is_required}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD_is_required}
+      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB_is_required}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    # Deliberately NOT published. Nothing outside this network needs it.
+
+  # Runs to completion before the API starts. A failed migration stops the
+  # deploy here rather than leaving the API pointed at a schema it does not
+  # expect. The example poll is a migration too, so a fresh database comes up
+  # with it.
+  migrate:
+    build:
+      context: ./backend
+      target: production
+    restart: 'no'
+    command: ['node', 'dist/migrate']
+    environment:
+      DATABASE_URL: &database_url postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      LOG_FORMAT: json
+    depends_on:
+      db:
+        condition: service_healthy
+
+  backend:
+    build:
+      context: ./backend
+      target: production
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: *database_url
+      PORT: 8000
+      LOG_FORMAT: json
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+
+  frontend:
+    build:
+      context: ./frontend
+      target: production
+    restart: unless-stopped
+    ports:
+      # 127.0.0.1 when something on the same host terminates TLS in front of
+      # this — scripts/deploy.sh sets it. Published on every interface, the
+      # plain-HTTP port stays reachable from outside even behind a firewall,
+      # because Docker writes its own iptables rules ahead of ufw's.
+      - '${PUBLIC_BIND_ADDRESS:-0.0.0.0}:${PUBLIC_PORT:-80}:80'
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  db_data:
